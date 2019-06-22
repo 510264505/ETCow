@@ -300,6 +300,14 @@ namespace ETModel
 					string assetName = Path.GetFileNameWithoutExtension(s);
 					UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
 					AddResource(assetBundleName, assetName, resource);
+                    if (s.EndsWith(".png"))
+                    {
+                        UnityEngine.Object[] atlas = AssetDatabase.LoadAllAssetsAtPath(s);
+                        foreach (var asset in atlas)
+                        {
+                            AddResource(assetBundleName, asset.name, asset);
+                        }
+                    }
 				}
 
 				abInfo = ComponentFactory.CreateWithParent<ABInfo, string, AssetBundle>(this, assetBundleName, null);
@@ -380,7 +388,15 @@ namespace ETModel
 					string assetName = Path.GetFileNameWithoutExtension(s);
 					UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(s);
 					AddResource(assetBundleName, assetName, resource);
-				}
+                    if (s.EndsWith(".png"))
+                    {
+                        UnityEngine.Object[] atlas = AssetDatabase.LoadAllAssetsAtPath(s);
+                        foreach (var asset in atlas)
+                        {
+                            AddResource(assetBundleName, asset.name, asset);
+                        }
+                    }
+                }
 
 				abInfo = ComponentFactory.CreateWithParent<ABInfo, string, AssetBundle>(this, assetBundleName, null);
 				this.bundles[assetBundleName] = abInfo;

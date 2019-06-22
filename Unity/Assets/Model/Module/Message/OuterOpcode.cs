@@ -48,6 +48,13 @@ namespace ETModel
 	[Message(OuterOpcode.M2C_Reload)]
 	public partial class M2C_Reload : IResponse {}
 
+//第一个枚举的值必须为0。声明名称都为全局的，各枚举不能相同
+//花色
+//权重
+//身份
+	[Message(OuterOpcode.Card)]
+	public partial class Card {}
+
 }
 namespace ETModel
 {
@@ -68,5 +75,6 @@ namespace ETModel
 		 public const ushort G2C_Test = 113;
 		 public const ushort C2M_Reload = 114;
 		 public const ushort M2C_Reload = 115;
+		 public const ushort Card = 116;
 	}
 }

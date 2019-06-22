@@ -157,6 +157,28 @@ namespace ETModel
 
 	}
 
+	[Message(InnerOpcode.DBDeleteRequest)]
+	public partial class DBDeleteRequest: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public string CollectionName { get; set; }
+
+		public string Json { get; set; }
+
+	}
+
+	[Message(InnerOpcode.DBDeleteResponse)]
+	public partial class DBDeleteResponse: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
+
+	}
+
 	[Message(InnerOpcode.DBQueryBatchRequest)]
 	public partial class DBQueryBatchRequest: IRequest
 	{
@@ -202,6 +224,28 @@ namespace ETModel
 		public string Message { get; set; }
 
 		public List<ComponentWithId> Components = new List<ComponentWithId>();
+
+	}
+
+	[Message(InnerOpcode.DBUpdateJsonRequest)]
+	public partial class DBUpdateJsonRequest: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public string CollectionName { get; set; }
+
+		public string Json { get; set; }
+
+	}
+
+	[Message(InnerOpcode.DBUpdateJsonResponse)]
+	public partial class DBUpdateJsonResponse: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
 
 	}
 

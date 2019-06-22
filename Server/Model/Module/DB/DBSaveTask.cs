@@ -3,7 +3,6 @@ using MongoDB.Driver;
 
 namespace ETModel
 {
-
 	[ObjectSystem]
 	public class DbSaveTaskAwakeSystem : AwakeSystem<DBSaveTask, ComponentWithId, string, ETTaskCompletionSource>
 	{

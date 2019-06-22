@@ -91,5 +91,21 @@ namespace ETModel
 
 			return tcs.Task;
 		}
+        public ETTask DelJson(string collectionName, string json)
+        {
+            ETTaskCompletionSource tcs = new ETTaskCompletionSource();
+            DBDeleteJsonTask dbDeleteJsonTask = ComponentFactory.Create<DBDeleteJsonTask, string, string, ETTaskCompletionSource>(collectionName, json, tcs);
+            this.tasks[(int)((ulong)dbDeleteJsonTask.Id % taskCount)].Add(dbDeleteJsonTask);
+
+            return tcs.Task;
+        }
+        public ETTask UpdJson(string collectionName, string json)
+        {
+            ETTaskCompletionSource tcs = new ETTaskCompletionSource();
+            DBUpdateJsonTask dbUpdateJsonTask = ComponentFactory.Create<DBUpdateJsonTask, string, string, ETTaskCompletionSource>(collectionName, json, tcs);
+            this.tasks[(int)((ulong)dbUpdateJsonTask.Id % taskCount)].Add(dbUpdateJsonTask);
+
+            return tcs.Task;
+        }
 	}
 }

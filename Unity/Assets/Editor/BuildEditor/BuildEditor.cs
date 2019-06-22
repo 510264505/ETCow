@@ -34,7 +34,7 @@ namespace ETEditor
 
 		private PlatformType platformType;
 		private bool isBuildExe;
-		private bool isContainAB;
+		private bool isContainAB = true;
 		private BuildType buildType;
 		private BuildOptions buildOptions = BuildOptions.AllowDebugging | BuildOptions.Development;
 		private BuildAssetBundleOptions buildAssetBundleOptions = BuildAssetBundleOptions.None;

@@ -11,10 +11,9 @@ namespace App
 		{
 			// 异步方法全部会回掉到主线程
 			SynchronizationContext.SetSynchronizationContext(OneThreadSynchronizationContext.Instance);
-			
-			try
-			{			
-				Game.EventSystem.Add(DLLType.Model, typeof(Game).Assembly);
+            try
+			{
+                Game.EventSystem.Add(DLLType.Model, typeof(Game).Assembly);
 				Game.EventSystem.Add(DLLType.Hotfix, DllHelper.GetHotfixAssembly());
 
 				Options options = Game.Scene.AddComponent<OptionComponent, string[]>(args).Options;
@@ -25,6 +24,8 @@ namespace App
 					Log.Error("命令行参数apptype与配置不一致");
 					return;
 				}
+
+                Log.Debug("启动服务器类型:" + startConfig.AppType);
 
 				IdGenerater.AppId = options.AppId;
 
@@ -51,16 +52,17 @@ namespace App
 						Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<NetOuterComponent, string>(outerConfig.Address);
 						break;
-					case AppType.Realm:
-						Game.Scene.AddComponent<MailboxDispatcherComponent>();
+					case AppType.Realm: //玩家的初次连接对象，实际上可能存在多个，但是对于单个玩家来说他只会遇到其中一个。
+                        // 有可能被攻击，需要改多个的话，改RealmGateAddressComponent组件
+                        Game.Scene.AddComponent<MailboxDispatcherComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatcherComponent>();
 						Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<NetOuterComponent, string>(outerConfig.Address);
 						Game.Scene.AddComponent<LocationProxyComponent>();
 						Game.Scene.AddComponent<RealmGateAddressComponent>();
 						break;
-					case AppType.Gate:
-						Game.Scene.AddComponent<PlayerComponent>();
+					case AppType.Gate: //消息转发服务器，直接处理玩家的请求和转发Actor消息。
+                        Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<MailboxDispatcherComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatcherComponent>();
 						Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
@@ -70,12 +72,12 @@ namespace App
 						Game.Scene.AddComponent<ActorLocationSenderComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						break;
-					case AppType.Location:
-						Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
+					case AppType.Location: //匹配服务器，在玩家更换游戏地图时，通知Gate更新ActorID。
+                        Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<LocationComponent>();
 						break;
-					case AppType.Map:
-						Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
+					case AppType.Map: //游戏逻辑服务器，内部运行整体游戏逻辑。
+                        Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<UnitComponent>();
 						Game.Scene.AddComponent<LocationProxyComponent>();
 						Game.Scene.AddComponent<ActorMessageSenderComponent>();
@@ -90,12 +92,14 @@ namespace App
 						
 						// 发送location actor消息
 						Game.Scene.AddComponent<ActorLocationSenderComponent>();
-						
-						//Game.Scene.AddComponent<DBComponent>();
-						//Game.Scene.AddComponent<DBProxyComponent>();
-						
-						// location server需要的组件
-						Game.Scene.AddComponent<LocationComponent>();
+
+                        // 数据库管理组件（管理数据库连接地址，数据库名称等）
+                        Game.Scene.AddComponent<DBComponent>();
+                        // 数据库调用组件（调用DB数据库的组件，添加、查询、修改、删除等操作）
+                        Game.Scene.AddComponent<DBProxyComponent>();
+
+                        // location server需要的组件
+                        Game.Scene.AddComponent<LocationComponent>();
 						
 						// 访问location server的组件
 						Game.Scene.AddComponent<LocationProxyComponent>();

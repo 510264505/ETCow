@@ -1,6 +1,6 @@
 ﻿namespace ETHotfix
 {
-	public static class EventIdType
+	public static partial class EventIdType
 	{
 		public const string InitSceneStart = "InitSceneStart";
 		public const string LoginFinish = "LoginFinish";

@@ -31,6 +31,13 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_PlayerInfo)]
 	public partial class G2C_PlayerInfo : IResponse {}
 
+//Test注册协议
+	[Message(HotfixOpcode.C2G_TestPlayerInfo)]
+	public partial class C2G_TestPlayerInfo : IRequest {}
+
+	[Message(HotfixOpcode.G2C_TestPlayerInfo)]
+	public partial class G2C_TestPlayerInfo : IResponse {}
+
 }
 namespace ETHotfix
 {
@@ -46,5 +53,7 @@ namespace ETHotfix
 		 public const ushort PlayerInfo = 10008;
 		 public const ushort C2G_PlayerInfo = 10009;
 		 public const ushort G2C_PlayerInfo = 10010;
+		 public const ushort C2G_TestPlayerInfo = 10011;
+		 public const ushort G2C_TestPlayerInfo = 10012;
 	}
 }

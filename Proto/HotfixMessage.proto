@@ -72,3 +72,18 @@ message G2C_PlayerInfo // IResponse
     repeated int32 TestRepeatedInt32 = 4;
     repeated int64 TestRepeatedInt64 = 5;
 }
+
+	//Test注册协议
+message C2G_TestPlayerInfo // IRequest
+{
+	int32 RpcId = 90;
+	string Account = 1;
+	string Password = 2;
+}
+
+message G2C_TestPlayerInfo // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}

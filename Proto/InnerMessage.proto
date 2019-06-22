@@ -106,6 +106,20 @@ message DBQueryResponse // IResponse
     ComponentWithId Component = 1;
 }
 
+message DBDeleteRequest // IRequest
+{
+    int32 RpcId = 90;
+    string CollectionName = 1;
+    string Json = 2;
+}
+
+message DBDeleteResponse // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+}
+
 message DBQueryBatchRequest // IRequest
 {
     int32 RpcId = 90;
@@ -136,6 +150,20 @@ message DBQueryJsonResponse // IResponse
     string Message = 92;
 
     repeated ComponentWithId Components = 1;
+}
+
+message DBUpdateJsonRequest // IRequest
+{
+    int32 RpcId = 90;
+    string CollectionName = 1;
+    string Json = 2;
+}
+
+message DBUpdateJsonResponse // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
 }
 
 message ObjectAddRequest // IRequest

@@ -59,15 +59,36 @@ namespace ETHotfix
 			DBQueryResponse dbQueryResponse = (DBQueryResponse)await session.Call(new DBQueryRequest { CollectionName = typeof(T).Name, Id = id });
 			return (T)dbQueryResponse.Component;
 		}
-		
-		/// <summary>
-		/// 根据查询表达式查询
-		/// </summary>
-		/// <param name="self"></param>
-		/// <param name="exp"></param>
-		/// <typeparam name="T"></typeparam>
-		/// <returns></returns>
-		public static async ETTask<List<ComponentWithId>> Query<T>(this DBProxyComponent self, Expression<Func<T ,bool>> exp) where T: ComponentWithId
+        public static async ETTask Delete<T>(this DBProxyComponent self, string json) where T : ComponentWithId
+        {
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            await session.Call(new DBDeleteRequest { CollectionName = typeof(T).Name, Json = json });
+        }
+        public static async ETTask Update<T>(this DBProxyComponent self, string queryJson, string updateJson) where T : ComponentWithId
+        {
+            BsonDocument bsons = new BsonDocument();
+            bsons["QueryJson"] = BsonSerializer.Deserialize<BsonDocument>(queryJson);
+            bsons["UpdateJson"] = BsonSerializer.Deserialize<BsonDocument>(updateJson);
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+        }
+        public static async ETTask Update<T>(this DBProxyComponent self, BsonDocument queryBson, BsonDocument updateBson) where T : ComponentWithId
+        {
+            BsonDocument bsons = new BsonDocument();
+            bsons["QueryJson"] = queryBson;
+            bsons["UpdateJson"] = updateBson;
+            Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
+            await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+        }
+
+        /// <summary>
+        /// 根据查询表达式查询
+        /// </summary>
+        /// <param name="self"></param>
+        /// <param name="exp"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static async ETTask<List<ComponentWithId>> Query<T>(this DBProxyComponent self, Expression<Func<T ,bool>> exp) where T: ComponentWithId
 		{
 			ExpressionFilterDefinition<T> filter = new ExpressionFilterDefinition<T>(exp);
 			IBsonSerializerRegistry serializerRegistry = BsonSerializer.SerializerRegistry;
@@ -96,5 +117,6 @@ namespace ETHotfix
 			DBQueryJsonResponse dbQueryJsonResponse = (DBQueryJsonResponse)await session.Call(new DBQueryJsonRequest { CollectionName = typeof(T).Name, Json = json });
 			return dbQueryJsonResponse.Components;
 		}
+
 	}
 }

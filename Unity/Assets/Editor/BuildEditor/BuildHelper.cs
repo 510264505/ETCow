@@ -45,14 +45,14 @@ namespace ETEditor
 				Directory.CreateDirectory(fold);
 			}
 			
-			Log.Info("开始资源打包");
+			Log.Info("开始资源打包，输出路径:"+ fold);
 			BuildPipeline.BuildAssetBundles(fold, buildAssetBundleOptions, buildTarget);
 			
 			GenerateVersionInfo(fold);
 			Log.Info("完成资源打包");
 
-			if (isContainAB)
-			{
+			if (isContainAB)//拷贝AB包到本地StreamingAssets
+            {
 				FileHelper.CleanDirectory("Assets/StreamingAssets/");
 				FileHelper.CopyDirectory(fold, "Assets/StreamingAssets/");
 			}

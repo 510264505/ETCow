@@ -50,5 +50,13 @@ namespace ETModel
 		{
 			globalLog.Debug(MongoHelper.ToJson(message));
 		}
+        public static void WriteLine(string message)
+        {
+            Console.WriteLine(message);
+        }
+        public static void Write(string message)
+        {
+            Console.Write(message);
+        }
     }
 }

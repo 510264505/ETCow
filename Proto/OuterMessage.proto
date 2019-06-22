@@ -118,3 +118,48 @@ message M2C_Reload // IResponse
 	int32 Error = 91;
 	string Message = 92;
 }
+//第一个枚举的值必须为0。声明名称都为全局的，各枚举不能相同
+//花色
+enum Suits
+{
+	SuitsNone = 0;
+	Diamond = 1; //方块
+	Plum = 2;    //梅花
+	Heart = 3;   //红心
+	Spades = 4;   //黑桃
+}
+
+//权重
+enum Weight
+{
+	WeightNone = 0;
+    Three = 1;      //3
+    Four = 2;       //4
+    Five = 3;       //5
+    Six = 4;        //6
+    Seven = 5;      //7
+    Eight = 6;      //8
+    Nine = 7;       //9
+    Ten = 8;        //10
+    Jack = 9;       //J
+    Queen = 10;      //Q
+    King = 11;       //K
+    One = 12;        //A
+    Two = 13;        //2
+    SJoker = 14;     //小王
+    LJoker = 15;     //大王
+}
+
+//身份
+enum Identity
+{
+	IdentityNone = 0;
+	Player = 1;     //闲
+    Banker = 2;   //庄
+}
+
+message Card
+{
+	Weight CardWeight = 1;
+	Suits CardSuits = 2;
+}
