@@ -39,8 +39,8 @@ namespace ETHotfix
 				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
                 //Game.EventSystem.Run(EventIdType.InitSceneStart);
-                Game.EventSystem.Run(EventIdType.CowCowInitScensStart); //初始化UI
-			}
+                Game.EventSystem.Run(EventIdCowCowType.InitScensStart); //初始化UI
+            }
 			catch (Exception e)
 			{
 				Log.Error(e);

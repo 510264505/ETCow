@@ -54,6 +54,12 @@ message M2C_TestActorResponse // IActorLocationResponse
 message PlayerInfo // IMessage
 {
 	int32 RpcId = 90;
+	string UserID = 1;
+	string Name = 2;
+	string HeadIcon = 3;
+	int32 RoomCard = 4;
+	int32 Sex = 5;
+	int32 State = 6;
 }
 
 message C2G_PlayerInfo // IRequest
@@ -86,4 +92,67 @@ message G2C_TestPlayerInfo // IResponse
 	int32 RpcId = 90;
 	int32 Error = 91;
 	string Message = 92;
+}
+
+message C2R_CowCowLogin // IRequest
+{
+	int32 RpcId = 90;
+	string Account = 1;
+	string Password = 2;
+}
+
+message R2C_CowCowLogin // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string Address = 1;
+	int64 Key = 2;
+}
+
+message C2R_CowCowRegistered // IRequest
+{
+	int32 RpcId = 90;
+	string Account = 1;
+	string Password = 2;
+}
+
+message R2C_CowCowRegistered // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string Address = 1;
+	int64 Key = 2;
+}
+
+message C2G_CowCowLoginGate // IRequest
+{
+	int32 RpcId = 90;
+	int64 Key = 1;	// 帐号
+}
+
+message G2C_CowCowLoginGate // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int64 PlayerId = 1;
+	PlayerInfo PlayerInfo = 2;
+}
+
+message C2G_CowCowEnterGameRoomGate // IRequest
+{
+	int32 RpcId = 90;
+	int32 Bureau = 1;
+	int32 Rule = 2;
+}
+
+message G2C_CowCowEnterGameRoomGate // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int32 Bureau = 1;
+	int32 Rule = 2;
 }

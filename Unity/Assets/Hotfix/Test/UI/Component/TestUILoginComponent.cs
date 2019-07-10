@@ -21,15 +21,12 @@ namespace ETHotfix
         private Button loginBtn;
         public void Awake()
         {
-            //GameObject parent = this.GetParent<UI>().GameObject;
+            //直接以字典形式拿到对象
+            Debug.Log("???自己:" + GameObject.name);
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             account = rc.Get<GameObject>("Account").GetComponent<InputField>();
             password = rc.Get<GameObject>("Password").GetComponent<InputField>();
             loginBtn = rc.Get<GameObject>("LoginBtn").GetComponent<Button>();
-            //Debug.Log("此物体名称:" + parent.name);
-            //account = parent.transform.Find("TestUILogin/Account").GetComponent<InputField>();
-            //password = parent.transform.Find("TestUILogin/Password").GetComponent<InputField>();
-            //loginBtn = parent.transform.Find("TestUILogin/LoginBtn").GetComponent<Button>();
             loginBtn.onClick.Add(() => OnLogin());
         }
         public async void OnLogin()

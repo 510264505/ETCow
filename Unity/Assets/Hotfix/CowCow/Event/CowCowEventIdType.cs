@@ -1,8 +1,14 @@
 ﻿namespace ETHotfix
 {
-    public static partial class EventIdType
+    public static partial class EventIdCowCowType
     {
-        public const string CowCowInitScensStart = "CowCowInitScensStart";
+        public const string InitScensStart = "CowCowInitScensStart";
+        public const string RegisteredFail = "CowCowRegisteredFail";
+        public const string LoginFinish = "CowCowLoginFinish";
+        public const string LoginFail = "COwCowLoginFail";
+        public const string RemoveLobby = "CowCowRemoveLobby";
+        public const string CreateGameRoom = "CowCowCreateGameRoom";
+        public const string RemoveGameRoom = "CowCowRemoveGameRoom";
     }
 }
 

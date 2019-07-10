@@ -146,6 +146,7 @@
     <Compile Include="Assets\Model\CowCow\Message\CowCowOuterErrorCode.cs" />
     <Compile Include="Assets\Model\CowCow\MonoScript\HandCardSprite.cs" />
     <Compile Include="Assets\Model\CowCow\Object\Card.cs" />
+    <Compile Include="Assets\Model\CowCow\Tool\UGUIGradient.cs" />
     <Compile Include="Assets\Model\Entity\Game.cs" />
     <Compile Include="Assets\Model\Entity\Hotfix.cs" />
     <Compile Include="Assets\Model\Entity\Scene.cs" />

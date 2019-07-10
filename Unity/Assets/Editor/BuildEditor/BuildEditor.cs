@@ -109,8 +109,65 @@ namespace ETEditor
 			}
 		}
 
-		// 会将目录下的每个prefab引用的资源强制打成一个包，不分析共享资源
-		private static void SetBundles(string dir)
+        //将文件夹以及上一级文件名组合拼为AB包名
+        [MenuItem("Tools/AssetBundle/设置AB包名")]
+        public static void SetFieldAssetBundleName()
+        {
+            Object[] asset = Selection.GetFiltered<Object>(SelectionMode.DeepAssets);
+            for (int i = 0; i < asset.Length; i++)
+            {
+                if (asset[i].GetType() == typeof(DefaultAsset))
+                {
+                    string path = AssetDatabase.GetAssetPath(asset[i]);
+                    AssetImporter ai = AssetImporter.GetAtPath(path);
+                    path = path.Substring(0, path.LastIndexOf("/"));
+                    if (path.Contains("/"))
+                    {
+                        int lastIndex = path.LastIndexOf("/") + 1;
+                        int len = path.Length - lastIndex;
+                        path = path.Substring(lastIndex, len) + "_";
+                        ai.assetBundleName = path + asset[i].name.ToLower() + ".unity3d"; //更改文件夹中的资源AB名称
+                    }
+                    else
+                    {
+                        ai.assetBundleName = asset[i].name.ToLower() + ".unity3d"; //更改文件夹中的资源AB名称
+                    }
+                }
+            }
+            AssetDatabase.Refresh();
+        }
+        //清空AB包名
+        [MenuItem("Tools/AssetBundle/清空AB包名")]
+        public static void ClearFieldAssetBundleName()
+        {
+            Object[] asset = Selection.GetFiltered<Object>(SelectionMode.DeepAssets);
+            for (int i = 0; i < asset.Length; i++)
+            {
+                if (asset[i].GetType() == typeof(DefaultAsset))
+                {
+                    AssetImporter ai = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(asset[i]));
+                    ai.assetBundleName = string.Empty; //清空文件夹中的资源AB名称
+                }
+            }
+            AssetDatabase.RemoveUnusedAssetBundleNames();
+            AssetDatabase.Refresh();
+        }
+        //清空单个AB包名
+        [MenuItem("Tools/AssetBundle/清空单个AB包名")]
+        public static void ClearOneFieldAssetBundleName()
+        {
+            if (Selection.objects.Length <= 0)
+            {
+                return;
+            }
+            AssetImporter ai = AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(Selection.objects[0]));
+            ai.assetBundleName = string.Empty; //清空文件夹中的资源AB名称
+            AssetDatabase.RemoveUnusedAssetBundleNames();
+            AssetDatabase.Refresh();
+        }
+
+        // 会将目录下的每个prefab引用的资源强制打成一个包，不分析共享资源
+        private static void SetBundles(string dir)
 		{
 			List<string> paths = EditorResHelper.GetPrefabsAndScenes(dir);
 			foreach (string path in paths)
