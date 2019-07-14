@@ -164,6 +164,8 @@ message DBUpdateJsonResponse // IResponse
     int32 RpcId = 90;
     int32 Error = 91;
     string Message = 92;
+
+    repeated ComponentWithId Components = 1;
 }
 
 message ObjectAddRequest // IRequest
@@ -276,4 +278,32 @@ message G2M_SessionDisconnect // IActorLocationMessage
 {
     int32 RpcId = 90;
     int64 ActorId = 94;
+}
+//-------------------------------------已下是自定义牛牛协议-------------------------------------
+message R2G_CowCowGamerKickOut // IRequest
+{
+    int32 RpcId = 90;
+    long UserID = 1;
+}
+
+message G2R_CowCowGamerKickOut // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+}
+
+message R2G_CowCowGetLoginKey // IRequest
+{
+    int32 RpcId = 90;
+    int64 UserID = 1;
+}
+
+message G2R_CowCowGetLoginKey // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+
+    int64 Key = 1;
 }
