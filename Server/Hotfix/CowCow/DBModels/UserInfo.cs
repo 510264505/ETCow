@@ -1,8 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using ETModel;
 
-namespace ETModel
+namespace ETHotfix
 {
-    public class RoomPlayer
+    /// <summary>
+    /// 房间中多个玩家信息
+    /// </summary>
+    public class RoomGamer
     {
         //椅子号
         public int ChairID { get; set; }
@@ -11,12 +16,23 @@ namespace ETModel
         //输赢
         public int LoseWinCoin { get; set; }
     }
+
+    /// <summary>
+    /// 房间记录
+    /// </summary>
     public class RoomRecord
     {
         //房间号
         public string RoomNumber { get; set; }
-        public List<RoomPlayer> Player { get; set; }
+        //玩家信息
+        public List<RoomGamer> Player { get; set; }
+        //时间
+        public DateTime RegisterTime { get; set; }
     }
+
+    /// <summary>
+    /// 用户信息
+    /// </summary>
     public class UserInfo : Entity
     {
         //账号
@@ -29,8 +45,9 @@ namespace ETModel
         public string HeadIcon { get; set; }
         //性别
         public int Sex { get; set; }
-        //金额
-        public long Money { get; set; }
-        public List<RoomRecord> Records { get; set; }
+        //钻石
+        public long Diamond { get; set; }
+        //注册时间
+        public DateTime RegisterTime { get; set; }
     }
 }
