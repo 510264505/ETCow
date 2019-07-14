@@ -8,16 +8,16 @@ using MongoDB.Bson.Serialization;
 namespace ETModel
 {
     [ObjectSystem]
-    public class DBUpdateJsonTaskAwakeSystem : AwakeSystem<DBUpdateJsonTask, string, string, ETTaskCompletionSource>
+    public class DBQueryToUpdateJsonTaskAwakeSystem : AwakeSystem<DBQueryToUpdateJsonTask, string, string, ETTaskCompletionSource>
     {
-        public override void Awake(DBUpdateJsonTask self, string collectionName, string json, ETTaskCompletionSource tcs)
+        public override void Awake(DBQueryToUpdateJsonTask self, string collectionName, string json, ETTaskCompletionSource tcs)
         {
             self.CollectionName = collectionName;
             self.Json = json;
             self.Tcs = tcs;
         }
     }
-    public sealed class DBUpdateJsonTask : DBTask
+    public sealed class DBQueryToUpdateJsonTask : DBTask
     {
         public string CollectionName { get; set; }
         public string Json { get; set; }
@@ -38,7 +38,7 @@ namespace ETModel
                 await dbComponent.GetCollection(this.CollectionName).UpdateOneAsync(queryFilter, updateFilter);
                 this.Tcs.SetResult();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 this.Tcs.SetException(new Exception($"更改数据库异常! {CollectionName} {this.Json}", e));
             }
