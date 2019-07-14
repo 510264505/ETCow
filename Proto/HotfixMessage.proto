@@ -93,7 +93,8 @@ message G2C_TestPlayerInfo // IResponse
 	int32 Error = 91;
 	string Message = 92;
 }
-
+//-----------------------------------------以下是牛牛协议-----------------------------------------
+//登录
 message C2R_CowCowLogin // IRequest
 {
 	int32 RpcId = 90;
@@ -109,7 +110,7 @@ message R2C_CowCowLogin // IResponse
 	string Address = 1;
 	int64 Key = 2;
 }
-
+//注册
 message C2R_CowCowRegistered // IRequest
 {
 	int32 RpcId = 90;
@@ -125,7 +126,7 @@ message R2C_CowCowRegistered // IResponse
 	string Address = 1;
 	int64 Key = 2;
 }
-
+//登录消息服务器
 message C2G_CowCowLoginGate // IRequest
 {
 	int32 RpcId = 90;
@@ -141,11 +142,25 @@ message G2C_CowCowLoginGate // IResponse
 	PlayerInfo PlayerInfo = 2;
 }
 
+message GamerInfo // IMessage
+{
+	int32 RpcId = 90;
+	int64 UserID = 1;
+	string Coin = 2;
+	string Name = 3;
+	string HeadIcon = 4;
+	int32 Sex = 5;
+	int32 Status = 6;
+	int32 SeatID = 7;
+}
+
 message C2G_CowCowEnterGameRoomGate // IRequest
 {
 	int32 RpcId = 90;
-	int32 Bureau = 1;
-	int32 Rule = 2;
+	int64 UserID = 1;
+	string Name = 2;
+	int32 Bureau = 3;
+	int32 RuleBit = 4;
 }
 
 message G2C_CowCowEnterGameRoomGate // IResponse
@@ -153,6 +168,8 @@ message G2C_CowCowEnterGameRoomGate // IResponse
 	int32 RpcId = 90;
 	int32 Error = 91;
 	string Message = 92;
-	int32 Bureau = 1;
-	int32 Rule = 2;
+	string GameName = 1;
+	int32 Bureau = 2;
+	int32 RuleBit = 3;
+	repeated GamerInfo GamerInfo = 4;
 }
