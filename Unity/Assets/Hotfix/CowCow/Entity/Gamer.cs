@@ -5,7 +5,7 @@
         //玩家唯一ID
         public long UserID { get; set; }
         //是否准备
-        public bool IsReady { get; set; }
+        public UIGamerStatus Status { get; set; }
         public override void Dispose()
         {
             if (this.IsDisposed)
@@ -15,7 +15,7 @@
             base.Dispose();
 
             this.UserID = 0;
-            this.IsReady = false;
+            this.Status = UIGamerStatus.None;
         }
     }
 }

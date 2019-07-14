@@ -15,6 +15,18 @@ namespace ETHotfix
             this.gamers[seatIndex] = gamer;
             this.seats[gamer.UserID] = seatIndex;
         }
+
+        public Gamer AddGamerUI(GamerInfo info)
+        {
+            if (gamers.ContainsKey(info.SeatID))
+            {
+                return null;
+            }
+            Gamer gamer = GamerFactory.Create(info);
+            Add(gamer, info.SeatID);
+            return gamer;
+        }
+
         public Gamer Get(long id)
         {
             int seatIndex = GetGamerSeat(id);

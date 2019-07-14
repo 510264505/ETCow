@@ -247,6 +247,8 @@ namespace ETModel
 
 		public string Message { get; set; }
 
+		public List<ComponentWithId> Components = new List<ComponentWithId>();
+
 	}
 
 	[Message(InnerOpcode.ObjectAddRequest)]
@@ -419,6 +421,49 @@ namespace ETModel
 		public int RpcId { get; set; }
 
 		public long ActorId { get; set; }
+
+	}
+
+//-------------------------------------已下是自定义牛牛协议-------------------------------------
+	[Message(InnerOpcode.R2G_CowCowGamerKickOut)]
+	public partial class R2G_CowCowGamerKickOut: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public long UserID { get; set; }
+
+	}
+
+	[Message(InnerOpcode.G2R_CowCowGamerKickOut)]
+	public partial class G2R_CowCowGamerKickOut: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
+
+	}
+
+	[Message(InnerOpcode.R2G_CowCowGetLoginKey)]
+	public partial class R2G_CowCowGetLoginKey: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public long UserID { get; set; }
+
+	}
+
+	[Message(InnerOpcode.G2R_CowCowGetLoginKey)]
+	public partial class G2R_CowCowGetLoginKey: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
+
+		public long Key { get; set; }
 
 	}
 

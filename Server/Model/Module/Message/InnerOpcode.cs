@@ -39,5 +39,9 @@ namespace ETModel
 		 public const ushort G2M_CreateUnit = 1035;
 		 public const ushort M2G_CreateUnit = 1036;
 		 public const ushort G2M_SessionDisconnect = 1037;
+		 public const ushort R2G_CowCowGamerKickOut = 1038;
+		 public const ushort G2R_CowCowGamerKickOut = 1039;
+		 public const ushort R2G_CowCowGetLoginKey = 1040;
+		 public const ushort G2R_CowCowGetLoginKey = 1041;
 	}
 }

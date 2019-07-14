@@ -38,23 +38,30 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_TestPlayerInfo)]
 	public partial class G2C_TestPlayerInfo : IResponse {}
 
+//-----------------------------------------以下是牛牛协议-----------------------------------------
+//登录
 	[Message(HotfixOpcode.C2R_CowCowLogin)]
 	public partial class C2R_CowCowLogin : IRequest {}
 
 	[Message(HotfixOpcode.R2C_CowCowLogin)]
 	public partial class R2C_CowCowLogin : IResponse {}
 
+//注册
 	[Message(HotfixOpcode.C2R_CowCowRegistered)]
 	public partial class C2R_CowCowRegistered : IRequest {}
 
 	[Message(HotfixOpcode.R2C_CowCowRegistered)]
 	public partial class R2C_CowCowRegistered : IResponse {}
 
+//登录消息服务器
 	[Message(HotfixOpcode.C2G_CowCowLoginGate)]
 	public partial class C2G_CowCowLoginGate : IRequest {}
 
 	[Message(HotfixOpcode.G2C_CowCowLoginGate)]
 	public partial class G2C_CowCowLoginGate : IResponse {}
+
+	[Message(HotfixOpcode.GamerInfo)]
+	public partial class GamerInfo : IMessage {}
 
 	[Message(HotfixOpcode.C2G_CowCowEnterGameRoomGate)]
 	public partial class C2G_CowCowEnterGameRoomGate : IRequest {}
@@ -85,7 +92,8 @@ namespace ETHotfix
 		 public const ushort R2C_CowCowRegistered = 10016;
 		 public const ushort C2G_CowCowLoginGate = 10017;
 		 public const ushort G2C_CowCowLoginGate = 10018;
-		 public const ushort C2G_CowCowEnterGameRoomGate = 10019;
-		 public const ushort G2C_CowCowEnterGameRoomGate = 10020;
+		 public const ushort GamerInfo = 10019;
+		 public const ushort C2G_CowCowEnterGameRoomGate = 10020;
+		 public const ushort G2C_CowCowEnterGameRoomGate = 10021;
 	}
 }

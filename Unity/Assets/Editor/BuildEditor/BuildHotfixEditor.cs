@@ -18,7 +18,7 @@ namespace ETEditor
             File.Copy(Path.Combine(ScriptAssembliesDir, HotfixDll), Path.Combine(CodeDir, "Hotfix.dll.bytes"), true);
             File.Copy(Path.Combine(ScriptAssembliesDir, HotfixPdb), Path.Combine(CodeDir, "Hotfix.pdb.bytes"), true);
             Log.Info($"复制Hotfix.dll, Hotfix.pdb到Res/Code完成");
-            AssetDatabase.Refresh ();
+            AssetDatabase.Refresh();
         }
     }
 }

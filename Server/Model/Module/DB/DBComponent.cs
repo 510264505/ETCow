@@ -99,10 +99,10 @@ namespace ETModel
 
             return tcs.Task;
         }
-        public ETTask UpdJson(string collectionName, string json)
+        public ETTask GetToUpdJson(string collectionName, string json)
         {
             ETTaskCompletionSource tcs = new ETTaskCompletionSource();
-            DBUpdateJsonTask dbUpdateJsonTask = ComponentFactory.Create<DBUpdateJsonTask, string, string, ETTaskCompletionSource>(collectionName, json, tcs);
+            DBQueryToUpdateJsonTask dbUpdateJsonTask = ComponentFactory.Create<DBQueryToUpdateJsonTask, string, string, ETTaskCompletionSource>(collectionName, json, tcs);
             this.tasks[(int)((ulong)dbUpdateJsonTask.Id % taskCount)].Add(dbUpdateJsonTask);
 
             return tcs.Task;

@@ -16,7 +16,8 @@ namespace ETHotfix
                 GameObject gameObject = UnityEngine.Object.Instantiate(ab);
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
-                ui.AddComponent<UICowCow_GameRoomComponent, G2C_CowCowEnterGameRoomGate>(data);
+                ui.AddComponent<UICowCow_GameRoomComponent, G2C_CowCowEnterGameRoomGate>(data); //加入游戏房间组件
+                ui.AddComponent<GamerComponent>(); //房间的预制体加入玩家管理组件
                 return ui;
             }
             catch (Exception e)
