@@ -6,7 +6,7 @@ using ETModel;
 namespace ETHotfix
 {
     [MessageHandler(AppType.DB)]
-    public class DBUpdateJsonRequestHandle : AMRpcHandler<DBUpdateJsonRequest, DBUpdateJsonResponse>
+    public class DBQueryToUpdateJsonRequestHandler : AMRpcHandler<DBUpdateJsonRequest, DBUpdateJsonResponse>
     {
         protected override void Run(Session session, DBUpdateJsonRequest message, Action<DBUpdateJsonResponse> reply)
         {
@@ -17,7 +17,7 @@ namespace ETHotfix
             DBUpdateJsonResponse response = new DBUpdateJsonResponse();
             try
             {
-                await Game.Scene.GetComponent<DBComponent>().UpdJson(message.CollectionName, message.Json);
+                await Game.Scene.GetComponent<DBComponent>().GetToUpdJson(message.CollectionName, message.Json);
                 reply(response);
             }
             catch(Exception e)
