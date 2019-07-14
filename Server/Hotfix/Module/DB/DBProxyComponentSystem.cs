@@ -64,21 +64,29 @@ namespace ETHotfix
             Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
             await session.Call(new DBDeleteRequest { CollectionName = typeof(T).Name, Json = json });
         }
-        public static async ETTask Update<T>(this DBProxyComponent self, string queryJson, string updateJson) where T : ComponentWithId
+        /// <summary>
+        /// 查询到修改
+        /// </summary>
+        public static async ETTask<List<ComponentWithId>> QueryToUpdate<T>(this DBProxyComponent self, string queryJson, string updateJson) where T : ComponentWithId
         {
             BsonDocument bsons = new BsonDocument();
             bsons["QueryJson"] = BsonSerializer.Deserialize<BsonDocument>(queryJson);
             bsons["UpdateJson"] = BsonSerializer.Deserialize<BsonDocument>(updateJson);
             Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-            await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+            DBUpdateJsonResponse dbUpdateJsonResponse = (DBUpdateJsonResponse)await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+            return dbUpdateJsonResponse.Components;
         }
-        public static async ETTask Update<T>(this DBProxyComponent self, BsonDocument queryBson, BsonDocument updateBson) where T : ComponentWithId
+        /// <summary>
+        /// 查询到修改
+        /// </summary>
+        public static async ETTask<List<ComponentWithId>> QueryToUpdate<T>(this DBProxyComponent self, BsonDocument queryBson, BsonDocument updateBson) where T : ComponentWithId
         {
             BsonDocument bsons = new BsonDocument();
             bsons["QueryJson"] = queryBson;
             bsons["UpdateJson"] = updateBson;
             Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(self.dbAddress);
-            await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+            DBUpdateJsonResponse dbUpdateJsonResponse =  (DBUpdateJsonResponse)await session.Call(new DBUpdateJsonRequest { CollectionName = typeof(T).Name, Json = bsons.ToJson() });
+            return dbUpdateJsonResponse.Components;
         }
 
         /// <summary>
