@@ -445,6 +445,48 @@ namespace ETModel
 
 	}
 
+	[Message(InnerOpcode.G2R_CowCowGamerOnline)]
+	public partial class G2R_CowCowGamerOnline: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public long UserID { get; set; }
+
+		public int GateAppID { get; set; }
+
+	}
+
+	[Message(InnerOpcode.R2G_CowCowGamerOnline)]
+	public partial class R2G_CowCowGamerOnline: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
+
+	}
+
+	[Message(InnerOpcode.G2R_CowCowGamerOffline)]
+	public partial class G2R_CowCowGamerOffline: IRequest
+	{
+		public int RpcId { get; set; }
+
+		public long UserID { get; set; }
+
+	}
+
+	[Message(InnerOpcode.R2G_CowCowGamerOffline)]
+	public partial class R2G_CowCowGamerOffline: IResponse
+	{
+		public int RpcId { get; set; }
+
+		public int Error { get; set; }
+
+		public string Message { get; set; }
+
+	}
+
 	[Message(InnerOpcode.R2G_CowCowGetLoginKey)]
 	public partial class R2G_CowCowGetLoginKey: IRequest
 	{

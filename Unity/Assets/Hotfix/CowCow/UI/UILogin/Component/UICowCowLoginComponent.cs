@@ -49,7 +49,7 @@ namespace ETHotfix
             registeredBtn.onClick.Add(OnRegistered);
             loginBtn.onClick.Add(OnLogin);
             closeBtn.onClick.Add(OnClose);
-            rLoginBtn.onClick.Add(OnRegistered);
+            rLoginBtn.onClick.Add(OnRLogin);
         }
         private void ShowHideLogin(bool isShow)
         {

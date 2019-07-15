@@ -4,8 +4,9 @@ namespace ETModel
 {
     public enum RoomState
     {
-        Idle,
-        Ready,
+        None,
+        Wait,
+        End,
         Game,
     }
     public sealed class Room : Entity
@@ -14,7 +15,7 @@ namespace ETModel
         public readonly List<Gamer> gamers = new List<Gamer>();
 
         public int RoomID { get; set; }
-        public RoomState State { get; set; } = RoomState.Idle;
+        public RoomState State { get; set; } = RoomState.None;
         public int Count { get { return seats.Values.Count; } }
         public override void Dispose()
         {
@@ -34,7 +35,7 @@ namespace ETModel
                     gamers[i] = null;
                 }
             }
-            State = RoomState.Idle;
+            State = RoomState.None;
         }
     }
 }

@@ -25,6 +25,7 @@ namespace App
 					return;
 				}
 
+                Log.WriteLine("启动服务器类型:" + startConfig.AppType);
                 Log.Debug("启动服务器类型:" + startConfig.AppType);
 
 				IdGenerater.AppId = options.AppId;
@@ -129,8 +130,15 @@ namespace App
 						Game.Scene.AddComponent<UnitComponent>();
 
 						Game.Scene.AddComponent<ConsoleComponent>();
-						// Game.Scene.AddComponent<HttpComponent>();
-						break;
+                        // Game.Scene.AddComponent<HttpComponent>();
+
+                        //以下是牛牛服务端自定义全局组件
+                        Game.Scene.AddComponent<UserComponent>();
+                        Game.Scene.AddComponent<CowCowGateSessionKeyComponent>();
+                        Game.Scene.AddComponent<RoomComponent>();
+
+                        Game.Scene.AddComponent<OnlineComponent>();
+                        break;
 					case AppType.Benchmark:
 						Game.Scene.AddComponent<NetOuterComponent>();
 						Game.Scene.AddComponent<BenchmarkComponent, string>(clientConfig.Address);

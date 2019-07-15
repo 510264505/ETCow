@@ -14,13 +14,13 @@ namespace ETModel
         //游戏中房间列表
         public readonly Dictionary<long, Room> gameRooms = new Dictionary<long, Room>();
         //等待中房间列表
-        public readonly Dictionary<long, Room> readyRooms = new Dictionary<long, Room>();
+        public readonly Dictionary<long, Room> waitRooms = new Dictionary<long, Room>();
         //房间总数
         public int TotalCount { get { return this.rooms.Count; } }
         //游戏中房间数
         public int GameRoomCount { get { return this.gameRooms.Count; } }
         //等待中房间数
-        public int ReadyRoomCount { get { return this.readyRooms.Count; } }
+        public int ReadyRoomCount { get { return this.waitRooms.Count; } }
 
         public override void Dispose()
         {

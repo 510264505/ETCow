@@ -1721,11 +1721,11 @@ namespace ETHotfix {
       }
     }
 
-    private global::ETHotfix.PlayerInfo playerInfo_;
-    public global::ETHotfix.PlayerInfo PlayerInfo {
-      get { return playerInfo_; }
+    private global::ETHotfix.GamerInfo gamerInfo_;
+    public global::ETHotfix.GamerInfo GamerInfo {
+      get { return gamerInfo_; }
       set {
-        playerInfo_ = value;
+        gamerInfo_ = value;
       }
     }
 
@@ -1734,9 +1734,9 @@ namespace ETHotfix {
         output.WriteRawTag(8);
         output.WriteInt64(PlayerId);
       }
-      if (playerInfo_ != null) {
+      if (gamerInfo_ != null) {
         output.WriteRawTag(18);
-        output.WriteMessage(PlayerInfo);
+        output.WriteMessage(GamerInfo);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -1766,15 +1766,15 @@ namespace ETHotfix {
       if (PlayerId != 0L) {
         size += 1 + pb::CodedOutputStream.ComputeInt64Size(PlayerId);
       }
-      if (playerInfo_ != null) {
-        size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfo);
+      if (gamerInfo_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(GamerInfo);
       }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
       playerId_ = 0;
-      if (playerInfo_ != null) MessagePool.Instance.Recycle(playerInfo_); playerInfo_ = null;
+      if (gamerInfo_ != null) MessagePool.Instance.Recycle(gamerInfo_); gamerInfo_ = null;
       rpcId_ = 0;
       error_ = 0;
       message_ = "";
@@ -1789,10 +1789,10 @@ namespace ETHotfix {
             break;
           }
           case 18: {
-            if (playerInfo_ == null) {
-              playerInfo_ = new global::ETHotfix.PlayerInfo();
+            if (gamerInfo_ == null) {
+              gamerInfo_ = new global::ETHotfix.GamerInfo();
             }
-            input.ReadMessage(playerInfo_);
+            input.ReadMessage(gamerInfo_);
             break;
           }
           case 720: {
@@ -1881,6 +1881,14 @@ namespace ETHotfix {
       }
     }
 
+    private int diamond_;
+    public int Diamond {
+      get { return diamond_; }
+      set {
+        diamond_ = value;
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       if (UserID != 0L) {
         output.WriteRawTag(8);
@@ -1909,6 +1917,10 @@ namespace ETHotfix {
       if (SeatID != 0) {
         output.WriteRawTag(56);
         output.WriteInt32(SeatID);
+      }
+      if (Diamond != 0) {
+        output.WriteRawTag(64);
+        output.WriteInt32(Diamond);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -1942,6 +1954,9 @@ namespace ETHotfix {
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
       }
+      if (Diamond != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Diamond);
+      }
       return size;
     }
 
@@ -1953,6 +1968,7 @@ namespace ETHotfix {
       sex_ = 0;
       status_ = 0;
       seatID_ = 0;
+      diamond_ = 0;
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -1986,6 +2002,10 @@ namespace ETHotfix {
           }
           case 56: {
             SeatID = input.ReadInt32();
+            break;
+          }
+          case 64: {
+            Diamond = input.ReadInt32();
             break;
           }
           case 720: {

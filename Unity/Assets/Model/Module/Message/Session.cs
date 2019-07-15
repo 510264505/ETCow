@@ -152,8 +152,8 @@ namespace ETModel
 			}
 			catch (Exception e)
 			{
-				// 出现任何消息解析异常都要断开Session，防止客户端伪造消息
-				Log.Error($"opcode: {opcode} {this.Network.Count} {e} ");
+                // 出现任何消息解析异常都要断开Session，防止客户端伪造消息
+                Log.Error($"opcode: {opcode} {this.Network.Count} {e} ");
 				this.Error = ErrorCode.ERR_PacketParserError;
 				this.Network.Remove(this.Id);
 				return;

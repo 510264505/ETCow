@@ -1,6 +1,5 @@
 ﻿using System;
 using ETModel;
-using Model.Test.DBModels;
 using MongoDB.Bson;
 
 namespace ETHotfix
@@ -40,9 +39,9 @@ namespace ETHotfix
                 //    g2C_TestPlayerInfo.Message = "恭喜您注册成功";
                 //}
                 //await db.Delete<Accounts>(s);
-                BsonDocument bsons1 = new BsonDocument();
-                bsons1["Password"] = message.Password;
-                await db.Update<Accounts>(bsons, bsons1);
+                //BsonDocument bsons1 = new BsonDocument();
+                //bsons1["Password"] = message.Password;
+                //await db.QueryToUpdate<Accounts>(bsons, bsons1);
             }
             catch(Exception e)
             {

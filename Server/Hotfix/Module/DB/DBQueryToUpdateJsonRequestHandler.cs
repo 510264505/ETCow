@@ -6,7 +6,7 @@ using ETModel;
 namespace ETHotfix
 {
     [MessageHandler(AppType.DB)]
-    public class DBQueryToUpdateJsonRequestHandler : AMRpcHandler<DBUpdateJsonRequest, DBUpdateJsonResponse>
+    public class DBUpdateJsonRequestHandle : AMRpcHandler<DBUpdateJsonRequest, DBUpdateJsonResponse>
     {
         protected override void Run(Session session, DBUpdateJsonRequest message, Action<DBUpdateJsonResponse> reply)
         {

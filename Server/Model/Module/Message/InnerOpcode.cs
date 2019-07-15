@@ -41,7 +41,11 @@ namespace ETModel
 		 public const ushort G2M_SessionDisconnect = 1037;
 		 public const ushort R2G_CowCowGamerKickOut = 1038;
 		 public const ushort G2R_CowCowGamerKickOut = 1039;
-		 public const ushort R2G_CowCowGetLoginKey = 1040;
-		 public const ushort G2R_CowCowGetLoginKey = 1041;
+		 public const ushort G2R_CowCowGamerOnline = 1040;
+		 public const ushort R2G_CowCowGamerOnline = 1041;
+		 public const ushort G2R_CowCowGamerOffline = 1042;
+		 public const ushort R2G_CowCowGamerOffline = 1043;
+		 public const ushort R2G_CowCowGetLoginKey = 1044;
+		 public const ushort G2R_CowCowGetLoginKey = 1045;
 	}
 }

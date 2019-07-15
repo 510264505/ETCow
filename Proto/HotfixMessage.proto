@@ -139,7 +139,7 @@ message G2C_CowCowLoginGate // IResponse
 	int32 Error = 91;
 	string Message = 92;
 	int64 PlayerId = 1;
-	PlayerInfo PlayerInfo = 2;
+	GamerInfo GamerInfo = 2;
 }
 
 message GamerInfo // IMessage
@@ -152,6 +152,7 @@ message GamerInfo // IMessage
 	int32 Sex = 5;
 	int32 Status = 6;
 	int32 SeatID = 7;
+	int32 Diamond = 8;
 }
 
 message C2G_CowCowEnterGameRoomGate // IRequest

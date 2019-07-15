@@ -20,7 +20,7 @@ namespace ETHotfix
     /// <summary>
     /// 房间记录
     /// </summary>
-    public class RoomRecord
+    public class RoomRecord : Entity
     {
         //房间号
         public string RoomNumber { get; set; }
@@ -35,10 +35,6 @@ namespace ETHotfix
     /// </summary>
     public class UserInfo : Entity
     {
-        //账号
-        public string Account { get; set; }
-        //密码
-        public string Password { get; set; }
         //昵称
         public string NickName { get; set; }
         //头像

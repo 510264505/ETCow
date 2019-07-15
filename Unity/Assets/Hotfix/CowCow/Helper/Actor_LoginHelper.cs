@@ -19,6 +19,12 @@ namespace ETHotfix
             R2C_CowCowLogin r2cLogin = (R2C_CowCowLogin)await realm_session.Call(new C2R_CowCowLogin() { Account = account, Password = password });
             realm_session.Dispose();
             //将与消息服务器的链接session加入到SessionComponent组件
+            if (r2cLogin.Error == ErrorCode.ERR_LoginError)
+            {
+                Log.Debug($"登录错误:{r2cLogin.Message}");
+                return;
+            }
+            Log.Debug("地址" + r2cLogin.Address);
             ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2cLogin.Address);
             ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
 
@@ -28,7 +34,7 @@ namespace ETHotfix
 
             if (g2cLoginGate.Error == 0)
             {
-                Debug.Log("登录成功！");
+                Log.Debug("登录成功！");
                 Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
             }
             else
@@ -44,12 +50,14 @@ namespace ETHotfix
         {
             ETModel.Session session = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(GlobalConfigComponent.Instance.GlobalProto.Address);
             Session realm_session = ComponentFactory.Create<Session, ETModel.Session>(session);
+            
             //给登陆服务器发送登陆
             R2C_CowCowRegistered r2cLogin = (R2C_CowCowRegistered)await realm_session.Call(new C2R_CowCowRegistered() { Account = account, Password = password });
             realm_session.Dispose();
             if (r2cLogin.Error == 0)
             {
-                Debug.Log("注册成功！");
+                Log.Debug("注册成功！");
+                
                 //将与消息服务器的链接session加入到SessionComponent组件
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2cLogin.Address);
                 ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
@@ -60,7 +68,7 @@ namespace ETHotfix
 
                 if (g2cLoginGate.Error == 0)
                 {
-                    Debug.Log("登录成功！");
+                    Log.Debug("登录成功！");
                     Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
                 }
                 else
@@ -71,7 +79,7 @@ namespace ETHotfix
             }
             else
             {
-                Debug.Log("注册失败:" + r2cLogin.Message);
+                Log.Debug("注册失败:" + r2cLogin.Message);
                 Game.EventSystem.Run(EventIdCowCowType.RegisteredFail, r2cLogin);
             }
         }

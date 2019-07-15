@@ -113,8 +113,8 @@ namespace ETHotfix
             //Texture2D texture2D = new Texture2D((int)headIcon.transform.GetComponent<Rect>().width, (int)headIcon.transform.GetComponent<Rect>().height);
             //texture2D.LoadImage(Convert.FromBase64String(data.PlayerInfo.HeadIcon));
             //headIcon.sprite = Sprite.Create(texture2D, new Rect(0, 0, texture2D.width, texture2D.height), new Vector2(0.5f, 0.5f));
-            nameText.text = data.PlayerInfo.Name;
-            roomCardText.text = data.PlayerInfo.RoomCard.ToString();
+            nameText.text = data.GamerInfo.Name;
+            roomCardText.text = data.GamerInfo.Diamond.ToString();
         }
         private void ShowHideCreateRoomWindows(bool isShow)
         {

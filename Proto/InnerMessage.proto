@@ -293,6 +293,33 @@ message G2R_CowCowGamerKickOut // IResponse
     string Message = 92;
 }
 
+message G2R_CowCowGamerOnline // IRequest
+{
+    int32 RpcId = 90;
+    long UserID = 1;
+    int GateAppID = 2;
+}
+
+message R2G_CowCowGamerOnline // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+}
+
+message G2R_CowCowGamerOffline // IRequest
+{
+    int32 RpcId = 90;
+    long UserID = 1;
+}
+
+message R2G_CowCowGamerOffline // IResponse
+{
+    int32 RpcId = 90;
+    int32 Error = 91;
+    string Message = 92;
+}
+
 message R2G_CowCowGetLoginKey // IRequest
 {
     int32 RpcId = 90;
