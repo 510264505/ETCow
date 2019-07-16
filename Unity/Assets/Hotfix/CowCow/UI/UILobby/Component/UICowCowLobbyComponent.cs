@@ -56,22 +56,26 @@ namespace ETHotfix
             joinRoomBtn = rc.Get<GameObject>("JoinRoomBtn").GetComponent<Button>();
             createRoomWindows = rc.Get<GameObject>("CreateRoomWindows").GetComponent<CanvasGroup>();
             joinRoomWindows = rc.Get<GameObject>("JoinRoomWindows").GetComponent<CanvasGroup>();
-            for (int i = 0; i < bureauLen; i++)
+            bureauTog = new Toggle[bureauLen];
+            for (int i = 0; i < bureauTog.Length; i++)
             {
                 bureauTog[i] = rc.Get<GameObject>("BToggle" + i).GetComponent<Toggle>();
             }
-            for (int i = 0; i < ruleLen; i++)
+            ruleTog = new Toggle[ruleLen];
+            for (int i = 0; i < ruleTog.Length; i++)
             {
                 ruleTog[i] = rc.Get<GameObject>("RToggle" + i).GetComponent<Toggle>();
             }
             createBtn = rc.Get<GameObject>("CreateBtn").GetComponent<Button>();
             closeCreateBtn = rc.Get<GameObject>("CloseCreateBtn").GetComponent<Button>();
             closeJoinBtn = rc.Get<GameObject>("CloseJoinBtn").GetComponent<Button>();
-            for (int i = 0; i < numLen; i++)
+            numText = new Text[numLen];
+            for (int i = 0; i < numText.Length; i++)
             {
                 numText[i] = rc.Get<GameObject>("Num" + i).GetComponent<Text>();
             }
-            for (int i = 0; i < numberLen; i++)
+            numberBtn = new Button[numberLen];
+            for (int i = 0; i < numberBtn.Length; i++)
             {
                 int n = i;
                 numberBtn[i] = rc.Get<GameObject>("NumberButton" + i).GetComponent<Button>();

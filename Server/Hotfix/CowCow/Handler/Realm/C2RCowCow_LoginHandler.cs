@@ -12,11 +12,6 @@ namespace ETHotfix
             R2C_CowCowLogin response = new R2C_CowCowLogin();
             try
             {
-                //BsonDocument bsons = new BsonDocument();
-                //bsons["Account"] = message.Account;
-                //string s = bsons.ToJson();
-                //Log.WriteLine("查询这个Bson:" + s);
-                //注册成功后，添加到数据库
                 DBProxyComponent db = Game.Scene.GetComponent<DBProxyComponent>();
                 var account = await db.Query<Accounts>(_account => _account.Account == message.Account && _account.Password == message.Password);
                 if (account.Count == 0)
