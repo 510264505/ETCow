@@ -70,7 +70,7 @@ namespace ETHotfix
                 self.gamers[seatIndex] = null;
                 self.seats.Remove(id);
 
-                gamer.RoomID = 0;
+                gamer.RoomID = string.Empty;
                 return gamer;
             }
             return null;

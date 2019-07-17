@@ -10,21 +10,24 @@ using System.Threading;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_GameRoomComponentAwake : AwakeSystem<UICowCow_GameRoomComponent, G2C_CowCowEnterGameRoomGate>
+    public class UICowCow_GameRoomComponentAwake : AwakeSystem<UICowCow_GameRoomComponent>
     {
-        public override void Awake(UICowCow_GameRoomComponent self, G2C_CowCowEnterGameRoomGate data)
+        public override void Awake(UICowCow_GameRoomComponent self)
         {
-            self.Awake(data);
+            self.Awake();
         }
     }
     public class UICowCow_GameRoomComponent : Component
     {
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
+        private GamerComponent gamerComponent;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
         private Text bureau;
+        private Text gameName;
+        private Text gameRule;
 
         private StringBuilder sb = new StringBuilder();
         private int curBureauCount = 1;
@@ -54,6 +57,7 @@ namespace ETHotfix
                 return bigSettlement;
             }
         }
+
         public UICowCow_SmallSettlementComponent SmallSettlement
         {
             get
@@ -67,20 +71,34 @@ namespace ETHotfix
                 return smallSettlement;
             }
         }
+
+        public GamerComponent GamerComponent
+        {
+            get
+            {
+                if (gamerComponent == null)
+                {
+                    UI ui = this.GetParent<UI>();
+                    gamerComponent = ui.AddComponent<GamerComponent>();
+                }
+                return gamerComponent;
+            }
+        }
+
         private void ReSet()
         {
             sb.Clear();
             curBureauCount = 1;
             isShowTime = false;
         }
-        public void Awake(G2C_CowCowEnterGameRoomGate data)
+        public void Awake()
         {
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             BackGround = rc.Get<GameObject>("BackGround");
             UIRoomGamer = rc.Get<GameObject>("UIRoomGamer");
-            bureau = rc.Get<GameObject>("GameBureau").GetComponent<Text>();
-            Text gameName = rc.Get<GameObject>("GameName").GetComponent<Text>();
-            Text gameRule = rc.Get<GameObject>("GameRule").GetComponent<Text>();
+            this.bureau = rc.Get<GameObject>("GameBureau").GetComponent<Text>();
+            this.gameName = rc.Get<GameObject>("GameName").GetComponent<Text>();
+            this.gameRule = rc.Get<GameObject>("GameRule").GetComponent<Text>();
             Text nowTime = rc.Get<GameObject>("NowTime").GetComponent<Text>();
             Button phizBtn = rc.Get<GameObject>("PhizBtn").GetComponent<Button>();
             Button keyboardBtn = rc.Get<GameObject>("KeyboardBtn").GetComponent<Button>();
@@ -96,32 +114,35 @@ namespace ETHotfix
             readyBtn.onClick.Add(OnReady);
             inviteBtn.onClick.Add(OnInvite);
 
-            bureauCount = data.Bureau;
-            gameName.text = data.GameName;
-            gameRule.text = Rule(data.Bureau, data.RuleBit);
             isShowTime = true;
             NowTime(nowTime).Coroutine();
-            Bureau();
+        }
 
-            UpdateGamerCount(data);
+        public void Init(string gameName, int bureau, int ruleBit)
+        {
+            this.bureauCount = bureau;
+            this.gameName.text = gameName;
+            this.gameRule.text = Rule(ruleBit);
+            Bureau();
         }
         
-        private void UpdateGamerCount(G2C_CowCowEnterGameRoomGate data)
+        public void AddGamer(GamerInfo info)
         {
-            for (int i = 0; i < data.GamerInfo.Count; i++)
+            Gamer gamer = GamerComponent.AddGamerUI(info);
+            if (gamer != null)
             {
-                GamerInfo info = data.GamerInfo[i];
-                Gamer gamer = this.GetParent<UI>().GetComponent<GamerComponent>().AddGamerUI(info);
-                if (gamer != null)
-                {
-                    gamer.AddComponent<UICowCow_GamerComponent, GameObject, GamerInfo>(UIRoomGamer, info);
-                    gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(smallSettlement.SmallBG);
-                    gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(bigSettlement.BigBG);
-                }
+                gamer.AddComponent<UICowCow_GamerInfoComponent, GameObject, GamerInfo>(UIRoomGamer, info);
+                gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(SmallSettlement.SmallBG);
+                gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(BigSettlement.BigBG);
             }
         }
 
-        private string Rule(int bureauCount, int ruleBit)
+        public void RemoveGamer(long id)
+        {
+            GamerComponent.Remove(id);
+        }
+
+        private string Rule(int ruleBit)
         {
             sb.Clear();
             foreach (var rule in this.rules)

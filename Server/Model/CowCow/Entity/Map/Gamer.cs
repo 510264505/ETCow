@@ -17,9 +17,11 @@ namespace ETModel
         //玩家Gate   ActorID
         public long ActorID { get; set; }
         //玩家所在房间号ID
-        public long RoomID { get; set; }
+        public string RoomID { get; set; }
+        //玩家名
+        public string Name { get; set; }
         //玩家所在房间的椅子号
-        public int ChairID { get; set; }
+        public int SeatID { get; set; }
         //玩家身份
         public Identity Identity { get; set; }
         //是否准备
@@ -44,8 +46,9 @@ namespace ETModel
 
             this.UserID = 0;
             this.ActorID = 0;
-            this.RoomID = 0;
-            this.ChairID = 0;
+            this.RoomID = string.Empty;
+            this.Name = string.Empty;
+            this.SeatID = 0;
             this.Identity = Identity.None;
             this.IsReady = false;
             this.IsOffline = false;

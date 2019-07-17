@@ -7,19 +7,19 @@ namespace ETModel
     /// </summary>
     public class RoomComponent : Component
     {
-        private readonly Dictionary<int, Room> rooms = new Dictionary<int, Room>();
+        private readonly Dictionary<string, Room> rooms = new Dictionary<string, Room>();
 
         public void Add(Room room)
         {
             this.rooms.Add(room.RoomID, room);
         }
-        public Room Get(int id)
+        public Room Get(string id)
         {
             Room room;
             this.rooms.TryGetValue(id, out room);
             return room;
         }
-        public Room Remove(int id)
+        public Room Remove(string id)
         {
             Room room = Get(id);
             this.rooms.Remove(id);

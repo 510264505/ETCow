@@ -26,9 +26,17 @@ namespace ETHotfix
             }
             Log.Debug("地址" + r2cLogin.Address);
             ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2cLogin.Address);
-            ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
-
-            Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+            if (ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>() == null)
+            {
+                ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
+                Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+            }
+            else
+            {
+                Game.Scene.GetComponent<SessionComponent>().Session.Dispose();
+                ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;
+                Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+            }
 
             G2C_CowCowLoginGate g2cLoginGate = (G2C_CowCowLoginGate)await SessionComponent.Instance.Session.Call(new C2G_CowCowLoginGate() { Key = r2cLogin.Key });
 
@@ -36,6 +44,8 @@ namespace ETHotfix
             {
                 Log.Debug("登录成功！");
                 Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
+                ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
+                clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.PlayerId);
             }
             else
             {
@@ -60,9 +70,17 @@ namespace ETHotfix
                 
                 //将与消息服务器的链接session加入到SessionComponent组件
                 ETModel.Session gateSession = ETModel.Game.Scene.GetComponent<NetOuterComponent>().Create(r2cLogin.Address);
-                ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
-
-                Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+                if (ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>() == null)
+                {
+                    ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
+                    Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+                }
+                else
+                {
+                    Game.Scene.GetComponent<SessionComponent>().Session.Dispose();
+                    ETModel.Game.Scene.GetComponent<ETModel.SessionComponent>().Session = gateSession;
+                    Game.Scene.GetComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+                }
 
                 G2C_CowCowLoginGate g2cLoginGate = (G2C_CowCowLoginGate)await SessionComponent.Instance.Session.Call(new C2G_CowCowLoginGate() { Key = r2cLogin.Key });
 
@@ -70,6 +88,8 @@ namespace ETHotfix
                 {
                     Log.Debug("登录成功！");
                     Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
+                    ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
+                    clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.PlayerId);
                 }
                 else
                 {

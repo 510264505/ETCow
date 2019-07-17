@@ -8,6 +8,7 @@
         public const string LoginFail = "COwCowLoginFail";
         public const string RemoveLobby = "CowCowRemoveLobby";
         public const string CreateGameRoom = "CowCowCreateGameRoom";
+        public const string JoinGameRoom = "CowCowJoinGameRoom";
         public const string RemoveGameRoom = "CowCowRemoveGameRoom";
     }
 }

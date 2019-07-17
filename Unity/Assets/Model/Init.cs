@@ -46,6 +46,8 @@ namespace ETModel
 				Game.Scene.AddComponent<OpcodeTypeComponent>();
                 //消息分发组件
 				Game.Scene.AddComponent<MessageDispatcherComponent>();
+                //保存User信息及ID
+                Game.Scene.AddComponent<ClientComponent>();
                 //执行热更，热更层的入口
 				Game.Hotfix.GotoHotfix();
 

@@ -14,7 +14,10 @@ namespace ETModel
         public readonly Dictionary<long, int> seats = new Dictionary<long, int>(); //椅子号？？
         public readonly List<Gamer> gamers = new List<Gamer>();
 
-        public int RoomID { get; set; }
+        public string GameName { get; set; }
+        public string RoomID { get; set; }
+        public int Bureau { get; set; }
+        public int RuleBit { get; set; }
         public RoomState State { get; set; } = RoomState.None;
         public int Count { get { return seats.Values.Count; } }
         public override void Dispose()

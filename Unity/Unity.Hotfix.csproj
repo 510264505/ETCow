@@ -92,6 +92,8 @@
     <Compile Include="Assets\Hotfix\CowCow\Factory\GamerFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Factory\UICowCowCreateChildGameObjectFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Factory\UICowCowGameRoomFactory.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_CreateRoomHelper.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_JoinRoomHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_LoginHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Object\CowCowUIType.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_BigSettlementComponent.cs" />
@@ -102,6 +104,7 @@
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_SSGamerResultComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\System\CowCow_CreateGameRoomUI.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\System\CowCow_GameRoomRemove.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\System\CowCow_JoinGameRoomUI.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UILobby\Component\UICowCowLobbyComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UILobby\System\CowCowLoginFinish_CreateLobbyUI.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UILobby\System\EnterCowCowGameFinish_RemoveLobbyUI.cs" />

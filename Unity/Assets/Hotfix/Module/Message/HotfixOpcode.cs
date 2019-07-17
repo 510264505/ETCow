@@ -63,11 +63,17 @@ namespace ETHotfix
 	[Message(HotfixOpcode.GamerInfo)]
 	public partial class GamerInfo : IMessage {}
 
-	[Message(HotfixOpcode.C2G_CowCowEnterGameRoomGate)]
-	public partial class C2G_CowCowEnterGameRoomGate : IRequest {}
+	[Message(HotfixOpcode.C2G_CowCowCreateGameRoomGate)]
+	public partial class C2G_CowCowCreateGameRoomGate : IRequest {}
 
-	[Message(HotfixOpcode.G2C_CowCowEnterGameRoomGate)]
-	public partial class G2C_CowCowEnterGameRoomGate : IResponse {}
+	[Message(HotfixOpcode.G2C_CowCowCreateGameRoomGate)]
+	public partial class G2C_CowCowCreateGameRoomGate : IResponse {}
+
+	[Message(HotfixOpcode.C2G_CowCowJoinGameRoomGate)]
+	public partial class C2G_CowCowJoinGameRoomGate : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowJoinGameRoomGate)]
+	public partial class G2C_CowCowJoinGameRoomGate : IResponse {}
 
 }
 namespace ETHotfix
@@ -93,7 +99,9 @@ namespace ETHotfix
 		 public const ushort C2G_CowCowLoginGate = 10017;
 		 public const ushort G2C_CowCowLoginGate = 10018;
 		 public const ushort GamerInfo = 10019;
-		 public const ushort C2G_CowCowEnterGameRoomGate = 10020;
-		 public const ushort G2C_CowCowEnterGameRoomGate = 10021;
+		 public const ushort C2G_CowCowCreateGameRoomGate = 10020;
+		 public const ushort G2C_CowCowCreateGameRoomGate = 10021;
+		 public const ushort C2G_CowCowJoinGameRoomGate = 10022;
+		 public const ushort G2C_CowCowJoinGameRoomGate = 10023;
 	}
 }

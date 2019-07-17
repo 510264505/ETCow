@@ -146,7 +146,7 @@ message GamerInfo // IMessage
 {
 	int32 RpcId = 90;
 	int64 UserID = 1;
-	string Coin = 2;
+	int32 Coin = 2;
 	string Name = 3;
 	string HeadIcon = 4;
 	int32 Sex = 5;
@@ -155,7 +155,7 @@ message GamerInfo // IMessage
 	int32 Diamond = 8;
 }
 
-message C2G_CowCowEnterGameRoomGate // IRequest
+message C2G_CowCowCreateGameRoomGate // IRequest
 {
 	int32 RpcId = 90;
 	int64 UserID = 1;
@@ -164,7 +164,7 @@ message C2G_CowCowEnterGameRoomGate // IRequest
 	int32 RuleBit = 4;
 }
 
-message G2C_CowCowEnterGameRoomGate // IResponse
+message G2C_CowCowCreateGameRoomGate // IResponse
 {
 	int32 RpcId = 90;
 	int32 Error = 91;
@@ -172,5 +172,25 @@ message G2C_CowCowEnterGameRoomGate // IResponse
 	string GameName = 1;
 	int32 Bureau = 2;
 	int32 RuleBit = 3;
-	repeated GamerInfo GamerInfo = 4;
+	string RoomID = 4;
+	GamerInfo GamerInfo = 5;
+}
+
+message C2G_CowCowJoinGameRoomGate // IRequest
+{
+	int32 RpcId = 90;
+	int64 UserID = 1;
+	string RoomID = 2;
+}
+
+message G2C_CowCowJoinGameRoomGate // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	string GameName = 1;
+	int32 Bureau = 2;
+	int32 RuleBit = 3;
+	string RoomID = 4;
+	repeated GamerInfo GamerInfo = 5;
 }

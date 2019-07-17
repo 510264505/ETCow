@@ -61,6 +61,8 @@ namespace ETHotfix
                 Gamer gamer = gamers[seatIndex];
                 gamers.Remove(seatIndex);
                 seats.Remove(id);
+                gamer.GetComponent<UICowCow_GamerInfoComponent>().Dispose();
+                gamer.RemoveComponent<UICowCow_GamerInfoComponent>();
                 return gamer;
             }
             return null;

@@ -5,14 +5,14 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_GamerComponentAwake : AwakeSystem<UICowCow_GamerComponent, GameObject, GamerInfo>
+    public class UICowCow_GamerComponentAwake : AwakeSystem<UICowCow_GamerInfoComponent, GameObject, GamerInfo>
     {
-        public override void Awake(UICowCow_GamerComponent self, GameObject parent, GamerInfo info)
+        public override void Awake(UICowCow_GamerInfoComponent self, GameObject parent, GamerInfo info)
         {
             self.Awake(parent, info);
         }
     }
-    public class UICowCow_GamerComponent : Component
+    public class UICowCow_GamerInfoComponent : Component
     {
         private GameObject UIGameInfo { get; set; }
         private Text coin;
@@ -39,7 +39,7 @@ namespace ETHotfix
             }
 
             gamerNames.text = info.Name;
-            SetCoin(info.Coin);
+            SetCoin(info.Coin.ToString());
             //headIcon.sprite = info.HeadIcon;
         }
 
@@ -76,6 +76,17 @@ namespace ETHotfix
             {
                 cards[i].sprite = sprites[i];
             }
+        }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            UnityEngine.Object.Destroy(UIGameInfo);
         }
     }
 }

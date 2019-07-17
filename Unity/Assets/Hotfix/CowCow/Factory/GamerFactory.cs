@@ -23,7 +23,7 @@ namespace ETHotfix
         {
             ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             rc.LoadBundle(UICowCowAB.CowCow_Prefabs.StringToAB());
-            GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs, abName);
+            GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs.StringToAB(), abName);
             return UnityEngine.Object.Instantiate(ab);
         }
     }

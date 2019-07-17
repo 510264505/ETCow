@@ -141,6 +141,8 @@ namespace ETHotfix
         private void OnCreate()
         {
             //向服务器发送创建房间
+            long userId = ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID;
+            Actor_CreateRoomHelper.OnCreateGameRoom("牛牛", userId, 1, 1).Coroutine();
         }
         private void OnCloseCreateRoomWindows()
         {
