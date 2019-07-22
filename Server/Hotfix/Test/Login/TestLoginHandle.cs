@@ -7,7 +7,7 @@ namespace ETHotfix
     [MessageHandler(AppType.AllServer)]
     public class TestLoginHandle : AMRpcHandler<C2G_TestPlayerInfo, G2C_TestPlayerInfo>
     {
-        protected override async void Run(Session session, C2G_TestPlayerInfo message, Action<G2C_TestPlayerInfo> reply)
+        protected override async void RunAsync(Session session, C2G_TestPlayerInfo message, Action<G2C_TestPlayerInfo> reply)
         {
             G2C_TestPlayerInfo g2C_TestPlayerInfo = new G2C_TestPlayerInfo();
             try

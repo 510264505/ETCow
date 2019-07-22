@@ -10,6 +10,7 @@ namespace ETModel
     /// </summary>
     public class UserComponent : Component
     {
+        //key:DB.Id, value:用户信息
         private readonly Dictionary<long, User> idUser = new Dictionary<long, User>();
 
         public void Add(User user)

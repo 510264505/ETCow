@@ -111,14 +111,14 @@ message R2C_CowCowLogin // IResponse
 	int64 Key = 2;
 }
 //注册
-message C2R_CowCowRegistered // IRequest
+message C2R_CowCowRegister // IRequest
 {
 	int32 RpcId = 90;
 	string Account = 1;
 	string Password = 2;
 }
 
-message R2C_CowCowRegistered // IResponse
+message R2C_CowCowRegister // IResponse
 {
 	int32 RpcId = 90;
 	int32 Error = 91;
@@ -138,8 +138,11 @@ message G2C_CowCowLoginGate // IResponse
 	int32 RpcId = 90;
 	int32 Error = 91;
 	string Message = 92;
-	int64 PlayerId = 1;
-	GamerInfo GamerInfo = 2;
+	int64 UserID = 1;
+	string NickName = 2;
+	string HeadIcon = 3;
+	int32 Sex = 4;
+	int32 Diamond = 5;
 }
 
 message GamerInfo // IMessage
@@ -152,7 +155,6 @@ message GamerInfo // IMessage
 	int32 Sex = 5;
 	int32 Status = 6;
 	int32 SeatID = 7;
-	int32 Diamond = 8;
 }
 
 message C2G_CowCowCreateGameRoomGate // IRequest

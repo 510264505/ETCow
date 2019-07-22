@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Location)]
 	public class ObjectUnLockRequestHandler : AMRpcHandler<ObjectUnLockRequest, ObjectUnLockResponse>
 	{
-		protected override void Run(Session session, ObjectUnLockRequest message, Action<ObjectUnLockResponse> reply)
+		protected override void RunAsync(Session session, ObjectUnLockRequest message, Action<ObjectUnLockResponse> reply)
 		{
 			ObjectUnLockResponse response = new ObjectUnLockResponse();
 			try

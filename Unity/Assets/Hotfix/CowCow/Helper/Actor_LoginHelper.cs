@@ -45,7 +45,7 @@ namespace ETHotfix
                 Log.Debug("登录成功！");
                 Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
                 ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
-                clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.PlayerId);
+                clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.UserID);
             }
             else
             {
@@ -62,7 +62,7 @@ namespace ETHotfix
             Session realm_session = ComponentFactory.Create<Session, ETModel.Session>(session);
             
             //给登陆服务器发送登陆
-            R2C_CowCowRegistered r2cLogin = (R2C_CowCowRegistered)await realm_session.Call(new C2R_CowCowRegistered() { Account = account, Password = password });
+            R2C_CowCowRegister r2cLogin = (R2C_CowCowRegister)await realm_session.Call(new C2R_CowCowRegister() { Account = account, Password = password });
             realm_session.Dispose();
             if (r2cLogin.Error == 0)
             {
@@ -89,7 +89,7 @@ namespace ETHotfix
                     Log.Debug("登录成功！");
                     Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
                     ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
-                    clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.PlayerId);
+                    clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.UserID);
                 }
                 else
                 {

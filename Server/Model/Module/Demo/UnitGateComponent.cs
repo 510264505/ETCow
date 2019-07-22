@@ -11,9 +11,9 @@
 
 	public class UnitGateComponent : Component, ISerializeToEntity
 	{
-		public long GateSessionActorId;
+		public long GateSessionActorId; //是该用户的session.InstanceId
 
-		public bool IsDisconnect;
+        public bool IsDisconnect;
 
 		public void Awake(long gateSessionId)
 		{

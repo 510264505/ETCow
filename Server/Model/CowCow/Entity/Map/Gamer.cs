@@ -12,9 +12,9 @@ namespace ETModel
     }
     public sealed class Gamer : Entity
     {
-        //用户唯一ID
+        //用户唯一ID        DB数据库的 _id
         public long UserID { get; set; }
-        //玩家Gate   ActorID
+        //玩家Gate   ActorID     component 的 InstanceId
         public long ActorID { get; set; }
         //玩家所在房间号ID
         public string RoomID { get; set; }

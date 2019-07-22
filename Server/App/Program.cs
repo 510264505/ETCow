@@ -73,7 +73,7 @@ namespace App
 						Game.Scene.AddComponent<ActorLocationSenderComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
 						break;
-					case AppType.Location: //匹配服务器，在玩家更换游戏地图时，通知Gate更新ActorID。
+					case AppType.Location: //连接内网，匹配服务器，在玩家更换游戏地图时，通知Gate更新ActorID。
                         Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<LocationComponent>();
 						break;
@@ -133,7 +133,7 @@ namespace App
                         // Game.Scene.AddComponent<HttpComponent>();
 
                         //以下是牛牛服务端自定义全局组件
-                        Game.Scene.AddComponent<UserComponent>();
+                        Game.Scene.AddComponent<UserInfoComponent>();
                         Game.Scene.AddComponent<CowCowGateSessionKeyComponent>();
                         Game.Scene.AddComponent<RoomComponent>();
 

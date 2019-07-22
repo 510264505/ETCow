@@ -11,11 +11,9 @@ namespace ETModel
     }
     public sealed class User : Entity
     {
-        //用户唯一ID
+        //用户唯一ID    DB数据库的 _id
         public long UserID { get; set; }
-        //是否正则匹配中
-        public bool IsMatching { get; set; }
-        //Gate转发ID
+        //Gate转发ID     是Gamer.Id
         public long ActorID { get; set; }
         public void Awake(long id)
         {
@@ -29,7 +27,7 @@ namespace ETModel
             }
             base.Dispose();
 
-            this.IsMatching = false;
+            this.UserID = 0;
             this.ActorID = 0;
         }
     }

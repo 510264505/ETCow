@@ -1,15 +1,14 @@
 ﻿using System;
 using ETModel;
-using MongoDB.Bson;
 
 namespace ETHotfix
 {
     [MessageHandler(AppType.Realm)]
-    public class C2RCowCow_RegisterHandler : AMRpcHandler<C2R_CowCowRegistered, R2C_CowCowRegistered>
+    public class C2RCowCow_RegisterHandler : AMRpcHandler<C2R_CowCowRegister, R2C_CowCowRegister>
     {
-        protected override async void Run(Session session, C2R_CowCowRegistered message, Action<R2C_CowCowRegistered> reply)
+        protected override async void RunAsync(Session session, C2R_CowCowRegister message, Action<R2C_CowCowRegister> reply)
         {
-            R2C_CowCowRegistered response = new R2C_CowCowRegistered();
+            R2C_CowCowRegister response = new R2C_CowCowRegister();
             try
             {
                 DBProxyComponent db = Game.Scene.GetComponent<DBProxyComponent>();
@@ -35,7 +34,7 @@ namespace ETHotfix
                 UserInfo newUser = ComponentFactory.CreateWithId<UserInfo>(newAccounts.Id);
                 newUser.NickName = $"用户{message.Account}";
                 newUser.Sex = 0;
-                newUser.Diamond = 0;
+                newUser.Diamond = 1000000;
                 newUser.RegisterTime = DateTime.Now;
 
                 await db.Save(newAccounts);

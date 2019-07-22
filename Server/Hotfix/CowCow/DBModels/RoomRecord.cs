@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ETModel;
+using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
-using ETModel;
 
 namespace ETHotfix
 {
@@ -20,6 +21,7 @@ namespace ETHotfix
     /// <summary>
     /// 房间记录
     /// </summary>
+    [BsonIgnoreExtraElements]
     public class RoomRecord : Entity
     {
         //房间号
@@ -27,23 +29,6 @@ namespace ETHotfix
         //玩家信息
         public List<RoomGamer> Player { get; set; }
         //时间
-        public DateTime RegisterTime { get; set; }
-    }
-
-    /// <summary>
-    /// 用户信息
-    /// </summary>
-    public class UserInfo : Entity
-    {
-        //昵称
-        public string NickName { get; set; }
-        //头像
-        public string HeadIcon { get; set; }
-        //性别
-        public int Sex { get; set; }
-        //钻石
-        public long Diamond { get; set; }
-        //注册时间
         public DateTime RegisterTime { get; set; }
     }
 }

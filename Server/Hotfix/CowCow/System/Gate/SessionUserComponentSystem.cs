@@ -19,12 +19,12 @@ namespace ETHotfix
                 ActorMessageSenderComponent actorProxyComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
                 
                 //正在匹配中发送玩家退出匹配请求
-                if (self.User.IsMatching)
-                {
-                    IPEndPoint iPEndPoint = config.LocationConfig.GetComponent<InnerConfig>().IPEndPoint;
-                    Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(iPEndPoint);
-                    //await session.Call()
-                }
+                //if (self.User.IsMatching)
+                //{
+                //    IPEndPoint iPEndPoint = config.LocationConfig.GetComponent<InnerConfig>().IPEndPoint;
+                //    Session session = Game.Scene.GetComponent<NetInnerComponent>().Get(iPEndPoint);
+                //    //await session.Call()
+                //}
 
                 //正则游戏中发送玩家退出房间请求
                 if (self.User.ActorID  != 0)

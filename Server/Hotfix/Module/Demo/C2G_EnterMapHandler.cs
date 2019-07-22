@@ -7,7 +7,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Gate)]
 	public class C2G_EnterMapHandler : AMRpcHandler<C2G_EnterMap, G2C_EnterMap>
 	{
-		protected override void Run(Session session, C2G_EnterMap message, Action<G2C_EnterMap> reply)
+		protected override void RunAsync(Session session, C2G_EnterMap message, Action<G2C_EnterMap> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

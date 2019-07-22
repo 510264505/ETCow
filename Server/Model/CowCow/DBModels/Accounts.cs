@@ -1,8 +1,10 @@
 ﻿using ETModel;
+using MongoDB.Bson.Serialization.Attributes;
 using System;
 
-namespace ETHotfix
+namespace ETModel
 {
+    [BsonIgnoreExtraElements]
     public class Accounts : Entity
     {
         public string Account { get; set; }

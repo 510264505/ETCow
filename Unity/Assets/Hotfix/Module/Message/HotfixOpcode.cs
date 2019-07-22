@@ -47,11 +47,11 @@ namespace ETHotfix
 	public partial class R2C_CowCowLogin : IResponse {}
 
 //注册
-	[Message(HotfixOpcode.C2R_CowCowRegistered)]
-	public partial class C2R_CowCowRegistered : IRequest {}
+	[Message(HotfixOpcode.C2R_CowCowRegister)]
+	public partial class C2R_CowCowRegister : IRequest {}
 
-	[Message(HotfixOpcode.R2C_CowCowRegistered)]
-	public partial class R2C_CowCowRegistered : IResponse {}
+	[Message(HotfixOpcode.R2C_CowCowRegister)]
+	public partial class R2C_CowCowRegister : IResponse {}
 
 //登录消息服务器
 	[Message(HotfixOpcode.C2G_CowCowLoginGate)]
@@ -94,8 +94,8 @@ namespace ETHotfix
 		 public const ushort G2C_TestPlayerInfo = 10012;
 		 public const ushort C2R_CowCowLogin = 10013;
 		 public const ushort R2C_CowCowLogin = 10014;
-		 public const ushort C2R_CowCowRegistered = 10015;
-		 public const ushort R2C_CowCowRegistered = 10016;
+		 public const ushort C2R_CowCowRegister = 10015;
+		 public const ushort R2C_CowCowRegister = 10016;
 		 public const ushort C2G_CowCowLoginGate = 10017;
 		 public const ushort G2C_CowCowLoginGate = 10018;
 		 public const ushort GamerInfo = 10019;

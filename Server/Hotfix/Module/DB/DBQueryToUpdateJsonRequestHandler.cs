@@ -8,7 +8,7 @@ namespace ETHotfix
     [MessageHandler(AppType.DB)]
     public class DBUpdateJsonRequestHandle : AMRpcHandler<DBUpdateJsonRequest, DBUpdateJsonResponse>
     {
-        protected override void Run(Session session, DBUpdateJsonRequest message, Action<DBUpdateJsonResponse> reply)
+        protected override void RunAsync(Session session, DBUpdateJsonRequest message, Action<DBUpdateJsonResponse> reply)
         {
             RunAsync(session, message, reply).Coroutine();
         }

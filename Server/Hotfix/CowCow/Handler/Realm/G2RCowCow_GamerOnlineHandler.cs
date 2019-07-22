@@ -6,7 +6,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Realm)]
     public class G2RCowCow_GamerOnlineHandler : AMRpcHandler<G2R_CowCowGamerOnline, R2G_CowCowGamerOnline>
     {
-        protected override async void Run(Session session, G2R_CowCowGamerOnline message, Action<R2G_CowCowGamerOnline> reply)
+        protected override async void RunAsync(Session session, G2R_CowCowGamerOnline message, Action<R2G_CowCowGamerOnline> reply)
         {
             R2G_CowCowGamerOnline response = new R2G_CowCowGamerOnline();
             try

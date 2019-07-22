@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Location)]
 	public class ObjectGetRequestHandler : AMRpcHandler<ObjectGetRequest, ObjectGetResponse>
 	{
-		protected override void Run(Session session, ObjectGetRequest message, Action<ObjectGetResponse> reply)
+		protected override void RunAsync(Session session, ObjectGetRequest message, Action<ObjectGetResponse> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

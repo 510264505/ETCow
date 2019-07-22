@@ -116,6 +116,8 @@ namespace ETHotfix
 
             isShowTime = true;
             NowTime(nowTime).Coroutine();
+
+            Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
         }
 
         public void Init(string gameName, int bureau, int ruleBit)

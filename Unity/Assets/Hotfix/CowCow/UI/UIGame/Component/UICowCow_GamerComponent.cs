@@ -24,10 +24,10 @@ namespace ETHotfix
         {
             UIGameInfo = GamerFactory.Create(UICowCowType.CowCowGamerInfo);
             UIGameInfo.transform.SetParent(parent.transform, false);
-            UIGameInfo.transform.localPosition = GamerData.Pos[info.SeatID].HeadPos;
             ReferenceCollector rc = UIGameInfo.GetComponent<ReferenceCollector>();
 
             Image headIcon = rc.Get<GameObject>("HeadIcon").GetComponent<Image>();
+            headIcon.transform.localPosition = GamerData.Pos[info.SeatID].HeadPos;
             Text gamerNames = rc.Get<GameObject>("Names").GetComponent<Text>();
             coin = rc.Get<GameObject>("Coin").GetComponent<Text>();
             status = rc.Get<GameObject>("Status").GetComponent<Text>();

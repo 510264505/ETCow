@@ -9,6 +9,7 @@ namespace ETModel
     /// </summary>
     public class OnlineComponent : Component
     {
+        //DB.Id,gateAppID
         private readonly Dictionary<long, int> dict = new Dictionary<long, int>();
 
         public void Add(long userId, int gateAppId)

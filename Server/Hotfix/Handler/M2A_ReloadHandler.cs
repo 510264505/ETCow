@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.AllServer)]
 	public class M2A_ReloadHandler : AMRpcHandler<M2A_Reload, A2M_Reload>
 	{
-		protected override void Run(Session session, M2A_Reload message, Action<A2M_Reload> reply)
+		protected override void RunAsync(Session session, M2A_Reload message, Action<A2M_Reload> reply)
 		{
 			A2M_Reload response = new A2M_Reload();
 			try

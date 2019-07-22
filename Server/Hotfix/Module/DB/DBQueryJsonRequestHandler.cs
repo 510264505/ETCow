@@ -7,7 +7,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.DB)]
 	public class DBQueryJsonRequestHandler : AMRpcHandler<DBQueryJsonRequest, DBQueryJsonResponse>
 	{
-		protected override void Run(Session session, DBQueryJsonRequest message, Action<DBQueryJsonResponse> reply)
+		protected override void RunAsync(Session session, DBQueryJsonRequest message, Action<DBQueryJsonResponse> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}
