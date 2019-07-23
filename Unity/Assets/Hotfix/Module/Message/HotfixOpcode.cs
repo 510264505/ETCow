@@ -75,6 +75,9 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_CowCowJoinGameRoomGate)]
 	public partial class G2C_CowCowJoinGameRoomGate : IResponse {}
 
+	[Message(HotfixOpcode.Actor_CowCowJoinGameRoomGroupSend)]
+	public partial class Actor_CowCowJoinGameRoomGroupSend : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -103,5 +106,6 @@ namespace ETHotfix
 		 public const ushort G2C_CowCowCreateGameRoomGate = 10021;
 		 public const ushort C2G_CowCowJoinGameRoomGate = 10022;
 		 public const ushort G2C_CowCowJoinGameRoomGate = 10023;
+		 public const ushort Actor_CowCowJoinGameRoomGroupSend = 10024;
 	}
 }

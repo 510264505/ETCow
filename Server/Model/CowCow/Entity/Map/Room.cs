@@ -11,15 +11,16 @@ namespace ETModel
     }
     public sealed class Room : Entity
     {
-        public readonly Dictionary<long, int> seats = new Dictionary<long, int>(); //椅子号？？
-        public readonly List<Gamer> gamers = new List<Gamer>();
+        public readonly Dictionary<int, Gamer> gamers = new Dictionary<int, Gamer>();
 
         public string GameName { get; set; }
+        //创建房间的玩家ID
+        public long UserID { get; set; }
         public string RoomID { get; set; }
         public int Bureau { get; set; }
         public int RuleBit { get; set; }
         public RoomState State { get; set; } = RoomState.None;
-        public int Count { get { return seats.Values.Count; } }
+        public int GamerCount { get { return gamers.Values.Count; } }
         public override void Dispose()
         {
             if (this.IsDisposed)
@@ -28,17 +29,20 @@ namespace ETModel
             }
             base.Dispose();
 
-            seats.Clear();
-
-            for (int i = 0; i < gamers.Count; i++)
+            foreach (Gamer gamer in this.gamers.Values)
             {
-                if (gamers[i] != null)
+                if (gamer != null)
                 {
-                    gamers[i].Dispose();
-                    gamers[i] = null;
+                    gamer.Dispose();
                 }
             }
-            State = RoomState.None;
+            this.gamers.Clear();
+            this.GameName = string.Empty;
+            this.UserID = 0;
+            this.RoomID = string.Empty;
+            this.Bureau = 0;
+            this.RuleBit = 0;
+            this.State = RoomState.None;
         }
     }
 }

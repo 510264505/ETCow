@@ -20,4 +20,12 @@ namespace ETHotfix
             }
         }
     }
+    [MessageHandler]
+    public class Actor_CowCowJoinRoomHandler : AMHandler<Actor_CowCowJoinGameRoomGroupSend>
+    {
+        protected override void Run(ETModel.Session session, Actor_CowCowJoinGameRoomGroupSend message)
+        {
+            //这里接收到所有玩家的消息
+        }
+    }
 }

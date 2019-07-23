@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using ETModel;
 
 namespace ETHotfix
@@ -24,12 +22,35 @@ namespace ETHotfix
                 }
                 userInfo.Diamond -= message.Bureau;
 
+                string roomId = string.Empty;
+                while (true)
+                {
+                    roomId = RandomHelper.RandomNumber(100000, 999999).ToString();
+                    if (!Game.Scene.GetComponent<RoomComponent>().IsExist(roomId))
+                    {
+                        break;
+                    }
+                }
+
                 Room room = ComponentFactory.Create<Room>();
-                room.RoomID = RandomHelper.RandomNumber(100000, 999999).ToString();
+                room.UserID = message.UserID;
+                room.RoomID = roomId;
                 room.GameName = message.Name;
                 room.Bureau = message.Bureau;
                 room.RuleBit = message.RuleBit;
                 Game.Scene.GetComponent<RoomComponent>().Add(room);
+
+                Gamer gamer = ComponentFactory.Create<Gamer, long>(message.UserID);
+                gamer.UserID = message.UserID;
+                gamer.Name = "房主" + userInfo.NickName;
+                gamer.HeadIcon = userInfo.HeadIcon;
+                gamer.RoomID = room.RoomID;
+                gamer.Status = 1;
+                gamer.IsOffline = false;
+                gamer.Identity = Identity.None;
+                gamer.Coin = 0;
+                gamer.Sex = userInfo.Sex;
+                room.Add(gamer);
 
                 response.GameName = message.Name;
                 response.Bureau = message.Bureau;
@@ -37,24 +58,13 @@ namespace ETHotfix
                 response.RoomID = room.RoomID;
                 //根据UserID从数据库拿到该用户信息并返回
                 response.GamerInfo = new GamerInfo();
-                response.GamerInfo.Name = "房主";
-                response.GamerInfo.HeadIcon = "房主头像base64";
-                response.GamerInfo.UserID = message.UserID;
-                response.GamerInfo.SeatID = room.GetEmptySeat();
-                response.GamerInfo.Sex = 0;
-                response.GamerInfo.Status = 1;
-                response.GamerInfo.Coin = 0;
-
-                Gamer gamer = ComponentFactory.Create<Gamer, long>(IdGenerater.GenerateId());
-                gamer.ActorID = message.UserID;
-                gamer.UserID = message.UserID; //玩家账号
-                gamer.Name = response.GamerInfo.Name;
-                gamer.SeatID = response.GamerInfo.SeatID;
-                gamer.RoomID = room.RoomID;
-                gamer.IsReady = false;
-                gamer.IsOffline = false;
-                gamer.Identity = Identity.None;
-                room.Add(gamer);
+                response.GamerInfo.Name = gamer.Name;
+                response.GamerInfo.HeadIcon = gamer.HeadIcon;
+                response.GamerInfo.UserID = gamer.UserID; //这个ID用于保存？待定
+                response.GamerInfo.SeatID = gamer.SeatID;
+                response.GamerInfo.Sex = gamer.Sex;
+                response.GamerInfo.Status = gamer.Status;
+                response.GamerInfo.Coin = gamer.Coin;
 
                 reply(response);
             }

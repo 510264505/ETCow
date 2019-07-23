@@ -19,6 +19,10 @@ namespace ETModel
             this.rooms.TryGetValue(id, out room);
             return room;
         }
+        public bool IsExist(string id)
+        {
+            return this.rooms.ContainsKey(id);
+        }
         public Room Remove(string id)
         {
             Room room = Get(id);

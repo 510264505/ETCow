@@ -10,23 +10,23 @@ namespace ETHotfix
         /// </summary>
         public static void Add(this Room self, Gamer gamer)
         {
-            int seatIndex = self.GetEmptySeat();
+            gamer.SeatID = self.GetEmptySeat();
+            self.gamers.Add(gamer.SeatID, gamer);
         }
 
         /// <summary>
         /// 获取玩家
         /// </summary>
-        public static Gamer Get(this Room self, long id)
+        public static Gamer Get(this Room self, int seatId)
         {
-            int seatIndex = self.GetGamerSeat(id);
-            if (seatIndex >= 0)
+            if (seatId >= 0)
             {
-                return self.gamers[seatIndex];
+                return self.gamers[seatId];
             }
             return null;
         }
 
-        public static List<Gamer> GetAll(this Room self)
+        public static Dictionary<int, Gamer> GetAll(this Room self)
         {
             return self.gamers;
         }
@@ -36,55 +36,44 @@ namespace ETHotfix
         /// </summary>
         public static int GetEmptySeat(this Room self)
         {
-            for (int i = 0; i < self.gamers.Count; i++)
+            int n = 0;
+            while (true)
             {
-                if (self.gamers[i] == null)
+                if (!self.gamers.ContainsKey(n) || self.gamers[n] == null)
                 {
-                    return i;
+                    return n;
                 }
+                n++;
             }
-            return -1;
-        }
-
-        /// <summary>
-        /// 获取玩家座位
-        /// </summary>
-        public static int GetGamerSeat(this Room self, long id)
-        {
-            if (self.seats.TryGetValue(id, out int seatIndex))
-            {
-                return seatIndex;
-            }
-            return -1;
         }
 
         /// <summary>
         /// 移除玩家并返回
         /// </summary>
-        public static Gamer Remove(this Room self,long id)
+        public static Gamer Remove(this Room self,int seatId)
         {
-            int seatIndex = self.GetGamerSeat(id);
-            if (seatIndex >= 0)
+            if (seatId >= 0)
             {
-                Gamer gamer = self.gamers[seatIndex];
-                self.gamers[seatIndex] = null;
-                self.seats.Remove(id);
-
+                Gamer gamer = self.gamers[seatId];
+                self.gamers.Remove(seatId);
                 gamer.RoomID = string.Empty;
                 return gamer;
             }
             return null;
         }
 
+        /// <summary>
+        /// 广播消息
+        /// </summary>
         public static void Broadcast(this Room self, IActorMessage message)
         {
-            for (int i = 0; i < self.gamers.Count; i++)
+            foreach (Gamer gamer in self.gamers.Values)
             {
-                if (self.gamers[i] == null || self.gamers[i].IsOffline)
+                if (gamer == null || gamer.IsOffline)
                 {
                     continue;
                 }
-                ActorMessageSender actorProxy = self.gamers[i].GetComponent<UnitGateComponent>().GetActorMessageSender();
+                ActorMessageSender actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorMessageSender();
                 actorProxy.Send(message);
             }
         }

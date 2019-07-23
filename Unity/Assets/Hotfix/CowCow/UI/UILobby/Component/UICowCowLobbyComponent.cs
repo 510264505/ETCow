@@ -46,7 +46,7 @@ namespace ETHotfix
         private int ruleLen = 4;
         private int numLen = 6;
         private int numberLen = 10;
-        private List<int> roomNumber = new List<int>();
+        private List<string> roomNumber = new List<string>();
 
 		public void Awake(G2C_CowCowLoginGate data)
 		{
@@ -168,8 +168,9 @@ namespace ETHotfix
         }
         private void OnNumber(int n)
         {
-            roomNumber.Add(n);
-            numText[roomNumber.Count - 1].text = n.ToString();
+            string num = n.ToString();
+            roomNumber.Add(num);
+            numText[roomNumber.Count - 1].text = num;
             if (roomNumber.Count >= numLen)
             {
                 //向服务器发送加入房间

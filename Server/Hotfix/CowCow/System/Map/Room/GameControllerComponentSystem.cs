@@ -29,7 +29,7 @@ namespace ETHotfix
 
             room.GetComponent<DeskComponent>().Shuffle();
 
-            List<Gamer> gamers = room.GetAll();
+            Dictionary<int, Gamer> gamers = room.GetAll();
             int index = 0;
             for (int i = 0; i < 51; i++)
             {

@@ -194,5 +194,11 @@ message G2C_CowCowJoinGameRoomGate // IResponse
 	int32 Bureau = 2;
 	int32 RuleBit = 3;
 	string RoomID = 4;
-	repeated GamerInfo GamerInfo = 5;
+}
+
+message Actor_CowCowJoinGameRoomGroupSend // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+    repeated GamerInfo GamerInfo = 1;
 }

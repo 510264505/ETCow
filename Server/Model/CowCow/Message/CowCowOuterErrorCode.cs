@@ -7,8 +7,9 @@
         public const int ERR_Disconnect = 210000;
         public const int ERR_AccountAlreadyRegister = 210001;
         public const int ERR_CreateRoomError = 210002;
-        public const int ERR_JoinRoomError = 210003;
+        public const int ERR_NotRoomNumberError = 210003;
         public const int ERR_PlayCardError = 210004;
         public const int ERR_LoginError = 210005;
+        public const int ERR_RoomPeopleFullError = 210006;
     }
 }

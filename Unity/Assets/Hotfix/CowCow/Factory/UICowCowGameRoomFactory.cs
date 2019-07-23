@@ -6,7 +6,7 @@ namespace ETHotfix
 {
     public static class UICowCowGameRoomFactory
     {
-        public static UI Create(G2C_CowCowCreateGameRoomGate data)
+        public static UI Create(G2C_CowCowCreateGameRoomGate room)
         {
             try
             {
@@ -17,8 +17,8 @@ namespace ETHotfix
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
                 ui.AddComponent<UICowCow_GameRoomComponent>(); //加入游戏房间组件
-                ui.GetComponent<UICowCow_GameRoomComponent>().Init(data.GameName, data.Bureau, data.RuleBit);
-                ui.GetComponent<UICowCow_GameRoomComponent>().AddGamer(data.GamerInfo);
+                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit);
+                ui.GetComponent<UICowCow_GameRoomComponent>().AddGamer(room.GamerInfo);
                 return ui;
             }
             catch (Exception e)
@@ -27,7 +27,7 @@ namespace ETHotfix
                 return null;
             }
         }
-        public static UI Create(G2C_CowCowJoinGameRoomGate data)
+        public static UI Create(G2C_CowCowJoinGameRoomGate room)
         {
             try
             {
@@ -38,11 +38,11 @@ namespace ETHotfix
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
                 ui.AddComponent<UICowCow_GameRoomComponent>(); //加入游戏房间组件
-                ui.GetComponent<UICowCow_GameRoomComponent>().Init(data.GameName, data.Bureau, data.RuleBit);
-                for (int i = 0; i < data.GamerInfo.count; i++)
-                {
-                    ui.GetComponent<UICowCow_GameRoomComponent>().AddGamer(data.GamerInfo[i]);
-                }
+                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit);
+                //for (int i = 0; i < gamers.GamerInfo.count; i++)
+                //{
+                //    ui.GetComponent<UICowCow_GameRoomComponent>().AddGamer(gamers.GamerInfo[i]);
+                //}
                 return ui;
             }
             catch (Exception e)

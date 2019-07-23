@@ -2513,14 +2513,6 @@ namespace ETHotfix {
       }
     }
 
-    private static readonly pb::FieldCodec<global::ETHotfix.GamerInfo> _repeated_gamerInfo_codec
-        = pb::FieldCodec.ForMessage(42, global::ETHotfix.GamerInfo.Parser);
-    private pbc::RepeatedField<global::ETHotfix.GamerInfo> gamerInfo_ = new pbc::RepeatedField<global::ETHotfix.GamerInfo>();
-    public pbc::RepeatedField<global::ETHotfix.GamerInfo> GamerInfo {
-      get { return gamerInfo_; }
-      set { gamerInfo_ = value; }
-    }
-
     public void WriteTo(pb::CodedOutputStream output) {
       if (GameName.Length != 0) {
         output.WriteRawTag(10);
@@ -2538,7 +2530,6 @@ namespace ETHotfix {
         output.WriteRawTag(34);
         output.WriteString(RoomID);
       }
-      gamerInfo_.WriteTo(output, _repeated_gamerInfo_codec);
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
         output.WriteInt32(RpcId);
@@ -2576,7 +2567,6 @@ namespace ETHotfix {
       if (RoomID.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
       }
-      size += gamerInfo_.CalculateSize(_repeated_gamerInfo_codec);
       return size;
     }
 
@@ -2585,8 +2575,6 @@ namespace ETHotfix {
       bureau_ = 0;
       ruleBit_ = 0;
       roomID_ = "";
-      for (int i = 0; i < gamerInfo_.Count; i++) { MessagePool.Instance.Recycle(gamerInfo_[i]); }
-      gamerInfo_.Clear();
       rpcId_ = 0;
       error_ = 0;
       message_ = "";
@@ -2612,10 +2600,6 @@ namespace ETHotfix {
             RoomID = input.ReadString();
             break;
           }
-          case 42: {
-            gamerInfo_.AddEntriesFrom(input, _repeated_gamerInfo_codec);
-            break;
-          }
           case 720: {
             RpcId = input.ReadInt32();
             break;
@@ -2626,6 +2610,87 @@ namespace ETHotfix {
           }
           case 738: {
             Message = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class Actor_CowCowJoinGameRoomGroupSend : pb::IMessage {
+    private static readonly pb::MessageParser<Actor_CowCowJoinGameRoomGroupSend> _parser = new pb::MessageParser<Actor_CowCowJoinGameRoomGroupSend>(() => (Actor_CowCowJoinGameRoomGroupSend)MessagePool.Instance.Fetch(typeof(Actor_CowCowJoinGameRoomGroupSend)));
+    public static pb::MessageParser<Actor_CowCowJoinGameRoomGroupSend> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private long actorId_;
+    public long ActorId {
+      get { return actorId_; }
+      set {
+        actorId_ = value;
+      }
+    }
+
+    private static readonly pb::FieldCodec<global::ETHotfix.GamerInfo> _repeated_gamerInfo_codec
+        = pb::FieldCodec.ForMessage(10, global::ETHotfix.GamerInfo.Parser);
+    private pbc::RepeatedField<global::ETHotfix.GamerInfo> gamerInfo_ = new pbc::RepeatedField<global::ETHotfix.GamerInfo>();
+    public pbc::RepeatedField<global::ETHotfix.GamerInfo> GamerInfo {
+      get { return gamerInfo_; }
+      set { gamerInfo_ = value; }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      gamerInfo_.WriteTo(output, _repeated_gamerInfo_codec);
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (ActorId != 0L) {
+        output.WriteRawTag(240, 5);
+        output.WriteInt64(ActorId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (ActorId != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+      }
+      size += gamerInfo_.CalculateSize(_repeated_gamerInfo_codec);
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      for (int i = 0; i < gamerInfo_.Count; i++) { MessagePool.Instance.Recycle(gamerInfo_[i]); }
+      gamerInfo_.Clear();
+      rpcId_ = 0;
+      actorId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            gamerInfo_.AddEntriesFrom(input, _repeated_gamerInfo_codec);
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 752: {
+            ActorId = input.ReadInt64();
             break;
           }
         }

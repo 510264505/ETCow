@@ -15,7 +15,7 @@ namespace ETModel
         //用户唯一ID        DB数据库的 _id
         public long UserID { get; set; }
         //玩家Gate   ActorID     component 的 InstanceId
-        public long ActorID { get; set; }
+        //public long ActorID { get; set; }
         //玩家所在房间号ID
         public string RoomID { get; set; }
         //玩家名
@@ -25,9 +25,15 @@ namespace ETModel
         //玩家身份
         public Identity Identity { get; set; }
         //是否准备
-        public bool IsReady { get; set; }
+        public int Status { get; set; }
         //是否离线
         public bool IsOffline { get; set; }
+        //玩家金币
+        public int Coin { get; set; }
+        //玩家性别
+        public int Sex { get; set; }
+        //玩家头像
+        public string HeadIcon { get; set; }
         //玩家牌
         public List<Card> cards { get; set; }
         //牌类型
@@ -45,13 +51,15 @@ namespace ETModel
             base.Dispose();
 
             this.UserID = 0;
-            this.ActorID = 0;
             this.RoomID = string.Empty;
             this.Name = string.Empty;
             this.SeatID = 0;
             this.Identity = Identity.None;
-            this.IsReady = false;
+            this.Status = 0;
             this.IsOffline = false;
+            this.Coin = 0;
+            this.Sex = 0;
+            this.HeadIcon = string.Empty;
             this.cards.Clear();
             this.cardsType = CardGroupType.None;
         }
