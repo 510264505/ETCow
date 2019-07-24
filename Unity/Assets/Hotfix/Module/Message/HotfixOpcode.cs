@@ -78,6 +78,18 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowJoinGameRoomGroupSend)]
 	public partial class Actor_CowCowJoinGameRoomGroupSend : IActorMessage {}
 
+	[Message(HotfixOpcode.C2M_CowCowGamerReady)]
+	public partial class C2M_CowCowGamerReady : IRequest {}
+
+	[Message(HotfixOpcode.M2C_CowCowGamerReady)]
+	public partial class M2C_CowCowGamerReady : IResponse {}
+
+	[Message(HotfixOpcode.Actor_CowCowGamerReady)]
+	public partial class Actor_CowCowGamerReady : IActorMessage {}
+
+	[Message(HotfixOpcode.Actor_CowCowRoomSendCards)]
+	public partial class Actor_CowCowRoomSendCards : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -107,5 +119,9 @@ namespace ETHotfix
 		 public const ushort C2G_CowCowJoinGameRoomGate = 10022;
 		 public const ushort G2C_CowCowJoinGameRoomGate = 10023;
 		 public const ushort Actor_CowCowJoinGameRoomGroupSend = 10024;
+		 public const ushort C2M_CowCowGamerReady = 10025;
+		 public const ushort M2C_CowCowGamerReady = 10026;
+		 public const ushort Actor_CowCowGamerReady = 10027;
+		 public const ushort Actor_CowCowRoomSendCards = 10028;
 	}
 }

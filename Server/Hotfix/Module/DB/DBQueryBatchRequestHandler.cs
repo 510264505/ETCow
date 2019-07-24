@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.DB)]
 	public class DBQueryBatchRequestHandler : AMRpcHandler<DBQueryBatchRequest, DBQueryBatchResponse>
 	{
-		protected override void RunAsync(Session session, DBQueryBatchRequest message, Action<DBQueryBatchResponse> reply)
+		protected override void Run(Session session, DBQueryBatchRequest message, Action<DBQueryBatchResponse> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

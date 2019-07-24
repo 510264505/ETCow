@@ -8,7 +8,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Map)]
 	public class G2M_CreateUnitHandler : AMRpcHandler<G2M_CreateUnit, M2G_CreateUnit>
 	{
-		protected override void RunAsync(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
+		protected override void Run(Session session, G2M_CreateUnit message, Action<M2G_CreateUnit> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

@@ -2699,6 +2699,338 @@ namespace ETHotfix {
 
   }
 
+  public partial class C2M_CowCowGamerReady : pb::IMessage {
+    private static readonly pb::MessageParser<C2M_CowCowGamerReady> _parser = new pb::MessageParser<C2M_CowCowGamerReady>(() => (C2M_CowCowGamerReady)MessagePool.Instance.Fetch(typeof(C2M_CowCowGamerReady)));
+    public static pb::MessageParser<C2M_CowCowGamerReady> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private string roomID_ = "";
+    public string RoomID {
+      get { return roomID_; }
+      set {
+        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private int seatID_;
+    public int SeatID {
+      get { return seatID_; }
+      set {
+        seatID_ = value;
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (RoomID.Length != 0) {
+        output.WriteRawTag(10);
+        output.WriteString(RoomID);
+      }
+      if (SeatID != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(SeatID);
+      }
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (RoomID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      }
+      if (SeatID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      roomID_ = "";
+      seatID_ = 0;
+      rpcId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            RoomID = input.ReadString();
+            break;
+          }
+          case 16: {
+            SeatID = input.ReadInt32();
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class M2C_CowCowGamerReady : pb::IMessage {
+    private static readonly pb::MessageParser<M2C_CowCowGamerReady> _parser = new pb::MessageParser<M2C_CowCowGamerReady>(() => (M2C_CowCowGamerReady)MessagePool.Instance.Fetch(typeof(M2C_CowCowGamerReady)));
+    public static pb::MessageParser<M2C_CowCowGamerReady> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private int error_;
+    public int Error {
+      get { return error_; }
+      set {
+        error_ = value;
+      }
+    }
+
+    private string message_ = "";
+    public string Message {
+      get { return message_; }
+      set {
+        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (Error != 0) {
+        output.WriteRawTag(216, 5);
+        output.WriteInt32(Error);
+      }
+      if (Message.Length != 0) {
+        output.WriteRawTag(226, 5);
+        output.WriteString(Message);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (Error != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(Error);
+      }
+      if (Message.Length != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      rpcId_ = 0;
+      error_ = 0;
+      message_ = "";
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 728: {
+            Error = input.ReadInt32();
+            break;
+          }
+          case 738: {
+            Message = input.ReadString();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class Actor_CowCowGamerReady : pb::IMessage {
+    private static readonly pb::MessageParser<Actor_CowCowGamerReady> _parser = new pb::MessageParser<Actor_CowCowGamerReady>(() => (Actor_CowCowGamerReady)MessagePool.Instance.Fetch(typeof(Actor_CowCowGamerReady)));
+    public static pb::MessageParser<Actor_CowCowGamerReady> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private long actorId_;
+    public long ActorId {
+      get { return actorId_; }
+      set {
+        actorId_ = value;
+      }
+    }
+
+    private static readonly pb::FieldCodec<int> _repeated_seatIDs_codec
+        = pb::FieldCodec.ForInt32(10);
+    private pbc::RepeatedField<int> seatIDs_ = new pbc::RepeatedField<int>();
+    public pbc::RepeatedField<int> SeatIDs {
+      get { return seatIDs_; }
+      set { seatIDs_ = value; }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      seatIDs_.WriteTo(output, _repeated_seatIDs_codec);
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (ActorId != 0L) {
+        output.WriteRawTag(240, 5);
+        output.WriteInt64(ActorId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (ActorId != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+      }
+      size += seatIDs_.CalculateSize(_repeated_seatIDs_codec);
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      seatIDs_.Clear();
+      rpcId_ = 0;
+      actorId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            seatIDs_.AddEntriesFrom(input, _repeated_seatIDs_codec);
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 752: {
+            ActorId = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class Actor_CowCowRoomSendCards : pb::IMessage {
+    private static readonly pb::MessageParser<Actor_CowCowRoomSendCards> _parser = new pb::MessageParser<Actor_CowCowRoomSendCards>(() => (Actor_CowCowRoomSendCards)MessagePool.Instance.Fetch(typeof(Actor_CowCowRoomSendCards)));
+    public static pb::MessageParser<Actor_CowCowRoomSendCards> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private long actorId_;
+    public long ActorId {
+      get { return actorId_; }
+      set {
+        actorId_ = value;
+      }
+    }
+
+    private static readonly pb::FieldCodec<int> _repeated_cards_codec
+        = pb::FieldCodec.ForInt32(10);
+    private pbc::RepeatedField<int> cards_ = new pbc::RepeatedField<int>();
+    public pbc::RepeatedField<int> Cards {
+      get { return cards_; }
+      set { cards_ = value; }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      cards_.WriteTo(output, _repeated_cards_codec);
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (ActorId != 0L) {
+        output.WriteRawTag(240, 5);
+        output.WriteInt64(ActorId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (ActorId != 0L) {
+        size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
+      }
+      size += cards_.CalculateSize(_repeated_cards_codec);
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      cards_.Clear();
+      rpcId_ = 0;
+      actorId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10:
+          case 8: {
+            cards_.AddEntriesFrom(input, _repeated_cards_codec);
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 752: {
+            ActorId = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   #endregion
 
 }

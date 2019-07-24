@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Map)]
 	public class M2M_TrasferUnitRequestHandler : AMRpcHandler<M2M_TrasferUnitRequest, M2M_TrasferUnitResponse>
 	{
-		protected override void RunAsync(Session session, M2M_TrasferUnitRequest message, Action<M2M_TrasferUnitResponse> reply)
+		protected override void Run(Session session, M2M_TrasferUnitRequest message, Action<M2M_TrasferUnitResponse> reply)
 		{
 			M2M_TrasferUnitResponse response = new M2M_TrasferUnitResponse();
 			try

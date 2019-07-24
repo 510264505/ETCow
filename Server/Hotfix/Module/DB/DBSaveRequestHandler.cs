@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.DB)]
 	public class DBSaveRequestHandler : AMRpcHandler<DBSaveRequest, DBSaveResponse>
 	{
-		protected override void RunAsync(Session session, DBSaveRequest message, Action<DBSaveResponse> reply)
+		protected override void Run(Session session, DBSaveRequest message, Action<DBSaveResponse> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

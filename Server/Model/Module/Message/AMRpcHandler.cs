@@ -12,7 +12,7 @@ namespace ETModel
 			reply(response);
 		}
 
-		protected abstract void RunAsync(Session session, Request message, Action<Response> reply);
+		protected abstract void Run(Session session, Request message, Action<Response> reply);
 
 		public void Handle(Session session, object message)
 		{
@@ -28,7 +28,7 @@ namespace ETModel
 
 				long instanceId = session.InstanceId;
 				
-				this.RunAsync(session, request, response =>
+				this.Run(session, request, response =>
 				{
 					// 等回调回来,session可以已经断开了,所以需要判断session InstanceId是否一样
 					if (session.InstanceId != instanceId)

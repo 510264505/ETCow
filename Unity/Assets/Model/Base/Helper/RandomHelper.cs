@@ -23,13 +23,21 @@ namespace ETModel
 		/// <summary>
 		/// 获取lower与Upper之间的随机数
 		/// </summary>
-		/// <param name="lower"></param>
-		/// <param name="upper"></param>
+		/// <param name="lower">闭区间包含</param>
+		/// <param name="upper">开区间不包含</param>
 		/// <returns></returns>
 		public static int RandomNumber(int lower, int upper)
 		{
 			int value = random.Next(lower, upper);
 			return value;
 		}
+
+        /// <summary>
+        /// 获取0到max且不包含max的整数
+        /// </summary>
+        public static int RandomNumber(int max)
+        {
+            return random.Next(max);
+        }
 	}
 }

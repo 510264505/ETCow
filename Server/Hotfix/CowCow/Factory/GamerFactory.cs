@@ -4,10 +4,10 @@ namespace ETHotfix
 {
     public static class GamerFactory
     {
-        public static Gamer Create(long actorId, long userId, long ? id = null)
+        public static Gamer Create(long userId, long sessionId)
         {
-            Gamer gamer = ComponentFactory.CreateWithId<Gamer, long>(id ?? IdGenerater.GenerateId(), userId);
-            gamer.ActorID = actorId;
+            Gamer gamer = ComponentFactory.CreateWithId<Gamer>(userId);
+            gamer.AddComponent<UnitGateComponent, long>(sessionId);
             return gamer;
         }
     }

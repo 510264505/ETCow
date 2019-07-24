@@ -9,7 +9,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Gate)]
     public class C2GCowCow_LoginGateHandler : AMRpcHandler<C2G_CowCowLoginGate, G2C_CowCowLoginGate>
     {
-        protected override async void RunAsync(Session session, C2G_CowCowLoginGate message, Action<G2C_CowCowLoginGate> reply)
+        protected override async void Run(Session session, C2G_CowCowLoginGate message, Action<G2C_CowCowLoginGate> reply)
         {
             G2C_CowCowLoginGate response = new G2C_CowCowLoginGate();
             try

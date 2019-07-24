@@ -7,7 +7,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Gate)]
 	public class C2G_PlayerInfoHandler : AMRpcHandler<C2G_PlayerInfo, G2C_PlayerInfo>
 	{
-		protected override void RunAsync(Session session, C2G_PlayerInfo message, Action<G2C_PlayerInfo> reply)
+		protected override void Run(Session session, C2G_PlayerInfo message, Action<G2C_PlayerInfo> reply)
 		{
 			G2C_PlayerInfo g2CPlayerInfo = new G2C_PlayerInfo();
 			g2CPlayerInfo.PlayerInfo = new PlayerInfo();

@@ -7,7 +7,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Realm)]
     public class C2RCowCow_LoginHandler : AMRpcHandler<C2R_CowCowLogin, R2C_CowCowLogin>
     {
-        protected override async void RunAsync(Session session, C2R_CowCowLogin message, Action<R2C_CowCowLogin> reply)
+        protected override async void Run(Session session, C2R_CowCowLogin message, Action<R2C_CowCowLogin> reply)
         {
             R2C_CowCowLogin response = new R2C_CowCowLogin();
             try

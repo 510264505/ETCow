@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Location)]
 	public class ObjectAddRequestHandler : AMRpcHandler<ObjectAddRequest, ObjectAddResponse>
 	{
-		protected override void RunAsync(Session session, ObjectAddRequest message, Action<ObjectAddResponse> reply)
+		protected override void Run(Session session, ObjectAddRequest message, Action<ObjectAddResponse> reply)
 		{
 			ObjectAddResponse response = new ObjectAddResponse();
 			try

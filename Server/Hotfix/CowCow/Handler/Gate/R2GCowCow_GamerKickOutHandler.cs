@@ -8,7 +8,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Gate)]
     public class R2GCowCow_GamerKickOutHandler : AMRpcHandler<R2G_CowCowGamerKickOut, G2R_CowCowGamerKickOut>
     {
-        protected override async void RunAsync(Session session, R2G_CowCowGamerKickOut message, Action<G2R_CowCowGamerKickOut> reply)
+        protected override async void Run(Session session, R2G_CowCowGamerKickOut message, Action<G2R_CowCowGamerKickOut> reply)
         {
             G2R_CowCowGamerKickOut response = new G2R_CowCowGamerKickOut();
             try

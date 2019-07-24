@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Location)]
 	public class ObjectLockRequestHandler : AMRpcHandler<ObjectLockRequest, ObjectLockResponse>
 	{
-		protected override void RunAsync(Session session, ObjectLockRequest message, Action<ObjectLockResponse> reply)
+		protected override void Run(Session session, ObjectLockRequest message, Action<ObjectLockResponse> reply)
 		{
 			ObjectLockResponse response = new ObjectLockResponse();
 			try

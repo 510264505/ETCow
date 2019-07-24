@@ -7,7 +7,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Realm)]
 	public class C2R_LoginHandler : AMRpcHandler<C2R_Login, R2C_Login>
 	{
-		protected override void RunAsync(Session session, C2R_Login message, Action<R2C_Login> reply)
+		protected override void Run(Session session, C2R_Login message, Action<R2C_Login> reply)
 		{
 			RunAsync(session, message, reply).Coroutine();
 		}

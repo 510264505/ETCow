@@ -8,7 +8,7 @@ namespace ETHotfix
     [MessageHandler(AppType.DB)]
     public class DBDeleteJsonRequestHandle : AMRpcHandler<DBDeleteRequest, DBDeleteResponse>
     {
-        protected override void RunAsync(Session session, DBDeleteRequest message, Action<DBDeleteResponse> reply)
+        protected override void Run(Session session, DBDeleteRequest message, Action<DBDeleteResponse> reply)
         {
             RunAsync(session, message, reply).Coroutine();
         }

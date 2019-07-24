@@ -62,6 +62,16 @@ namespace ETHotfix
             return null;
         }
 
+        public static void Send(this Room self, Gamer gamer, IActorMessage message)
+        {
+            if (gamer == null || gamer.IsOffline)
+            {
+                return;
+            }
+            ActorMessageSender actorProxy = gamer.GetComponent<UnitGateComponent>().GetActorMessageSender();
+            actorProxy.Send(message);
+        }
+
         /// <summary>
         /// 广播消息
         /// </summary>

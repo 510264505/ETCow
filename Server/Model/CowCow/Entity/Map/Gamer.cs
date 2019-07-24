@@ -35,7 +35,7 @@ namespace ETModel
         //玩家头像
         public string HeadIcon { get; set; }
         //玩家牌
-        public List<Card> cards { get; set; }
+        public List<int> cards { get; set; }
         //牌类型
         public CardGroupType cardsType { get; set; }
         public void Awake(long id)

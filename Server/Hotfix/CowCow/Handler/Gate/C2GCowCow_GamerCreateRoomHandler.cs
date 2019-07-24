@@ -6,7 +6,7 @@ namespace ETHotfix
     [MessageHandler(AppType.Gate)]
     public class C2GCowCow_GamerCreateRoomHandler : AMRpcHandler<C2G_CowCowCreateGameRoomGate, G2C_CowCowCreateGameRoomGate>
     {
-        protected override void RunAsync(Session session, C2G_CowCowCreateGameRoomGate message, Action<G2C_CowCowCreateGameRoomGate> reply)
+        protected override void Run(Session session, C2G_CowCowCreateGameRoomGate message, Action<G2C_CowCowCreateGameRoomGate> reply)
         {
             G2C_CowCowCreateGameRoomGate response = new G2C_CowCowCreateGameRoomGate();
             try
@@ -40,7 +40,7 @@ namespace ETHotfix
                 room.RuleBit = message.RuleBit;
                 Game.Scene.GetComponent<RoomComponent>().Add(room);
 
-                Gamer gamer = ComponentFactory.Create<Gamer, long>(message.UserID);
+                Gamer gamer = GamerFactory.Create(message.UserID, session.InstanceId);
                 gamer.UserID = message.UserID;
                 gamer.Name = "房主" + userInfo.NickName;
                 gamer.HeadIcon = userInfo.HeadIcon;

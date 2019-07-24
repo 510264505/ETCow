@@ -6,7 +6,7 @@ namespace ETHotfix
 	[MessageHandler(AppType.Location)]
 	public class ObjectRemoveRequestHandler : AMRpcHandler<ObjectRemoveRequest, ObjectRemoveResponse>
 	{
-		protected override void RunAsync(Session session, ObjectRemoveRequest message, Action<ObjectRemoveResponse> reply)
+		protected override void Run(Session session, ObjectRemoveRequest message, Action<ObjectRemoveResponse> reply)
 		{
 			ObjectRemoveResponse response = new ObjectRemoveResponse();
 			try
