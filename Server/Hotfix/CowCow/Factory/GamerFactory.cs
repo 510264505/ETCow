@@ -7,7 +7,7 @@ namespace ETHotfix
         public static Gamer Create(long userId, long sessionId)
         {
             Gamer gamer = ComponentFactory.CreateWithId<Gamer>(userId);
-            gamer.AddComponent<UnitGateComponent, long>(sessionId);
+            gamer.AddComponent<GamerGateComponent, long>(sessionId);
             return gamer;
         }
     }

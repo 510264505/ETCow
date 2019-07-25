@@ -14,7 +14,7 @@ namespace ETHotfix
             try
             {
                 //释放User对象时，将User对象从管理组件中移除
-                Game.Scene.GetComponent<UserComponent>()?.Remove(self.User.UserID);
+                Game.Scene.GetComponent<UserInfoComponent>()?.Remove(self.User.UserID);
                 StartConfigComponent config = Game.Scene.GetComponent<StartConfigComponent>();
                 ActorMessageSenderComponent actorProxyComponent = Game.Scene.GetComponent<ActorMessageSenderComponent>();
                 

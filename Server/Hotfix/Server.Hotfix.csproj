@@ -31,8 +31,6 @@
     <ProjectReference Include="..\ThirdParty\MongoDBDriver\MongoDB.Driver\MongoDB.Driver.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CowCow\Component\" />
-    <Folder Include="CowCow\Handler\Map\" />
     <Folder Include="Module\Http\" />
   </ItemGroup>
 </Project>

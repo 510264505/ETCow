@@ -26,6 +26,7 @@ namespace ETHotfix
                 }
                 //从数据库拿用户数据用于大厅显示
                 UserInfo userInfo = await Game.Scene.GetComponent<DBProxyComponent>().Query<UserInfo>(userId);
+                userInfo.AddComponent<UnitGateComponent, long>(session.InstanceId);
                 //添加进用户信息管理组件，下线的时候保存并从组件中移除改用户信息
                 Game.Scene.GetComponent<UserInfoComponent>().Add(userInfo);
                 //向登录服务器发送玩家上线消息

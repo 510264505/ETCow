@@ -21,7 +21,7 @@ namespace ETModel
         public int RuleBit { get; set; }
         public RoomState State { get; set; } = RoomState.None;
         public int GamerCount { get { return gamers.Values.Count; } }
-        public int PeopleCount { get { return 7; } }
+        public int PeopleCount { get { return 2; } }
         public override void Dispose()
         {
             if (this.IsDisposed)

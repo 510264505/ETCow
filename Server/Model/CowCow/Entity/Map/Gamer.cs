@@ -34,10 +34,18 @@ namespace ETModel
         public int Sex { get; set; }
         //玩家头像
         public string HeadIcon { get; set; }
+        //是否提交手牌
+        public bool IsSubmitHandCards { get; set; } = false;
         //玩家牌
         public List<int> cards { get; set; }
         //牌类型
-        public CardGroupType cardsType { get; set; }
+        public int cardType { get; set; }
+        //牌中最大的那张
+        public int MaxValue { get; set; }
+        //最大牌的花色
+        public int FloweColor { get; set; }
+        //牛几
+        public int CowNumber { get; set; }
         public void Awake(long id)
         {
             this.UserID = id;
@@ -61,7 +69,10 @@ namespace ETModel
             this.Sex = 0;
             this.HeadIcon = string.Empty;
             this.cards.Clear();
-            this.cardsType = CardGroupType.None;
+            this.cardType = 0;
+            this.MaxValue = 0;
+            this.FloweColor = 0;
+            this.CowNumber = 0;
         }
     }
 }

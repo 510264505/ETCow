@@ -13,14 +13,14 @@ namespace ETHotfix
             G2R_CowCowGamerKickOut response = new G2R_CowCowGamerKickOut();
             try
             {
-                User user = Game.Scene.GetComponent<UserComponent>().Get(message.UserID);
+                UserInfo userInfo = Game.Scene.GetComponent<UserInfoComponent>().Get(message.UserID);
                 //服务器主动断开客户端连接
-                if (user != null)
+                if (userInfo != null)
                 {
-                    long userSessionId = user.GetComponent<UnitGateComponent>().GateSessionActorId;
+                    long userSessionId = userInfo.GetComponent<UnitGateComponent>().GateSessionActorId;
                     Game.Scene.GetComponent<NetOuterComponent>().Remove(userSessionId);
                 }
-                
+
                 await session.Call(new G2R_CowCowGamerOffline() { UserID = message.UserID });
                 Log.Info($"将玩家{message.UserID}连接断开");
 

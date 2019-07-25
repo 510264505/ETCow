@@ -31,8 +31,9 @@ namespace ETHotfix
                 Log.WriteLine($"注册新账号:{newAccounts.Account},密码:{message.Password}");
 
                 //新建用户信息
-                UserInfo newUser = ComponentFactory.CreateWithId<UserInfo>(newAccounts.Id);
+                UserInfo newUser = UserInfoFactory.Create(newAccounts.Id, session.InstanceId);
                 newUser.NickName = $"用户{message.Account}";
+                newUser.HeadIcon = message.Account;
                 newUser.Sex = 0;
                 newUser.Diamond = 1000000;
                 newUser.RegisterTime = DateTime.Now;

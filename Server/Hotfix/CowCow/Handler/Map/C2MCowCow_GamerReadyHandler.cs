@@ -37,6 +37,7 @@ namespace ETHotfix
                 {
                     //SendCards
                     Actor_CowCowRoomSendCards sendCards = new Actor_CowCowRoomSendCards();
+                    sendCards.Cards = new Google.Protobuf.Collections.RepeatedField<int>();
                     int count = 5; //每人持牌数
                     List<int> allCards = CowCowDealCardSystem.DealAllCards(count * room.GamerCount);
                     foreach (Gamer g in gamers.Values)

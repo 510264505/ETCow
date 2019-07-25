@@ -230,3 +230,45 @@ message Actor_CowCowRoomSendCards // IActorMessage
 	int64 ActorId = 94;
 	repeated int32 Cards = 1;
 }
+
+message C2M_CowCowGamerSubmitCardType // IRequest
+{
+	int32 RpcId = 90;
+	string RoomID = 1;
+	int32 SeatID = 2;
+	int32 MaxCard = 3;
+	int32 CardType = 4;
+	int32 FlowerColor = 5;
+	int32 CowNumber = 6;
+	repeated int32 Cards = 7;
+}
+
+message M2C_CowCowGamerSubmitCardType // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+message Actor_CowCowGamerSubmitCardType // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	repeated int32 SeatIDs = 1;
+}
+
+message CowCowSmallSettlementInfo // IMessage
+{
+	int32 SeatIDs = 1;
+	repeated int32 Cards = 2;
+	int32 CardsType = 3;
+	int32 BetCoin = 4;
+	int32 LoseWin = 5;
+}
+
+message Actor_CowCowRoomOpenCardsAndSettlement // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	repeated CowCowSmallSettlementInfo SmallSettlemntInfo = 1;
+}

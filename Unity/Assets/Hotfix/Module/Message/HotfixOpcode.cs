@@ -90,6 +90,21 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowRoomSendCards)]
 	public partial class Actor_CowCowRoomSendCards : IActorMessage {}
 
+	[Message(HotfixOpcode.C2M_CowCowGamerSubmitCardType)]
+	public partial class C2M_CowCowGamerSubmitCardType : IRequest {}
+
+	[Message(HotfixOpcode.M2C_CowCowGamerSubmitCardType)]
+	public partial class M2C_CowCowGamerSubmitCardType : IResponse {}
+
+	[Message(HotfixOpcode.Actor_CowCowGamerSubmitCardType)]
+	public partial class Actor_CowCowGamerSubmitCardType : IActorMessage {}
+
+	[Message(HotfixOpcode.CowCowSmallSettlementInfo)]
+	public partial class CowCowSmallSettlementInfo : IMessage {}
+
+	[Message(HotfixOpcode.Actor_CowCowRoomOpenCardsAndSettlement)]
+	public partial class Actor_CowCowRoomOpenCardsAndSettlement : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -123,5 +138,10 @@ namespace ETHotfix
 		 public const ushort M2C_CowCowGamerReady = 10026;
 		 public const ushort Actor_CowCowGamerReady = 10027;
 		 public const ushort Actor_CowCowRoomSendCards = 10028;
+		 public const ushort C2M_CowCowGamerSubmitCardType = 10029;
+		 public const ushort M2C_CowCowGamerSubmitCardType = 10030;
+		 public const ushort Actor_CowCowGamerSubmitCardType = 10031;
+		 public const ushort CowCowSmallSettlementInfo = 10032;
+		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10033;
 	}
 }

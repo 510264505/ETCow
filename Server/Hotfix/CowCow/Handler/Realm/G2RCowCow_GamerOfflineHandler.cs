@@ -12,6 +12,7 @@ namespace ETHotfix
             try
             {
                 Game.Scene.GetComponent<OnlineComponent>().Remove(message.UserID);
+                Game.Scene.GetComponent<UserInfoComponent>().Remove(message.UserID);
                 Log.Debug($"玩家{message.UserID}下线");
 
                 reply(response);
