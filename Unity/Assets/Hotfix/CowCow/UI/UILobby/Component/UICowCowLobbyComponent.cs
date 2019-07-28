@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -47,6 +48,7 @@ namespace ETHotfix
         private int numLen = 6;
         private int numberLen = 10;
         private List<string> roomNumber = new List<string>();
+        private StringBuilder roomId = new StringBuilder();
 
 		public void Awake(G2C_CowCowLoginGate data)
 		{
@@ -174,6 +176,12 @@ namespace ETHotfix
             if (roomNumber.Count >= numLen)
             {
                 //向服务器发送加入房间
+                long userId = ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID;
+                for (int i = 0; i < roomNumber.Count; i++)
+                {
+                    roomId.Append(roomNumber[i]);
+                }
+                Actor_JoinRoomHelper.OnJoinRoomAsync(userId, roomId.ToString()).Coroutine();
                 OnRepeat();
             }
         }

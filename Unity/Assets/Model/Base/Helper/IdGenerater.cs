@@ -11,8 +11,8 @@
 			set
 			{
 				appId = value;
-				instanceIdGenerator = appId << 48;
-			}
+				instanceIdGenerator = appId << 48; //返回appId*2^48次方
+            }
 		}
 
 		private static ushort value;
@@ -28,7 +28,9 @@
 		{
 			return ++instanceIdGenerator;
 		}
-
+        /// <summary>
+        /// 移位运算 2^48次方的时候返回0，2^49次方的时候返回1，以此类推
+        /// </summary>
 		public static int GetAppId(long v)
 		{
 			return (int)(v >> 48);

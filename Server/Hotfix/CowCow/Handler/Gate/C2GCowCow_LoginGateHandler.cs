@@ -35,6 +35,8 @@ namespace ETHotfix
                 Session realmSession = Game.Scene.GetComponent<NetInnerComponent>().Get(realmIPEndPoint);
                 await realmSession.Call(new G2R_CowCowGamerOnline() { UserID = userId, GateAppID = config.StartConfig.AppId });
 
+                session.AddComponent<MailBoxComponent, string>(MailboxType.GateSession);
+
                 response.UserID = userInfo.Id; //永久ID，DB.Id
                 response.NickName = userInfo.NickName;
                 response.Diamond = userInfo.Diamond;

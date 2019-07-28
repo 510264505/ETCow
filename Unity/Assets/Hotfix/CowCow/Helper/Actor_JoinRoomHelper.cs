@@ -26,6 +26,11 @@ namespace ETHotfix
         protected override void Run(ETModel.Session session, Actor_CowCowJoinGameRoomGroupSend message)
         {
             //这里接收到所有玩家的消息
+            Log.Debug($"加入房间的SessionId:{session.InstanceId}");
+            for (int i = 0; i < message.GamerInfo.count; i++)
+            {
+                Log.Debug($"玩家ID:{message.GamerInfo[i].UserID}，玩家椅子号:{message.GamerInfo[i].SeatID}");
+            }
         }
     }
 }

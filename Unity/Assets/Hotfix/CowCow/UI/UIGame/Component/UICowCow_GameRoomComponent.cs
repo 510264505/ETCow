@@ -28,6 +28,7 @@ namespace ETHotfix
         private Text bureau;
         private Text gameName;
         private Text gameRule;
+        private Text roomId;
 
         private StringBuilder sb = new StringBuilder();
         private int curBureauCount = 1;
@@ -99,6 +100,7 @@ namespace ETHotfix
             this.bureau = rc.Get<GameObject>("GameBureau").GetComponent<Text>();
             this.gameName = rc.Get<GameObject>("GameName").GetComponent<Text>();
             this.gameRule = rc.Get<GameObject>("GameRule").GetComponent<Text>();
+            this.roomId = rc.Get<GameObject>("RoomID").GetComponent<Text>();
             Text nowTime = rc.Get<GameObject>("NowTime").GetComponent<Text>();
             Button phizBtn = rc.Get<GameObject>("PhizBtn").GetComponent<Button>();
             Button keyboardBtn = rc.Get<GameObject>("KeyboardBtn").GetComponent<Button>();
@@ -120,11 +122,12 @@ namespace ETHotfix
             Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
         }
 
-        public void Init(string gameName, int bureau, int ruleBit)
+        public void Init(string gameName, int bureau, int ruleBit, string roomId)
         {
             this.bureauCount = bureau;
             this.gameName.text = gameName;
             this.gameRule.text = Rule(ruleBit);
+            this.roomId.text = roomId;
             Bureau();
         }
         
