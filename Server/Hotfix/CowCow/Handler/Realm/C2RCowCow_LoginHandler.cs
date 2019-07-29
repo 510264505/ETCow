@@ -39,7 +39,6 @@ namespace ETHotfix
                 response.Error = 0;
                 response.Message = "恭喜您登录成功";
 
-                Log.WriteLine($"返回key:{response.Key},返回地址:{response.Address}");
                 reply(response);
             }
             catch (Exception e)

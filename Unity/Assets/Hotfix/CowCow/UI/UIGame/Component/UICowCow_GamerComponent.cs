@@ -5,11 +5,11 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_GamerComponentAwake : AwakeSystem<UICowCow_GamerInfoComponent, GameObject, GamerInfo>
+    public class UICowCow_GamerComponentAwake : AwakeSystem<UICowCow_GamerInfoComponent, GameObject, GamerInfo, int>
     {
-        public override void Awake(UICowCow_GamerInfoComponent self, GameObject parent, GamerInfo info)
+        public override void Awake(UICowCow_GamerInfoComponent self, GameObject parent, GamerInfo info, int pos)
         {
-            self.Awake(parent, info);
+            self.Awake(parent, info, pos);
         }
     }
     public class UICowCow_GamerInfoComponent : Component
@@ -19,9 +19,12 @@ namespace ETHotfix
         private Text status;
         private CanvasGroup HandCard { get; set; }
         private Image[] cards = new Image[5];
+        //是否准备
+        public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
-        public void Awake(GameObject parent, GamerInfo info)
+        public void Awake(GameObject parent, GamerInfo info, int posIndex)
         {
+            this.Status = (UIGamerStatus)info.Status;
             UIGameInfo = GamerFactory.Create(UICowCowType.CowCowGamerInfo);
             UIGameInfo.transform.SetParent(parent.transform, false);
             ReferenceCollector rc = UIGameInfo.GetComponent<ReferenceCollector>();

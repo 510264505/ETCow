@@ -2513,6 +2513,14 @@ namespace ETHotfix {
       }
     }
 
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
+      set {
+        userID_ = value;
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       if (GameName.Length != 0) {
         output.WriteRawTag(10);
@@ -2529,6 +2537,10 @@ namespace ETHotfix {
       if (RoomID.Length != 0) {
         output.WriteRawTag(34);
         output.WriteString(RoomID);
+      }
+      if (UserID != 0L) {
+        output.WriteRawTag(40);
+        output.WriteInt64(UserID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -2567,6 +2579,9 @@ namespace ETHotfix {
       if (RoomID.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
       }
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
+      }
       return size;
     }
 
@@ -2575,6 +2590,7 @@ namespace ETHotfix {
       bureau_ = 0;
       ruleBit_ = 0;
       roomID_ = "";
+      userID_ = 0;
       rpcId_ = 0;
       error_ = 0;
       message_ = "";
@@ -2598,6 +2614,10 @@ namespace ETHotfix {
           }
           case 34: {
             RoomID = input.ReadString();
+            break;
+          }
+          case 40: {
+            UserID = input.ReadInt64();
             break;
           }
           case 720: {
@@ -2646,8 +2666,20 @@ namespace ETHotfix {
       set { gamerInfo_ = value; }
     }
 
+    private int seatID_;
+    public int SeatID {
+      get { return seatID_; }
+      set {
+        seatID_ = value;
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       gamerInfo_.WriteTo(output, _repeated_gamerInfo_codec);
+      if (SeatID != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(SeatID);
+      }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
         output.WriteInt32(RpcId);
@@ -2667,12 +2699,16 @@ namespace ETHotfix {
         size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
       }
       size += gamerInfo_.CalculateSize(_repeated_gamerInfo_codec);
+      if (SeatID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
+      }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
       for (int i = 0; i < gamerInfo_.Count; i++) { MessagePool.Instance.Recycle(gamerInfo_[i]); }
       gamerInfo_.Clear();
+      seatID_ = 0;
       rpcId_ = 0;
       actorId_ = 0;
       uint tag;
@@ -2683,6 +2719,10 @@ namespace ETHotfix {
             break;
           case 10: {
             gamerInfo_.AddEntriesFrom(input, _repeated_gamerInfo_codec);
+            break;
+          }
+          case 16: {
+            SeatID = input.ReadInt32();
             break;
           }
           case 720: {

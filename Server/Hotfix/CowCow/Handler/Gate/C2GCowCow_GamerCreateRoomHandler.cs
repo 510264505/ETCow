@@ -11,7 +11,6 @@ namespace ETHotfix
             G2C_CowCowCreateGameRoomGate response = new G2C_CowCowCreateGameRoomGate();
             try
             {
-                Log.WriteLine($"Session:{session.Id},userId:{message.UserID}");
                 UserInfo userInfo = Game.Scene.GetComponent<UserInfoComponent>().Get(message.UserID);
                 if (userInfo.Diamond < message.Bureau)
                 {

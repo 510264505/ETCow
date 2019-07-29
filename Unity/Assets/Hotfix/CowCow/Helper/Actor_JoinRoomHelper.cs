@@ -26,11 +26,20 @@ namespace ETHotfix
         protected override void Run(ETModel.Session session, Actor_CowCowJoinGameRoomGroupSend message)
         {
             //这里接收到所有玩家的消息
-            Log.Debug($"加入房间的SessionId:{session.InstanceId}");
+            UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
             for (int i = 0; i < message.GamerInfo.count; i++)
             {
-                Log.Debug($"玩家ID:{message.GamerInfo[i].UserID}，玩家椅子号:{message.GamerInfo[i].SeatID}");
+                int seatId = message.GamerInfo[i].SeatID - message.SeatID; //移位
+                if (seatId < 0)
+                {
+                    room.AddGamer(message.GamerInfo[i], seatId + GamerData.Pos.Count);
+                }
+                else
+                {
+                    room.AddGamer(message.GamerInfo[i], seatId);
+                }
             }
+            room.ShowHideInviteButton(!(message.GamerInfo.count == GamerData.Pos.Count));
         }
     }
 }

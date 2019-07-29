@@ -22,6 +22,7 @@ namespace ETHotfix
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
         private GamerComponent gamerComponent;
+        public Gamer Gamer { get; set; } = null;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -29,6 +30,8 @@ namespace ETHotfix
         private Text gameName;
         private Text gameRule;
         private Text roomId;
+        private Button readyBtn;
+        private Button inviteBtn;
 
         private StringBuilder sb = new StringBuilder();
         private int curBureauCount = 1;
@@ -91,6 +94,7 @@ namespace ETHotfix
             sb.Clear();
             curBureauCount = 1;
             isShowTime = false;
+            this.Gamer = null;
         }
         public void Awake()
         {
@@ -106,8 +110,8 @@ namespace ETHotfix
             Button keyboardBtn = rc.Get<GameObject>("KeyboardBtn").GetComponent<Button>();
             Button voiceBtn = rc.Get<GameObject>("VoiceBtn").GetComponent<Button>();
             Button dissBtn = rc.Get<GameObject>("DissBtn").GetComponent<Button>();
-            Button readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
-            Button inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
+            readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
+            inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
 
             phizBtn.onClick.Add(Onphiz);
             keyboardBtn.onClick.Add(OnKeyboard);
@@ -131,20 +135,36 @@ namespace ETHotfix
             Bureau();
         }
         
-        public void AddGamer(GamerInfo info)
+        public void AddGamer(GamerInfo info, int posIndex)
         {
             Gamer gamer = GamerComponent.AddGamerUI(info);
             if (gamer != null)
             {
-                gamer.AddComponent<UICowCow_GamerInfoComponent, GameObject, GamerInfo>(UIRoomGamer, info);
+                gamer.AddComponent<UICowCow_GamerInfoComponent, GameObject, GamerInfo, int>(UIRoomGamer, info, posIndex);
                 gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(SmallSettlement.SmallBG);
                 gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(BigSettlement.BigBG);
+            }
+            if (this.Gamer == null)
+            {
+                if (info.UserID == ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID)
+                {
+                    this.Gamer = GamerComponent.Get(info.UserID);
+                    if (this.Gamer.GetComponent<UICowCow_GamerInfoComponent>().Status == UIGamerStatus.Down)
+                    {
+                        readyBtn.GetComponent<CanvasGroup>().alpha = 1;
+                    }
+                }
             }
         }
 
         public void RemoveGamer(long id)
         {
             GamerComponent.Remove(id);
+        }
+
+        public void ShowHideInviteButton(bool isShow)
+        {
+            inviteBtn.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
         }
 
         private string Rule(int ruleBit)
