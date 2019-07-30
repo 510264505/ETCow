@@ -29,7 +29,7 @@ namespace ETHotfix
     {
         public const string W0 = "bf_0";
     }
-    public enum UIGamerStatus
+    public enum UIGamerStatus : ushort
     {
         None,       //无
         Down,       //坐下
@@ -38,6 +38,11 @@ namespace ETHotfix
         Playing,    //游戏中
         End,        //结束
         Offline,    //离线
+    }
+
+    public static class UIGamerStatusString
+    {
+        public const string Ready = "已准备";
     }
 
     public class GamerPosData

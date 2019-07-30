@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
+using Google.Protobuf.Collections;
 
 namespace ETHotfix
 {
+    [MessageHandler(AppType.Map)]
     public class C2MCowCow_GamerReadyHandler : AMRpcHandler<C2M_CowCowGamerReady, M2C_CowCowGamerReady>
     {
         protected override void Run(Session session, C2M_CowCowGamerReady message, Action<M2C_CowCowGamerReady> reply)
@@ -23,7 +25,7 @@ namespace ETHotfix
                 gamer.Status = 2;
 
                 Actor_CowCowGamerReady readyInfo = new Actor_CowCowGamerReady();
-                readyInfo.SeatIDs = new Google.Protobuf.Collections.RepeatedField<int>();
+                readyInfo.SeatIDs = new RepeatedField<int>();
                 Dictionary<int, Gamer> gamers = room.GetAll();
                 foreach (Gamer g in gamers.Values)
                 {
@@ -35,14 +37,12 @@ namespace ETHotfix
                 reply(response);
                 if (readyInfo.SeatIDs.count == room.PeopleCount)
                 {
-                    //SendCards
-                    Actor_CowCowRoomSendCards sendCards = new Actor_CowCowRoomSendCards();
-                    sendCards.Cards = new Google.Protobuf.Collections.RepeatedField<int>();
                     int count = 5; //每人持牌数
                     List<int> allCards = CowCowDealCardSystem.DealAllCards(count * room.GamerCount);
                     foreach (Gamer g in gamers.Values)
                     {
-                        sendCards.Cards.Clear();
+                        Actor_CowCowRoomDealCards sendCards = new Actor_CowCowRoomDealCards();
+                        sendCards.Cards = new RepeatedField<int>();
                         int index = g.SeatID * count;
                         for (int i = 0; i < count; i++)
                         {

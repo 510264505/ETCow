@@ -12,7 +12,6 @@ namespace ETHotfix
         {
             Gamer gamer = ComponentFactory.Create<Gamer>();
             gamer.UserID = info.UserID;
-            gamer.Status = (UIGamerStatus)info.Status;
             return gamer;
         }
 

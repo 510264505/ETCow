@@ -22,7 +22,6 @@ namespace ETHotfix
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
         private GamerComponent gamerComponent;
-        public Gamer Gamer { get; set; } = null;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -94,7 +93,7 @@ namespace ETHotfix
             sb.Clear();
             curBureauCount = 1;
             isShowTime = false;
-            this.Gamer = null;
+            GamerComponent.LocalGamer = null;
         }
         public void Awake()
         {
@@ -144,14 +143,14 @@ namespace ETHotfix
                 gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(SmallSettlement.SmallBG);
                 gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(BigSettlement.BigBG);
             }
-            if (this.Gamer == null)
+            if (GamerComponent.LocalGamer == null)
             {
                 if (info.UserID == ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID)
                 {
-                    this.Gamer = GamerComponent.Get(info.UserID);
-                    if (this.Gamer.GetComponent<UICowCow_GamerInfoComponent>().Status == UIGamerStatus.Down)
+                    GamerComponent.Init(info.UserID);
+                    if (GamerComponent.LocalGamer.GetComponent<UICowCow_GamerInfoComponent>().Status == UIGamerStatus.Down)
                     {
-                        readyBtn.GetComponent<CanvasGroup>().alpha = 1;
+                        ShowHideReadyButton(true);
                     }
                 }
             }
@@ -165,6 +164,25 @@ namespace ETHotfix
         public void ShowHideInviteButton(bool isShow)
         {
             inviteBtn.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
+            inviteBtn.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
+        }
+
+        public void ShowHideReadyButton(bool isShow)
+        {
+            readyBtn.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
+            readyBtn.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
+        }
+
+        public void GamerReady(int[] seatIds)
+        {
+            for (int i = 0; i < seatIds.Length; i++)
+            {
+                UICowCow_GamerInfoComponent gc = GamerComponent.Get(seatIds[i]).GetComponent<UICowCow_GamerInfoComponent>();
+                if (gc.Status != UIGamerStatus.Ready)
+                {
+                    gc.SetStatus(UIGamerStatusString.Ready, UIGamerStatus.Ready);
+                }
+            }
         }
 
         private string Rule(int ruleBit)
@@ -207,7 +225,7 @@ namespace ETHotfix
         }
         private void OnReady()
         {
-
+            Actor_GamerReadyHelper.OnReady(GamerComponent.LocalSeatID, this.roomId.text).Coroutine();
         }
         private void OnInvite()
         {

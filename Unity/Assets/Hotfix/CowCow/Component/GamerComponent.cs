@@ -9,6 +9,13 @@ namespace ETHotfix
         private readonly Dictionary<int, Gamer> gamers = new Dictionary<int, Gamer>();
 
         public Gamer LocalGamer { get; set; }
+        public int LocalSeatID { get; set; }
+
+        public void Init(long id)
+        {
+            this.LocalGamer = Get(id);
+            this.LocalSeatID = GetGamerSeat(id);
+        }
 
         public void Add(Gamer gamer, int seatIndex)
         {
@@ -36,6 +43,16 @@ namespace ETHotfix
             }
             return null;
         }
+
+        public Gamer Get(int seatId)
+        {
+            if (this.gamers.TryGetValue(seatId, out Gamer gamer))
+            {
+                return gamer;
+            }
+            return null;
+        }
+
         public Gamer[] GetAll()
         {
             return gamers.Values.ToArray();
@@ -76,6 +93,7 @@ namespace ETHotfix
             base.Dispose();
 
             this.LocalGamer = null;
+            this.LocalSeatID = 0;
             this.seats.Clear();
             foreach (Gamer gamer in gamers.Values)
             {

@@ -39,7 +39,7 @@ namespace ETHotfix
                     room.AddGamer(message.GamerInfo[i], seatId);
                 }
             }
-            room.ShowHideInviteButton(!(message.GamerInfo.count == GamerData.Pos.Count));
+            room.ShowHideInviteButton(!(message.GamerInfo.count == GamerData.Pos.Count - 5));
         }
     }
 }

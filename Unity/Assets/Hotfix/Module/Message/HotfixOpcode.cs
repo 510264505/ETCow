@@ -87,8 +87,8 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowGamerReady)]
 	public partial class Actor_CowCowGamerReady : IActorMessage {}
 
-	[Message(HotfixOpcode.Actor_CowCowRoomSendCards)]
-	public partial class Actor_CowCowRoomSendCards : IActorMessage {}
+	[Message(HotfixOpcode.Actor_CowCowRoomDealCards)]
+	public partial class Actor_CowCowRoomDealCards : IActorMessage {}
 
 	[Message(HotfixOpcode.C2M_CowCowGamerSubmitCardType)]
 	public partial class C2M_CowCowGamerSubmitCardType : IRequest {}
@@ -137,7 +137,7 @@ namespace ETHotfix
 		 public const ushort C2M_CowCowGamerReady = 10025;
 		 public const ushort M2C_CowCowGamerReady = 10026;
 		 public const ushort Actor_CowCowGamerReady = 10027;
-		 public const ushort Actor_CowCowRoomSendCards = 10028;
+		 public const ushort Actor_CowCowRoomDealCards = 10028;
 		 public const ushort C2M_CowCowGamerSubmitCardType = 10029;
 		 public const ushort M2C_CowCowGamerSubmitCardType = 10030;
 		 public const ushort Actor_CowCowGamerSubmitCardType = 10031;

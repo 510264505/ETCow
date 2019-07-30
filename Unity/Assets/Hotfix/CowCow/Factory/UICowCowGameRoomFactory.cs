@@ -19,6 +19,7 @@ namespace ETHotfix
                 ui.AddComponent<UICowCow_GameRoomComponent>(); //加入游戏房间组件
                 ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit, room.RoomID);
                 ui.GetComponent<UICowCow_GameRoomComponent>().AddGamer(room.GamerInfo, room.GamerInfo.SeatID);
+                ui.GetComponent<UICowCow_GameRoomComponent>().ShowHideInviteButton(true);
                 return ui;
             }
             catch (Exception e)

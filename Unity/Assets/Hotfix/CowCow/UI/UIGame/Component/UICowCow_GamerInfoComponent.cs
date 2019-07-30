@@ -51,15 +51,16 @@ namespace ETHotfix
         /// </summary>
         public void ShowHideHandCard(bool isShow)
         {
-            HandCard.alpha = isShow ? 1 : 0;
+            this.HandCard.alpha = isShow ? 1 : 0;
         }
 
         /// <summary>
         /// 显示状态
         /// </summary>
-        public void SetStatus(string status)
+        public void SetStatus(string status, UIGamerStatus uiStatus)
         {
             this.status.text = status;
+            this.Status = uiStatus;
         }
 
         /// <summary>
@@ -75,10 +76,16 @@ namespace ETHotfix
         /// </summary>
         public void SetCards(Sprite[] sprites)
         {
-            for (int i = 0; i < cards.Length; i++)
+            for (int i = 0; i < this.cards.Length; i++)
             {
-                cards[i].sprite = sprites[i];
+                this.cards[i].sprite = sprites[i];
             }
+        }
+
+        public void SetCard(int n, Sprite sprite)
+        {
+            this.cards[n].sprite = sprite;
+            ShowHideHandCard(n + 1 == this.cards.Length);
         }
 
         public override void Dispose()

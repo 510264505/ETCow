@@ -2990,9 +2990,9 @@ namespace ETHotfix {
 
   }
 
-  public partial class Actor_CowCowRoomSendCards : pb::IMessage {
-    private static readonly pb::MessageParser<Actor_CowCowRoomSendCards> _parser = new pb::MessageParser<Actor_CowCowRoomSendCards>(() => (Actor_CowCowRoomSendCards)MessagePool.Instance.Fetch(typeof(Actor_CowCowRoomSendCards)));
-    public static pb::MessageParser<Actor_CowCowRoomSendCards> Parser { get { return _parser; } }
+  public partial class Actor_CowCowRoomDealCards : pb::IMessage {
+    private static readonly pb::MessageParser<Actor_CowCowRoomDealCards> _parser = new pb::MessageParser<Actor_CowCowRoomDealCards>(() => (Actor_CowCowRoomDealCards)MessagePool.Instance.Fetch(typeof(Actor_CowCowRoomDealCards)));
+    public static pb::MessageParser<Actor_CowCowRoomDealCards> Parser { get { return _parser; } }
 
     private int rpcId_;
     public int RpcId {

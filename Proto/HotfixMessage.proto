@@ -226,7 +226,7 @@ message Actor_CowCowGamerReady // IActorMessage
 	repeated int32 SeatIDs = 1;
 }
 
-message Actor_CowCowRoomSendCards // IActorMessage
+message Actor_CowCowRoomDealCards // IActorMessage
 {
 	int32 RpcId = 90;
 	int64 ActorId = 94;
