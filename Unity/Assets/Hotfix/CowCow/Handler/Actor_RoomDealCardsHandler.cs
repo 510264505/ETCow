@@ -13,7 +13,7 @@ namespace ETHotfix
             UICowCow_GamerInfoComponent gc = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>().GamerComponent.LocalGamer.GetComponent<UICowCow_GamerInfoComponent>();
             for (int i = 0; i < message.Cards.count; i++)
             {
-                gc.SetCard(i, (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(message.Cards[i])));
+                gc.SetCard(i, message.Cards[i], (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(message.Cards[i])));
             }
         }
     }

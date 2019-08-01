@@ -98,6 +98,7 @@
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_GamerReadyHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_JoinRoomHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_LoginHelper.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Helper\CalculateCowTypeHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\CardHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Object\CowCowUIType.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_BigSettlementComponent.cs" />

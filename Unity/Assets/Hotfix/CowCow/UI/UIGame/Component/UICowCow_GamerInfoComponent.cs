@@ -1,4 +1,5 @@
 ﻿using ETModel;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +20,8 @@ namespace ETHotfix
         private Text status;
         private CanvasGroup HandCard { get; set; }
         private Image[] cards = new Image[5];
+        private Button promptBtn;
+        private List<int> cardList = new List<int>();
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
@@ -40,10 +43,21 @@ namespace ETHotfix
             {
                 cards[i] = rc.Get<GameObject>("Card" + i).GetComponent<Image>();
             }
+            promptBtn = rc.Get<GameObject>("PromptBtn").GetComponent<Button>();
 
+            promptBtn.onClick.Add(OnPrompt);
             gamerNames.text = info.Name;
             SetCoin(info.Coin.ToString());
             //headIcon.sprite = info.HeadIcon;
+        }
+
+        /// <summary>
+        /// 提示按钮，系统计算牌型，并从新排列和关闭按钮
+        /// </summary>
+        private void OnPrompt()
+        {
+            int[] threeCard = CalculateCowTypeHelper.MostMaxCowType(cardList);
+
         }
 
         /// <summary>
@@ -82,8 +96,13 @@ namespace ETHotfix
             }
         }
 
-        public void SetCard(int n, Sprite sprite)
+        public void SetCard(int n, int card, Sprite sprite)
         {
+            if (n == 0)
+            {
+                cardList.Clear();
+            }
+            cardList.Add(card);
             this.cards[n].sprite = sprite;
             ShowHideHandCard(n + 1 == this.cards.Length);
         }

@@ -71,4 +71,13 @@ namespace ETHotfix
             { 6, new GamerPosData(new Vector2(-600,    0), new Vector2(-350,    0)) },
         };
     }
+
+    public enum CowType : ushort
+    {
+        None,           //无牛
+        Cow,            //有牛
+        FiveFlowerCow,  //五花牛
+        BombCow,        //炸弹牛
+        FiveSmallCow,   //五小牛
+    }
 }
