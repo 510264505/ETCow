@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace ETHotfix
 {
@@ -18,16 +19,22 @@ namespace ETHotfix
         private GameObject UIGameInfo { get; set; }
         private Text coin;
         private Text status;
+        private Text cowType;
         private CanvasGroup HandCard { get; set; }
         private Image[] cards = new Image[5];
         private Button promptBtn;
+        private Button submitBtn;
         private List<int> cardList = new List<int>();
+        private CalculateCowTypeData cowTypeData;
+        private C2M_CowCowGamerSubmitCardType submitCard;
+        public string gamerName { get; set; }
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
         public void Awake(GameObject parent, GamerInfo info, int posIndex)
         {
             this.Status = (UIGamerStatus)info.Status;
+            this.gamerName = info.Name;
             UIGameInfo = GamerFactory.Create(UICowCowType.CowCowGamerInfo);
             UIGameInfo.transform.SetParent(parent.transform, false);
             ReferenceCollector rc = UIGameInfo.GetComponent<ReferenceCollector>();
@@ -44,11 +51,22 @@ namespace ETHotfix
                 cards[i] = rc.Get<GameObject>("Card" + i).GetComponent<Image>();
             }
             promptBtn = rc.Get<GameObject>("PromptBtn").GetComponent<Button>();
+            submitBtn = rc.Get<GameObject>("SubmitBtn").GetComponent<Button>();
 
             promptBtn.onClick.Add(OnPrompt);
+            submitBtn.onClick.Add(OnSubmit);
             gamerNames.text = info.Name;
             SetCoin(info.Coin.ToString());
             //headIcon.sprite = info.HeadIcon;
+        }
+
+        private void InitSubmitCard()
+        {
+            submitCard.MaxCard = 0;
+            submitCard.CardType = 0;
+            submitCard.FlowerColor = 0;
+            submitCard.CowNumber = 0;
+            submitCard.Cards.Clear();
         }
 
         /// <summary>
@@ -56,8 +74,49 @@ namespace ETHotfix
         /// </summary>
         private void OnPrompt()
         {
-            int[] threeCard = CalculateCowTypeHelper.MostMaxCowType(cardList);
+            InitSubmitCard();
+            cowTypeData = CalculateCowTypeHelper.MostMaxCowType(cardList);
+            switch (cowTypeData.cowType)
+            {
+                case CowType.None:
+                    SetCowType("无牛");
+                    break;
+                case CowType.HaveCow:
+                    for (int i = 0; i < cowTypeData.indexs.Length; i++)
+                    {
+                        UpMoveCard(cowTypeData.indexs[i]);
+                    }
+                    SetCowType($"牛{cowTypeData.cowNumber}");
+                    break;
+                case CowType.FiveFlowerCow:
+                    SetCowType("五花牛");
+                    break;
+                case CowType.BombCow:
+                    for (int i = 0; i < cowTypeData.indexs.Length; i++)
+                    {
+                        UpMoveCard(cowTypeData.indexs[i]);
+                    }
+                    SetCowType("炸弹牛");
+                    break;
+                case CowType.FiveSmallCow:
+                    SetCowType("五小牛");
+                    break;
+            }
+        }
 
+        private void OnSubmit()
+        {
+            submitCard.MaxCard = cowTypeData.maxCard;
+            submitCard.CardType = (int)cowTypeData.cowType;
+            submitCard.FlowerColor = (int)cowTypeData.floweColor;
+            submitCard.CowNumber = cowTypeData.cowNumber;
+            for (int i = 0; i < cowTypeData.indexs.Length; i++)
+            {
+                int temp = cardList[cowTypeData.indexs[i]];
+                cardList.Remove(temp);
+                cardList.Insert(0, temp);
+            }
+            submitCard.Cards.AddRange(cardList);
         }
 
         /// <summary>
@@ -85,6 +144,11 @@ namespace ETHotfix
             this.coin.text = coin;
         }
 
+        private void SetCowType(string type)
+        {
+            this.cowType.text = type;
+        }
+
         /// <summary>
         /// 设置手牌
         /// </summary>
@@ -96,15 +160,31 @@ namespace ETHotfix
             }
         }
 
-        public void SetCard(int n, int card, Sprite sprite)
+        public void SetCards(int[] indexs)
         {
-            if (n == 0)
+            ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            
+            for (int i = 0; i < this.cards.Length; i++)
+            {
+                Sprite sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(indexs[i]));
+                this.cards[i].sprite = sprite;
+            }
+        }
+
+        public void SetCard(int index, int card, Sprite sprite)
+        {
+            if (index == 0)
             {
                 cardList.Clear();
             }
             cardList.Add(card);
-            this.cards[n].sprite = sprite;
-            ShowHideHandCard(n + 1 == this.cards.Length);
+            this.cards[index].sprite = sprite;
+            ShowHideHandCard(index + 1 == this.cards.Length);
+        }
+
+        private void UpMoveCard(int index)
+        {
+            cards[index].transform.DOLocalMoveY(20, 0.5f);
         }
 
         public override void Dispose()

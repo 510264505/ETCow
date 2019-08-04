@@ -38,13 +38,26 @@ namespace ETHotfix
             }
         }
 
-        public void SetGamerSmallSettlement()
+        public void SetGamerSmallSettlement(int seatId, string name, int betCoin, int type, int losewin, int[] list)
         {
-            banker.alpha = true ? 1 : 0;
-            gamerName.text = "";
-            bets.text = "";
-            cardType.text = "";
-            score.text = "";
+            banker.alpha = seatId == 0 ? 1 : 0;
+            gamerName.text = name;
+            bets.text = betCoin.ToString();
+            //switch ((CowType)type)
+            //{
+            //    case CowType.None:
+            //        break;
+            //    case CowType.HaveCow:
+            //        break;
+            //    case CowType.FiveFlowerCow:
+            //        break;
+            //    case CowType.BombCow:
+            //        break;
+            //    case CowType.FiveSmallCow:
+            //        break;
+            //}
+            cardType.text = ((CowType)type).ToString();
+            score.text = losewin.ToString();
             for (int i = 0; i < cards.Length; i++)
             {
                 cards[i].sprite = null;

@@ -3422,11 +3422,11 @@ namespace ETHotfix {
     private static readonly pb::MessageParser<CowCowSmallSettlementInfo> _parser = new pb::MessageParser<CowCowSmallSettlementInfo>(() => (CowCowSmallSettlementInfo)MessagePool.Instance.Fetch(typeof(CowCowSmallSettlementInfo)));
     public static pb::MessageParser<CowCowSmallSettlementInfo> Parser { get { return _parser; } }
 
-    private int seatIDs_;
-    public int SeatIDs {
-      get { return seatIDs_; }
+    private int seatID_;
+    public int SeatID {
+      get { return seatID_; }
       set {
-        seatIDs_ = value;
+        seatID_ = value;
       }
     }
 
@@ -3462,10 +3462,18 @@ namespace ETHotfix {
       }
     }
 
+    private int cowNumber_;
+    public int CowNumber {
+      get { return cowNumber_; }
+      set {
+        cowNumber_ = value;
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
-      if (SeatIDs != 0) {
+      if (SeatID != 0) {
         output.WriteRawTag(8);
-        output.WriteInt32(SeatIDs);
+        output.WriteInt32(SeatID);
       }
       cards_.WriteTo(output, _repeated_cards_codec);
       if (CardsType != 0) {
@@ -3480,12 +3488,16 @@ namespace ETHotfix {
         output.WriteRawTag(40);
         output.WriteInt32(LoseWin);
       }
+      if (CowNumber != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(CowNumber);
+      }
     }
 
     public int CalculateSize() {
       int size = 0;
-      if (SeatIDs != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatIDs);
+      if (SeatID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
       }
       size += cards_.CalculateSize(_repeated_cards_codec);
       if (CardsType != 0) {
@@ -3497,15 +3509,19 @@ namespace ETHotfix {
       if (LoseWin != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(LoseWin);
       }
+      if (CowNumber != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CowNumber);
+      }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
-      seatIDs_ = 0;
+      seatID_ = 0;
       cards_.Clear();
       cardsType_ = 0;
       betCoin_ = 0;
       loseWin_ = 0;
+      cowNumber_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
         switch(tag) {
@@ -3513,7 +3529,7 @@ namespace ETHotfix {
             input.SkipLastField();
             break;
           case 8: {
-            SeatIDs = input.ReadInt32();
+            SeatID = input.ReadInt32();
             break;
           }
           case 18:
@@ -3531,6 +3547,10 @@ namespace ETHotfix {
           }
           case 40: {
             LoseWin = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            CowNumber = input.ReadInt32();
             break;
           }
         }

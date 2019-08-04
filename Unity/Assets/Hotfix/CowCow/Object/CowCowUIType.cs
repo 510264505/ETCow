@@ -75,9 +75,17 @@ namespace ETHotfix
     public enum CowType : ushort
     {
         None,           //无牛
-        Cow,            //有牛
+        HaveCow,            //有牛
         FiveFlowerCow,  //五花牛
         BombCow,        //炸弹牛
         FiveSmallCow,   //五小牛
+    }
+    public enum CardFlowerColor : ushort
+    {
+        Diamond,    //方块
+        Plum,       //梅花
+        Heart,      //红心
+        Spades,     //黑桃
+        None,       
     }
 }

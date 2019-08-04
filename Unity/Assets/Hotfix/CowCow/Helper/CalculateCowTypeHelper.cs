@@ -6,191 +6,161 @@ using System.Threading.Tasks;
 
 namespace ETHotfix
 {
-    class CalculateCowTypeHelper
+    public struct CalculateCowTypeData
     {
+        public int maxCard;
+        public CowType cowType;
+        public CardFlowerColor floweColor;
+        public int cowNumber;
+        public int[] indexs;
+        public void Init()
+        {
+            this.maxCard = 0;
+            this.cowType = CowType.None;
+            this.floweColor = CardFlowerColor.None;
+            this.cowNumber = 0;
+        }
+    }
+    public static class CalculateCowTypeHelper
+    {
+        private const int thirteen = 13;
+        private const int eleven = 11;
+        private const int tan = 10;
+        private const int three = 3;
+        private static CalculateCowTypeData data = new CalculateCowTypeData();
         /// <summary>
         /// 取最大的牛牌型，并取出同牌型最大的那张比拼
         /// </summary>
-        public static int[] MostMaxCowType(List<int> card)
+        public static CalculateCowTypeData MostMaxCowType(List<int> card)
         {
-            int oneColumn = 13; //一列，一种花色
-            int bigTan = 11; //大于十
-            int fiveSmallSum = 0;
-            int bombCount = 0;
-            int fiveFlowerCount = 0;
-            int haveSum = 0;
-            int haveNumber = 0;
-            int notMax = 0;
-            int notIndex = 0;
-            int oneMax = card[card.Count - 1]; //直接取最后一张
-            int twoMax = 0;
-            Dictionary<int, bool> dic = new Dictionary<int, bool>();
-            for (int i = 0; i < card.Count; i++)
+            data.Init();
+            if (FiveSmallCow(card))
             {
-                if (card[i] % oneColumn != 0) //五小牛
-                {
-                    fiveSmallSum += card[i] % oneColumn;
-                }
-                else
-                {
-                    fiveSmallSum += card[i] % oneColumn + oneColumn;
-                }
-                if (!dic.ContainsKey(card[i] % oneColumn)) //炸弹牛
-                {
-                    dic.Add(card[i] % oneColumn, true);
-                }
-                else
-                {
-                    bombCount++;
-                }
-                if (card[i] % oneColumn >= bigTan || card[i] % oneColumn == 0) //五花牛
-                {
-                    fiveFlowerCount++;
-                }
-                if (i <= 2) //普通牛
-                {
-                    haveSum += card[i];
-                }
-                else
-                {
-                    if (haveNumber < card[i] % 13) //取最大的，第二次比不过时，不用从新赋值
-                    {
-                        twoMax = card[i];
-                    }
-                    haveNumber += card[i] % oneColumn;
-                }
-                if (card[i] % oneColumn > notMax) //无牛
-                {
-                    notIndex = i;
-                    notMax = card[i];
-                }
+                return data;
             }
-            if (fiveSmallSum < 10)
+            else if (BombCow(card))
             {
-                return new int[3] { (int)CowType.FiveSmallCow, fiveSmallSum, notIndex };
+                return data;
             }
-            else if (bombCount >= 3)
+            else if (FiveFlowerCow(card))
             {
-                return new int[3] { (int)CowType.BombCow, bombCount, oneMax };
+                return data;
             }
-            else if (fiveFlowerCount == 5)
+            else if (HaveCow(card))
             {
-                return new int[3] { (int)CowType.FiveFlowerCow, fiveFlowerCount, notMax };
+                return data;
             }
-            else if (haveSum == 10)
-            {
-                return new int[3] { (int)CowType.Cow, haveNumber % 10, twoMax };
-            }
-            else
-            {
-                return new int[3] { (int)CowType.None, notMax, notMax };
-            }
+            return data;
         }
         /// <summary>
         /// 五小牛
         /// </summary>
-        public static int[] FiveSmallCow(List<int> card)
+        public static bool FiveSmallCow(List<int> card)
         {
             int sum = 0;
-            int max = 0;
             for (int i = 0; i < card.Count; i++)
             {
-                if (card[i] % 13 != 0) //五小牛
+                if (card[i] % thirteen != 0) //五小牛
                 {
-                    sum += card[i] % 13;
+                    sum += card[i] % thirteen;
                 }
                 else
                 {
-                    sum += card[i] % 13 + 13;
+                    sum += card[i] % thirteen + thirteen;
                 }
-                if (card[i] % 13 > max) //无牛
+                if (card[i] % thirteen >= data.maxCard % thirteen && card[i] >= data.maxCard)
                 {
-                    max = i;
+                    data.maxCard = card[i]; //五张中最大
                 }
             }
-            return sum < 10 ? new int[] { 4, sum, max } : null;
+            bool isFiveSmallCow = sum < tan;
+            if (isFiveSmallCow)
+            {
+                data.cowType = CowType.FiveSmallCow;
+            }
+            data.floweColor = (CardFlowerColor)(data.maxCard % thirteen);
+            return isFiveSmallCow;
         }
         /// <summary>
         /// 炸弹牛
         /// </summary>
-        public static int[] BombCow(List<int> card)
+        public static bool BombCow(List<int> card)
         {
             int count = 0;
+            int num = 0;
             Dictionary<int, bool> dic = new Dictionary<int, bool>();
             for (int i = 0; i < card.Count; i++)
             {
-                if (!dic.ContainsKey(card[i] % 13))
+                if (!dic.ContainsKey(card[i] % thirteen))
                 {
-                    dic.Add(card[i] % 13, true);
+                    dic.Add(card[i] % thirteen, true);
                 }
                 else
                 {
                     count++;
+                    num = card[i] % thirteen;
                 }
             }
-            return count >= 3 ? new int[3] { 3, count, card[card.Count - 1] } : null;
+            bool isBomb = count >= three;
+            if (isBomb)
+            {
+                data.cowType = CowType.BombCow;
+                data.indexs = new int[4];
+                int n = 0;
+                for (int i = 0; i < card.Count; i++)
+                {
+                    if (card[i] % thirteen == num)
+                    {
+                        data.indexs[n] = i;
+                        n++;
+                    }
+                }
+            }
+            return isBomb;
         }
         /// <summary>
         /// 五花牛
         /// </summary>
-        public static int[] FiveFlowerCow(List<int> card)
+        public static bool FiveFlowerCow(List<int> card)
         {
             int count = 0;
-            int max = 0;
             for (int i = 0; i < card.Count; i++)
             {
-                if (card[i] % 13 >= 11 || card[i] % 13 == 0)
+                if (card[i] % 13 >= eleven || card[i] % thirteen == 0)
                 {
                     count++;
                 }
-                if (card[i] % 13 > max) //无牛
-                {
-                    max = card[i];
-                }
             }
-            return count >= 5 ? new int[3] { 2, count, max } : null;
+            bool isFiveFlowerCow = count >= 5;
+            if (isFiveFlowerCow)
+            {
+                data.cowType = CowType.FiveFlowerCow;
+            }
+            return isFiveFlowerCow;
         }
         /// <summary>
         /// 有牛
         /// </summary>
-        public static int[] HaveCow(List<int> card)
+        public static bool HaveCow(List<int> card)
         {
-            int sum = 0;
-            int number = 0;
-            int max = 0;
-            for (int i = 0; i < card.Count; i++)
+            tempHaveCow.Clear();
+            Combination(card, three);
+            bool isHaveCow = tempHaveCow.Count > 0;
+            if (isHaveCow)
             {
-                if (i <= 2) //普通牛
-                {
-                    sum += card[i];
-                }
-                else
-                {
-                    if (number < card[i] % 13) //取最大的，第二次比不过时，不用从新赋值
-                    {
-                        max = card[i];
-                    }
-                    number += card[i] % 13;
-                }
+                data.cowType = CowType.HaveCow;
+                data.indexs = tempHaveCow[0];
+                data.cowNumber = cowNumber;
             }
-            return sum == 10 ? new int[3] { 2, sum, max } : null;
+            return isHaveCow;
         }
         /// <summary>
         /// 散牌中的最大值
         /// </summary>
-        public static int[] NotCow(List<int> card)
+        public static bool NotCow(List<int> card)
         {
-            int max = 0;
-            int index = 0;
-            for (int i = 0; i < card.Count; i++)
-            {
-                if (card[i] % 13 > max)
-                {
-                    index = i;
-                    max = card[i];
-                }
-            }
-            return new int[3] { 0, max, max };
+            data.cowType = CowType.None;
+            return true;
         }
         /// <summary>
         /// 所有有牛组合-----------------客户端需要给玩家有牛的提示
@@ -276,6 +246,59 @@ namespace ETHotfix
                 return n;
             }
             return n * Factorial(n - 1);
+        }
+        private static List<int[]> tempHaveCow = new List<int[]>();
+        private static int cowNumber = 0;
+        public static void Combination(List<int> list, int nCount, List<int> result = null, int head = 0)
+        {
+            if (result == null)
+            {
+                result = new List<int>();
+            }
+            if (result.Count == nCount)
+            {
+                int sum = 0;
+                for (int i = 0; i < nCount; i++)
+                {
+                    sum += result[i];
+                }
+                if (sum % 10 == 0)
+                {
+                    List<int> indexs = new List<int>();
+                    List<int> tempSum = new List<int>();
+                    tempSum.AddRange(list);
+                    for (int i = 0; i < result.Count; i++)
+                    {
+                        for (int j = 0; j < list.Count; j++)
+                        {
+                            if (list[i] == result[j])
+                            {
+                                indexs.Add(i);
+                                break;
+                            }
+                        }
+                        tempSum.Remove(result[i]);
+                    }
+                    tempHaveCow.Add(indexs.ToArray());
+                    cowNumber = 0;
+                    for (int i = 0; i < tempSum.Count; i++)
+                    {
+                        cowNumber += tempSum[i];
+                    }
+                }
+            }
+            else
+            {
+                for (int i = head; i < list.Count; i++)
+                {
+                    if (result.Count < nCount)
+                    {
+                        result.Add(list[i]);
+                        Combination(list, nCount, result, i + 1);
+                        result.RemoveAt(result.Count - 1);
+                    }
+                }
+            }
         }
     }
 }

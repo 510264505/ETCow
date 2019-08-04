@@ -1,6 +1,7 @@
 ﻿using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace ETHotfix
 {
@@ -33,6 +34,15 @@ namespace ETHotfix
         private void OnContinue()
         {
             Debug.Log("小结算继续游戏！");
+            ShowHideSmallSettlement(false, 1000).Coroutine();
+        }
+
+        public async ETVoid ShowHideSmallSettlement(bool isShow, long timer)
+        {
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(timer);
+            CanvasGroup canvasGroup = SmallBG.GetComponent<CanvasGroup>();
+            canvasGroup.blocksRaycasts = isShow;
+            canvasGroup.DOFade(isShow ? 1 : 0, 1);
         }
     }
 }

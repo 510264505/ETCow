@@ -261,11 +261,12 @@ message Actor_CowCowGamerSubmitCardType // IActorMessage
 
 message CowCowSmallSettlementInfo // IMessage
 {
-	int32 SeatIDs = 1;
+	int32 SeatID = 1;
 	repeated int32 Cards = 2;
 	int32 CardsType = 3;
 	int32 BetCoin = 4;
 	int32 LoseWin = 5;
+	int32 CowNumber = 6;
 }
 
 message Actor_CowCowRoomOpenCardsAndSettlement // IActorMessage

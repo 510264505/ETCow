@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Text;
 using System;
 using System.Threading;
+using System.Linq;
 
 namespace ETHotfix
 {
@@ -87,6 +88,7 @@ namespace ETHotfix
                 return gamerComponent;
             }
         }
+        public string RoomID { get; set; }
 
         private void ReSet()
         {
@@ -131,6 +133,7 @@ namespace ETHotfix
             this.gameName.text = gameName;
             this.gameRule.text = Rule(ruleBit);
             this.roomId.text = roomId;
+            this.RoomID = roomId;
             Bureau();
         }
         
@@ -225,7 +228,7 @@ namespace ETHotfix
         }
         private void OnReady()
         {
-            Actor_GamerReadyHelper.OnReady(GamerComponent.LocalSeatID, this.roomId.text).Coroutine();
+            Actor_GamerReadyHelper.OnReady(GamerComponent.LocalSeatID, this.RoomID).Coroutine();
         }
         private void OnInvite()
         {
@@ -238,6 +241,21 @@ namespace ETHotfix
         public void ChangeDesk(Sprite sprite)
         {
             BackGround.GetComponent<Image>().sprite = sprite;
+        }
+
+        public void OpenAllGamerHandCard(CowCowSmallSettlementInfo[] info)
+        {
+            Dictionary<int,Gamer> gamers = GamerComponent.GetDictAll();
+            for (int i = 0; i < info.Length; i++)
+            {
+                int[] cards = info[i].Cards.ToArray();
+                UICowCow_GamerInfoComponent gic = gamers[info[i].SeatID].GetComponent<UICowCow_GamerInfoComponent>();
+                UICowCow_SSGamerResultComponent ssgrc = gamers[info[i].SeatID].GetComponent<UICowCow_SSGamerResultComponent>();
+                gic.SetCards(cards);
+                ssgrc.SetGamerSmallSettlement(info[i].SeatID, gic.gamerName, info[i].BetCoin, info[i].CardsType, info[i].LoseWin, cards);
+            }
+            //在此延迟显示小结算
+            SmallSettlement.ShowHideSmallSettlement(true, 5000).Coroutine();
         }
 
         public override void Dispose()
