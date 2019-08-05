@@ -288,7 +288,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u725B\u4E00"
+  m_Text: 
 --- !u!1 &3925795278046977615
 GameObject:
   m_ObjectHideFlags: 0
@@ -519,6 +519,8 @@ MonoBehaviour:
     gameObject: {fileID: 7003476034439446801}
   - key: SubmitBtn
     gameObject: {fileID: 562535152519731109}
+  - key: CowType
+    gameObject: {fileID: 3450748311766820801}
 --- !u!1 &4249007959703645909
 GameObject:
   m_ObjectHideFlags: 0
@@ -568,7 +570,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4249007959703645909}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

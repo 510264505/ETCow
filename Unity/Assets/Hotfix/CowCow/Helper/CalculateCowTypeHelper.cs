@@ -260,9 +260,13 @@ namespace ETHotfix
                 int sum = 0;
                 for (int i = 0; i < nCount; i++)
                 {
-                    sum += result[i];
+                    int num = result[i] % thirteen;
+                    if (num < tan)
+                    {
+                        sum += num;
+                    }
                 }
-                if (sum % 10 == 0)
+                if (sum % tan == 0)
                 {
                     List<int> indexs = new List<int>();
                     List<int> tempSum = new List<int>();
@@ -271,9 +275,9 @@ namespace ETHotfix
                     {
                         for (int j = 0; j < list.Count; j++)
                         {
-                            if (list[i] == result[j])
+                            if (result[i] == list[j])
                             {
-                                indexs.Add(i);
+                                indexs.Add(j);
                                 break;
                             }
                         }
@@ -283,8 +287,13 @@ namespace ETHotfix
                     cowNumber = 0;
                     for (int i = 0; i < tempSum.Count; i++)
                     {
-                        cowNumber += tempSum[i];
+                        int num = tempSum[i] % thirteen;
+                        if (num < tan)
+                        {
+                            cowNumber += num;
+                        }
                     }
+                    cowNumber %= tan;
                 }
             }
             else

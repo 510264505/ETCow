@@ -40,7 +40,7 @@ namespace ETHotfix
         public async ETVoid ShowHideSmallSettlement(bool isShow, long timer)
         {
             await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(timer);
-            CanvasGroup canvasGroup = SmallBG.GetComponent<CanvasGroup>();
+            CanvasGroup canvasGroup = this.GetParent<UI>().GameObject.GetComponent<CanvasGroup>();
             canvasGroup.blocksRaycasts = isShow;
             canvasGroup.DOFade(isShow ? 1 : 0, 1);
         }

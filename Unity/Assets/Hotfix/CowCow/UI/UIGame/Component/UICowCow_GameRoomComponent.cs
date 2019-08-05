@@ -258,6 +258,20 @@ namespace ETHotfix
             SmallSettlement.ShowHideSmallSettlement(true, 5000).Coroutine();
         }
 
+        public void DealCardsGiveAllGamer()
+        {
+            ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            Dictionary<int, Gamer> gamers = GamerComponent.GetDictAll();
+            foreach (KeyValuePair<int, Gamer> gamer in gamers)
+            {
+                if (gamer.Key != GamerComponent.LocalSeatID)
+                {
+                    UICowCow_GamerInfoComponent gic = gamer.Value.GetComponent<UICowCow_GamerInfoComponent>();
+                    gic.SetCards((Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), "CardBG"));
+                }
+            }
+        }
+
         public override void Dispose()
         {
             if (this.IsDisposed)

@@ -19,6 +19,7 @@ namespace ETHotfix
             if (response.Error == 0)
             {
                 //盖牌
+                Log.Debug("盖牌");
             }
         }
     }

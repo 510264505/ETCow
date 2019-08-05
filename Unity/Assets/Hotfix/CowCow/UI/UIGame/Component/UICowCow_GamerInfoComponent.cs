@@ -26,7 +26,7 @@ namespace ETHotfix
         private Button submitBtn;
         private List<int> cardList = new List<int>();
         private CalculateCowTypeData cowTypeData;
-        private C2M_CowCowGamerSubmitCardType submitCard;
+        private C2M_CowCowGamerSubmitCardType submitCard = new C2M_CowCowGamerSubmitCardType();
         public string gamerName { get; set; }
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
@@ -44,6 +44,7 @@ namespace ETHotfix
             Text gamerNames = rc.Get<GameObject>("Names").GetComponent<Text>();
             coin = rc.Get<GameObject>("Coin").GetComponent<Text>();
             status = rc.Get<GameObject>("Status").GetComponent<Text>();
+            cowType = rc.Get<GameObject>("CowType").GetComponent<Text>();
             HandCard = rc.Get<GameObject>("HandCard").GetComponent<CanvasGroup>();
             HandCard.transform.localPosition = GamerData.Pos[info.SeatID].CardPos;
             for (int i = 0; i < cards.Length; i++)
@@ -102,6 +103,8 @@ namespace ETHotfix
                     SetCowType("五小牛");
                     break;
             }
+            ShowHidePromptButton(false);
+            ShowHideSubmitButton(true);
         }
 
         private void OnSubmit()
@@ -110,13 +113,32 @@ namespace ETHotfix
             submitCard.CardType = (int)cowTypeData.cowType;
             submitCard.FlowerColor = (int)cowTypeData.floweColor;
             submitCard.CowNumber = cowTypeData.cowNumber;
-            for (int i = 0; i < cowTypeData.indexs.Length; i++)
+            if (cowTypeData.indexs != null)
             {
-                int temp = cardList[cowTypeData.indexs[i]];
-                cardList.Remove(temp);
-                cardList.Insert(0, temp);
+                for (int i = 0; i < cowTypeData.indexs.Length; i++)
+                {
+                    int temp = cardList[cowTypeData.indexs[i]];
+                    cardList.Remove(temp);
+                    cardList.Insert(0, temp);
+                }
             }
             submitCard.Cards.AddRange(cardList);
+            Actor_SubmitHandCardHelper.OnSubmitHandCard(submitCard).Coroutine();
+            ShowHideSubmitButton(false);
+        }
+
+        public void ShowHidePromptButton(bool isShow)
+        {
+            CanvasGroup canvasGroup = promptBtn.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = isShow ? 1 : 0;
+            canvasGroup.blocksRaycasts = isShow;
+        }
+
+        public void ShowHideSubmitButton(bool isShow)
+        {
+            CanvasGroup canvasGroup = submitBtn.GetComponent<CanvasGroup>();
+            canvasGroup.alpha = isShow ? 1 : 0;
+            canvasGroup.blocksRaycasts = isShow;
         }
 
         /// <summary>
@@ -158,17 +180,30 @@ namespace ETHotfix
             {
                 this.cards[i].sprite = sprites[i];
             }
+            ShowHideHandCard(true);
+        }
+
+        /// <summary>
+        /// 设置牌背面
+        /// </summary>
+        public void SetCards(Sprite sprite)
+        {
+            for (int i = 0; i < this.cards.Length; i++)
+            {
+                this.cards[i].sprite = sprite;
+            }
+            ShowHideHandCard(true);
         }
 
         public void SetCards(int[] indexs)
         {
             ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-            
             for (int i = 0; i < this.cards.Length; i++)
             {
                 Sprite sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(indexs[i]));
                 this.cards[i].sprite = sprite;
             }
+            ShowHideHandCard(true);
         }
 
         public void SetCard(int index, int card, Sprite sprite)

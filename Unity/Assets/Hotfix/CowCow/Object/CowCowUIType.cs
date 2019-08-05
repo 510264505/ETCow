@@ -10,7 +10,7 @@ namespace ETHotfix
     {
         public const string CowCow_Prefabs = "cowcow_prefabs";
         public const string CowCow_Sound = "cowcow_sound";
-        public const string CowCow_Texture = "cowcow_Texture";
+        public const string CowCow_Texture = "cowcow_texture";
     }
     public static partial class UICowCowType
     {

@@ -3,11 +3,11 @@
 namespace ETModel
 {
     [ObjectSystem]
-    public class GamerAwakeSystem : AwakeSystem<Gamer, long>
+    public class GamerAwakeSystem : AwakeSystem<Gamer>
     {
-        public override void Awake(Gamer self, long id)
+        public override void Awake(Gamer self)
         {
-            self.Awake(id);
+            self.Awake();
         }
     }
     public sealed class Gamer : Entity
@@ -46,9 +46,10 @@ namespace ETModel
         public int FloweColor { get; set; }
         //牛几
         public int CowNumber { get; set; }
-        public void Awake(long id)
+        public void Awake()
         {
-            this.UserID = id;
+            this.UserID = this.Id;
+            this.cards = new List<int>();
         }
         public override void Dispose()
         {

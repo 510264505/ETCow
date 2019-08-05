@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 namespace ETHotfix
 {
+    [ObjectSystem]
     public class UICowCow_SSGamerResultComponentAwake : AwakeSystem<UICowCow_SSGamerResultComponent, GameObject>
     {
         public override void Awake(UICowCow_SSGamerResultComponent self, GameObject parent)

@@ -286,20 +286,20 @@
     <Reference Include="Pathfinding.Poly2Tri">
       <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/AstarPathfindingProject/Poly2Tri/Pathfinding.Poly2Tri.dll</HintPath>
     </Reference>
+    <Reference Include="DemiLib">
+      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DemiLib/Core/DemiLib.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween">
+      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween.dll</HintPath>
+    </Reference>
+    <Reference Include="DOTween43">
+      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween43.dll</HintPath>
+    </Reference>
     <Reference Include="DOTween46">
       <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween46.dll</HintPath>
     </Reference>
     <Reference Include="DOTween50">
       <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween50.dll</HintPath>
-    </Reference>
-    <Reference Include="DemiLib">
-      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DemiLib/Core/DemiLib.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween43">
-      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween43.dll</HintPath>
-    </Reference>
-    <Reference Include="DOTween">
-      <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTween/DOTween.dll</HintPath>
     </Reference>
     <Reference Include="DOTweenPro">
       <HintPath>E:/ETFrame/ET/Unity/Assets/Plugins/DOTweens/DOTweenPro/DOTweenPro.dll</HintPath>

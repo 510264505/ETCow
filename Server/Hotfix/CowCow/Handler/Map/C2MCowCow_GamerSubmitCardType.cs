@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using ETModel;
+using Google.Protobuf.Collections;
+using System.Linq;
 
 namespace ETHotfix
 {
+    [MessageHandler(AppType.Map)]
     public class C2MCowCow_GamerSubmitCardType : AMRpcHandler<C2M_CowCowGamerSubmitCardType, M2C_CowCowGamerSubmitCardType>
     {
         protected override void Run(Session session, C2M_CowCowGamerSubmitCardType message, Action<M2C_CowCowGamerSubmitCardType> reply)
@@ -26,9 +29,10 @@ namespace ETHotfix
                 gamer.cardType = message.CardType;
                 gamer.FloweColor = message.FlowerColor;
                 gamer.CowNumber = message.CowNumber;
+                gamer.cards.AddRange(message.Cards);
 
                 Actor_CowCowGamerSubmitCardType submits = new Actor_CowCowGamerSubmitCardType();
-                submits.SeatIDs = new Google.Protobuf.Collections.RepeatedField<int>();
+                submits.SeatIDs = new RepeatedField<int>();
                 Dictionary<int, Gamer> gamers = room.GetAll();
                 foreach (Gamer g in gamers.Values)
                 {
@@ -41,11 +45,12 @@ namespace ETHotfix
                 if (submits.SeatIDs.count == room.GamerCount)
                 {
                     Actor_CowCowRoomOpenCardsAndSettlement openCards = new Actor_CowCowRoomOpenCardsAndSettlement();
-                    openCards.SmallSettlemntInfo = new Google.Protobuf.Collections.RepeatedField<CowCowSmallSettlementInfo>();
+                    openCards.SmallSettlemntInfo = new RepeatedField<CowCowSmallSettlementInfo>();
                     foreach (Gamer g in gamers.Values)
                     {
                         CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
-                        info.SeatIDs = g.SeatID;
+                        info.Cards = new RepeatedField<int>();
+                        info.SeatID = g.SeatID;
                         info.Cards.AddRange(g.cards);
                         info.CardsType = g.cardType;
                         openCards.SmallSettlemntInfo.Add(info);
