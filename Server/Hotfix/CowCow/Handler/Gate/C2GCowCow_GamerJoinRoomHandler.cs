@@ -45,7 +45,7 @@ namespace ETHotfix
                 gamer.Sex = userInfo.Sex;
                 gamer.Coin = 0;
                 gamer.RoomID = room.RoomID;
-                gamer.Status = 1;
+                gamer.Status = GamerStatus.Down;
                 gamer.IsOffline = false;
                 gamer.Identity = Identity.None;
                 room.Add(gamer);
@@ -62,7 +62,7 @@ namespace ETHotfix
                     gamerInfo.HeadIcon = g.HeadIcon;
                     gamerInfo.SeatID = g.SeatID;
                     gamerInfo.Sex = g.Sex;
-                    gamerInfo.Status = g.Status;
+                    gamerInfo.Status = (int)g.Status;
                     gamerInfo.UserID = g.UserID;
 
                     allGamer.GamerInfo.Add(gamerInfo);

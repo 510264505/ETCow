@@ -11,4 +11,14 @@
         HaveCow,        //有牛
         NotCow          //无牛
     }
+    public enum GamerStatus : ushort
+    {
+        None,       //无
+        Down,       //坐下
+        Up,         //起立
+        Ready,      //准备
+        Playing,    //游戏中
+        End,        //结束
+        Offline,    //离线
+    }
 }

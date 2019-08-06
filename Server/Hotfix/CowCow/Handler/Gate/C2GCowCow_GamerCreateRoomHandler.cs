@@ -45,7 +45,7 @@ namespace ETHotfix
                 gamer.Name = "房主" + userInfo.NickName;
                 gamer.HeadIcon = userInfo.HeadIcon;
                 gamer.RoomID = room.RoomID;
-                gamer.Status = 1;
+                gamer.Status = GamerStatus.Down;
                 gamer.IsOffline = false;
                 gamer.Identity = Identity.None;
                 gamer.Coin = 0;
@@ -63,7 +63,7 @@ namespace ETHotfix
                 response.GamerInfo.UserID = gamer.UserID; //这个ID用于保存？待定
                 response.GamerInfo.SeatID = gamer.SeatID;
                 response.GamerInfo.Sex = gamer.Sex;
-                response.GamerInfo.Status = gamer.Status;
+                response.GamerInfo.Status = (int)gamer.Status;
                 response.GamerInfo.Coin = gamer.Coin;
 
                 reply(response);

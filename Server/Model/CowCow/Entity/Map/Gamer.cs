@@ -25,7 +25,7 @@ namespace ETModel
         //玩家身份
         public Identity Identity { get; set; }
         //是否准备
-        public int Status { get; set; }
+        public GamerStatus Status { get; set; }
         //是否离线
         public bool IsOffline { get; set; }
         //玩家金币
@@ -50,6 +50,7 @@ namespace ETModel
         {
             this.UserID = this.Id;
             this.cards = new List<int>();
+            this.Status = GamerStatus.None;
         }
         public override void Dispose()
         {

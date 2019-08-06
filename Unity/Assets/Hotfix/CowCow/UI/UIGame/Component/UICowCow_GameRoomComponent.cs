@@ -170,10 +170,22 @@ namespace ETHotfix
             inviteBtn.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
         }
 
+        /// <summary>
+        /// 显示隐藏准备按钮
+        /// </summary>
         public void ShowHideReadyButton(bool isShow)
         {
             readyBtn.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
             readyBtn.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
+            if (!isShow)
+            {
+                //隐藏所有玩家手牌
+                Dictionary<int, Gamer> gamers = GamerComponent.GetDictAll();
+                foreach (Gamer gamer in gamers.Values)
+                {
+                    gamer.GetComponent<UICowCow_GamerInfoComponent>().ShowHideHandCard(isShow);
+                }
+            }
         }
 
         public void GamerReady(int[] seatIds)
@@ -183,7 +195,7 @@ namespace ETHotfix
                 UICowCow_GamerInfoComponent gc = GamerComponent.Get(seatIds[i]).GetComponent<UICowCow_GamerInfoComponent>();
                 if (gc.Status != UIGamerStatus.Ready)
                 {
-                    gc.SetStatus(UIGamerStatusString.Ready, UIGamerStatus.Ready);
+                    gc.SetStatus(UIGamerStatus.Ready, UIGamerStatusString.Ready);
                 }
             }
         }
@@ -243,6 +255,9 @@ namespace ETHotfix
             BackGround.GetComponent<Image>().sprite = sprite;
         }
 
+        /// <summary>
+        /// 打开手牌并结算
+        /// </summary>
         public void OpenAllGamerHandCard(CowCowSmallSettlementInfo[] info)
         {
             Dictionary<int,Gamer> gamers = GamerComponent.GetDictAll();
@@ -252,7 +267,8 @@ namespace ETHotfix
                 UICowCow_GamerInfoComponent gic = gamers[info[i].SeatID].GetComponent<UICowCow_GamerInfoComponent>();
                 UICowCow_SSGamerResultComponent ssgrc = gamers[info[i].SeatID].GetComponent<UICowCow_SSGamerResultComponent>();
                 gic.SetCards(cards);
-                ssgrc.SetGamerSmallSettlement(info[i].SeatID, gic.gamerName, info[i].BetCoin, info[i].CardsType, info[i].LoseWin, cards);
+                gic.SetStatus(UIGamerStatus.Down);
+                ssgrc.SetGamerSmallSettlement(info[i]);
             }
             //在此延迟显示小结算
             SmallSettlement.ShowHideSmallSettlement(true, 5000).Coroutine();

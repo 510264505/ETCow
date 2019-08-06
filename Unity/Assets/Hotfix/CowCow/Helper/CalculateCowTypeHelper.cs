@@ -143,6 +143,7 @@ namespace ETHotfix
         /// </summary>
         public static bool HaveCow(List<int> card)
         {
+            cowNumber = 0;
             tempHaveCow.Clear();
             Combination(card, three);
             bool isHaveCow = tempHaveCow.Count > 0;

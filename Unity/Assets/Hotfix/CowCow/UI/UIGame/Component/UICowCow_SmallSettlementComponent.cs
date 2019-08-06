@@ -34,7 +34,7 @@ namespace ETHotfix
         private void OnContinue()
         {
             Debug.Log("小结算继续游戏！");
-            ShowHideSmallSettlement(false, 1000).Coroutine();
+            ShowHideSmallSettlement(false, 500).Coroutine();
         }
 
         public async ETVoid ShowHideSmallSettlement(bool isShow, long timer)
@@ -42,7 +42,12 @@ namespace ETHotfix
             await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(timer);
             CanvasGroup canvasGroup = this.GetParent<UI>().GameObject.GetComponent<CanvasGroup>();
             canvasGroup.blocksRaycasts = isShow;
-            canvasGroup.DOFade(isShow ? 1 : 0, 1);
+            canvasGroup.DOFade(isShow ? 1 : 0, 0.5f);
+            UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
+            if (!isShow)
+            {
+                Actor_GamerReadyHelper.OnReady(room.GamerComponent.LocalSeatID, room.RoomID).Coroutine();
+            }
         }
     }
 }

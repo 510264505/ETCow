@@ -22,6 +22,7 @@ namespace ETHotfix
         private Text cardType;
         private Image[] cards = new Image[5];
         private Text score;
+        private int tan = 10;
         public void Awake(GameObject parent)
         {
             GameObject SSGamerResult = GamerFactory.Create(UICowCowType.CowCowSSPlayerResult);
@@ -39,29 +40,42 @@ namespace ETHotfix
             }
         }
 
-        public void SetGamerSmallSettlement(int seatId, string name, int betCoin, int type, int losewin, int[] list)
+        public void SetGamerSmallSettlement(CowCowSmallSettlementInfo info)
         {
-            banker.alpha = seatId == 0 ? 1 : 0;
-            gamerName.text = name;
-            bets.text = betCoin.ToString();
-            //switch ((CowType)type)
-            //{
-            //    case CowType.None:
-            //        break;
-            //    case CowType.HaveCow:
-            //        break;
-            //    case CowType.FiveFlowerCow:
-            //        break;
-            //    case CowType.BombCow:
-            //        break;
-            //    case CowType.FiveSmallCow:
-            //        break;
-            //}
-            cardType.text = ((CowType)type).ToString();
-            score.text = losewin.ToString();
+            banker.alpha = info.SeatID == 0 ? 1 : 0;
+            gamerName.text = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>().GamerComponent.Get(info.SeatID).GetComponent<UICowCow_GamerInfoComponent>().gamerName;
+            bets.text = info.BetCoin.ToString();
+            switch ((CowType)info.CardsType)
+            {
+                case CowType.None:
+                    cardType.text = "无牛";
+                    break;
+                case CowType.HaveCow:
+                    int num = info.CowNumber % tan;
+                    if (num == 0)
+                    {
+                        cardType.text = "牛牛";
+                    }
+                    else
+                    {
+                        cardType.text = $"牛{num}";
+                    }
+                    break;
+                case CowType.FiveFlowerCow:
+                    cardType.text = "五花牛";
+                    break;
+                case CowType.BombCow:
+                    cardType.text = "炸弹牛";
+                    break;
+                case CowType.FiveSmallCow:
+                    cardType.text = "五小牛";
+                    break;
+            }
+            score.text = info.LoseWin.ToString();
+            ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             for (int i = 0; i < cards.Length; i++)
             {
-                cards[i].sprite = null;
+                cards[i].sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(info.Cards[i]));
             }
         }
     }

@@ -18,7 +18,7 @@ namespace ETHotfix
                 UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
                 UICowCow_GamerInfoComponent gc = room.GamerComponent.LocalGamer.GetComponent<UICowCow_GamerInfoComponent>();
                 room.ShowHideReadyButton(false);
-                gc.SetStatus(UIGamerStatusString.Ready, UIGamerStatus.Ready);
+                gc.SetStatus(UIGamerStatus.Ready, UIGamerStatusString.Ready);
             }
         }
     }

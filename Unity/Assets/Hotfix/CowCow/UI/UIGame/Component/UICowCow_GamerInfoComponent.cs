@@ -31,6 +31,8 @@ namespace ETHotfix
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
+        private int upOffy = 20;
+
         public void Awake(GameObject parent, GamerInfo info, int posIndex)
         {
             this.Status = (UIGamerStatus)info.Status;
@@ -85,7 +87,7 @@ namespace ETHotfix
                 case CowType.HaveCow:
                     for (int i = 0; i < cowTypeData.indexs.Length; i++)
                     {
-                        UpMoveCard(cowTypeData.indexs[i]);
+                        UpMoveCard(cowTypeData.indexs[i], upOffy);
                     }
                     SetCowType($"牛{cowTypeData.cowNumber}");
                     break;
@@ -95,7 +97,7 @@ namespace ETHotfix
                 case CowType.BombCow:
                     for (int i = 0; i < cowTypeData.indexs.Length; i++)
                     {
-                        UpMoveCard(cowTypeData.indexs[i]);
+                        UpMoveCard(cowTypeData.indexs[i], upOffy);
                     }
                     SetCowType("炸弹牛");
                     break;
@@ -147,12 +149,19 @@ namespace ETHotfix
         public void ShowHideHandCard(bool isShow)
         {
             this.HandCard.alpha = isShow ? 1 : 0;
+            if (!isShow)
+            {
+                for (int i = 0; i < cards.Length; i++)
+                {
+                    UpMoveCard(i, 0);
+                }
+            }
         }
 
         /// <summary>
         /// 显示状态
         /// </summary>
-        public void SetStatus(string status, UIGamerStatus uiStatus)
+        public void SetStatus(UIGamerStatus uiStatus, string status = null)
         {
             this.status.text = status;
             this.Status = uiStatus;
@@ -217,9 +226,9 @@ namespace ETHotfix
             ShowHideHandCard(index + 1 == this.cards.Length);
         }
 
-        private void UpMoveCard(int index)
+        private void UpMoveCard(int index, int offy)
         {
-            cards[index].transform.DOLocalMoveY(20, 0.5f);
+            cards[index].transform.DOLocalMoveY(offy, 0.5f);
         }
 
         public override void Dispose()

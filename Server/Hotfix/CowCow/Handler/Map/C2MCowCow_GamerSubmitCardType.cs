@@ -29,6 +29,7 @@ namespace ETHotfix
                 gamer.cardType = message.CardType;
                 gamer.FloweColor = message.FlowerColor;
                 gamer.CowNumber = message.CowNumber;
+                gamer.cards.Clear();
                 gamer.cards.AddRange(message.Cards);
 
                 Actor_CowCowGamerSubmitCardType submits = new Actor_CowCowGamerSubmitCardType();
@@ -48,11 +49,15 @@ namespace ETHotfix
                     openCards.SmallSettlemntInfo = new RepeatedField<CowCowSmallSettlementInfo>();
                     foreach (Gamer g in gamers.Values)
                     {
+                        //坐下
+                        g.Status = GamerStatus.Down;
+                        g.IsSubmitHandCards = false;
                         CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
                         info.Cards = new RepeatedField<int>();
                         info.SeatID = g.SeatID;
                         info.Cards.AddRange(g.cards);
                         info.CardsType = g.cardType;
+                        info.CowNumber = g.CowNumber;
                         openCards.SmallSettlemntInfo.Add(info);
                     }
                     room.Broadcast(openCards);
