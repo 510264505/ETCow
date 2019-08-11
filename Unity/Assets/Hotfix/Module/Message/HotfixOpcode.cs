@@ -105,6 +105,12 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowRoomOpenCardsAndSettlement)]
 	public partial class Actor_CowCowRoomOpenCardsAndSettlement : IActorMessage {}
 
+	[Message(HotfixOpcode.C2G_CowCowPing)]
+	public partial class C2G_CowCowPing : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowPing)]
+	public partial class G2C_CowCowPing : IResponse {}
+
 }
 namespace ETHotfix
 {
@@ -143,5 +149,7 @@ namespace ETHotfix
 		 public const ushort Actor_CowCowGamerSubmitCardType = 10031;
 		 public const ushort CowCowSmallSettlementInfo = 10032;
 		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10033;
+		 public const ushort C2G_CowCowPing = 10034;
+		 public const ushort G2C_CowCowPing = 10035;
 	}
 }

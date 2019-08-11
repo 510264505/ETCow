@@ -86,6 +86,7 @@
     <Compile Include="Assets\Hotfix\Base\Object\Object.cs" />
     <Compile Include="Assets\Hotfix\Base\Object\ObjectPool.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Component\GamerComponent.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Component\PingComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Component\SessionWarp\SessionOfflineComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Entity\Gamer.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Event\CowCowEventIdType.cs" />

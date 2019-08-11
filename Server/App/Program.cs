@@ -72,7 +72,8 @@ namespace App
 						Game.Scene.AddComponent<ActorMessageSenderComponent>();
 						Game.Scene.AddComponent<ActorLocationSenderComponent>();
 						Game.Scene.AddComponent<GateSessionKeyComponent>();
-						break;
+                        Game.Scene.AddComponent<PingComponent>();
+                        break;
 					case AppType.Location: //连接内网，匹配服务器，在玩家更换游戏地图时，通知Gate更新ActorID。
                         Game.Scene.AddComponent<NetInnerComponent, string>(innerConfig.Address);
 						Game.Scene.AddComponent<LocationComponent>();
@@ -86,6 +87,7 @@ namespace App
 						Game.Scene.AddComponent<MailboxDispatcherComponent>();
 						Game.Scene.AddComponent<ActorMessageDispatcherComponent>();
 						Game.Scene.AddComponent<PathfindingComponent>();
+                        Game.Scene.AddComponent<PingComponent>();
 						break;
 					case AppType.AllServer:
 						// 发送普通actor消息
@@ -125,8 +127,9 @@ namespace App
 						
 						// recast寻路组件
 						Game.Scene.AddComponent<PathfindingComponent>();
-						
-						Game.Scene.AddComponent<PlayerComponent>();
+                        Game.Scene.AddComponent<PingComponent>();
+
+                        Game.Scene.AddComponent<PlayerComponent>();
 						Game.Scene.AddComponent<UnitComponent>();
 
 						Game.Scene.AddComponent<ConsoleComponent>();

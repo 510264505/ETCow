@@ -275,3 +275,15 @@ message Actor_CowCowRoomOpenCardsAndSettlement // IActorMessage
 	int64 ActorId = 94;
 	repeated CowCowSmallSettlementInfo SmallSettlemntInfo = 1;
 }
+
+message C2G_CowCowPing // IRequest
+{
+	int32 RpcId = 90;
+}
+
+message G2C_CowCowPing // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}

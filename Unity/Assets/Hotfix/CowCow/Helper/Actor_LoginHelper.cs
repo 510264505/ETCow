@@ -30,6 +30,7 @@ namespace ETHotfix
             {
                 ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
                 Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+                SessionComponent.Instance.Session.AddComponent<PingComponent>();
             }
             else
             {
@@ -74,6 +75,7 @@ namespace ETHotfix
                 {
                     ETModel.Game.Scene.AddComponent<ETModel.SessionComponent>().Session = gateSession;
                     Game.Scene.AddComponent<SessionComponent>().Session = ComponentFactory.Create<Session, ETModel.Session>(gateSession);
+                    SessionComponent.Instance.Session.AddComponent<PingComponent>();
                 }
                 else
                 {

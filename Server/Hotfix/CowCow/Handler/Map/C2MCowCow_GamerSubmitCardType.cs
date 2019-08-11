@@ -22,7 +22,7 @@ namespace ETHotfix
                     reply(response);
                     return;
                 }
-
+                
                 Gamer gamer = room.Get(message.SeatID);
                 gamer.IsSubmitHandCards = true;
                 gamer.MaxValue = message.MaxCard;
@@ -45,22 +45,7 @@ namespace ETHotfix
                 reply(response);
                 if (submits.SeatIDs.count == room.GamerCount)
                 {
-                    Actor_CowCowRoomOpenCardsAndSettlement openCards = new Actor_CowCowRoomOpenCardsAndSettlement();
-                    openCards.SmallSettlemntInfo = new RepeatedField<CowCowSmallSettlementInfo>();
-                    foreach (Gamer g in gamers.Values)
-                    {
-                        //坐下
-                        g.Status = GamerStatus.Down;
-                        g.IsSubmitHandCards = false;
-                        CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
-                        info.Cards = new RepeatedField<int>();
-                        info.SeatID = g.SeatID;
-                        info.Cards.AddRange(g.cards);
-                        info.CardsType = g.cardType;
-                        info.CowNumber = g.CowNumber;
-                        openCards.SmallSettlemntInfo.Add(info);
-                    }
-                    room.Broadcast(openCards);
+                    SmallSettlement(gamers, room);
                 }
                 else
                 {
@@ -71,6 +56,28 @@ namespace ETHotfix
             {
                 ReplyError(response, e, reply);
             }
+        }
+        /// <summary>
+        /// 小结算
+        /// </summary>
+        private void SmallSettlement(Dictionary<int, Gamer> gamers, Room room)
+        {
+            Actor_CowCowRoomOpenCardsAndSettlement openCards = new Actor_CowCowRoomOpenCardsAndSettlement();
+            openCards.SmallSettlemntInfo = new RepeatedField<CowCowSmallSettlementInfo>();
+            foreach (Gamer g in gamers.Values)
+            {
+                //坐下
+                g.Status = GamerStatus.Down;
+                g.IsSubmitHandCards = false;
+                CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
+                info.Cards = new RepeatedField<int>();
+                info.SeatID = g.SeatID;
+                info.Cards.AddRange(g.cards);
+                info.CardsType = g.cardType;
+                info.CowNumber = g.CowNumber;
+                openCards.SmallSettlemntInfo.Add(info);
+            }
+            room.Broadcast(openCards);
         }
     }
 }
