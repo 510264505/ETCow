@@ -23,6 +23,7 @@ namespace ETHotfix
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
         private GamerComponent gamerComponent;
+        private UICowCow_ChatComponent chatComponent;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -36,13 +37,7 @@ namespace ETHotfix
         private StringBuilder sb = new StringBuilder();
         private int curBureauCount = 1;
         private int bureauCount;
-        private Dictionary<int, string> rules = new Dictionary<int, string>()
-        {
-            { 0x1, "五小牛" },
-            { 0x2, "炸弹牛" },
-            { 0x4, "五花牛" },
-            { 0x8, "葫芦牛" },
-        };
+
         private bool isShowTime = false;
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private CancellationToken cancellationToken;
@@ -82,12 +77,27 @@ namespace ETHotfix
             {
                 if (gamerComponent == null)
                 {
-                    UI ui = this.GetParent<UI>();
-                    gamerComponent = ui.AddComponent<GamerComponent>();
+                    UI uiRoom = this.GetParent<UI>();
+                    gamerComponent = uiRoom.AddComponent<GamerComponent>();
                 }
                 return gamerComponent;
             }
         }
+
+        public UICowCow_ChatComponent ChatComponent
+        {
+            get
+            {
+                if (chatComponent == null)
+                {
+                    UI uiRoom = this.GetParent<UI>();
+                    UI ui = UICowCowCreateChildGameObjectFactory.Create<UICowCow_ChatComponent>(UICowCowType.CowcowChat, uiRoom, BackGround);
+                    chatComponent = ui.GetComponent<UICowCow_ChatComponent>();
+                }
+                return chatComponent;
+            }
+        }
+
         public string RoomID { get; set; }
 
         private void ReSet()
@@ -114,7 +124,7 @@ namespace ETHotfix
             readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
 
-            phizBtn.onClick.Add(Onphiz);
+            phizBtn.onClick.Add(Onphiz); // 表情
             keyboardBtn.onClick.Add(OnKeyboard);
             voiceBtn.onClick.Add(OnVoice);
             dissBtn.onClick.Add(OnDiss);
@@ -127,16 +137,45 @@ namespace ETHotfix
             Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
         }
 
-        public void Init(string gameName, int bureau, int ruleBit, string roomId)
+        public void Init(string gameName, int bureau, int ruleBit, string roomId, int people)
         {
             this.bureauCount = bureau;
             this.gameName.text = gameName;
-            this.gameRule.text = Rule(ruleBit);
+            this.gameRule.text = $"{people}人 " + Rule(ruleBit);
             this.roomId.text = roomId;
             this.RoomID = roomId;
             Bureau();
         }
         
+        /// <summary>
+        /// 先讲自己克隆出来
+        /// </summary>
+        public void AddLocalGamer(GamerInfo info)
+        {
+            if (info.UserID != ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID)
+            {
+                return;
+            }
+            Gamer gamer = GamerComponent.AddGamerUI(info);
+            if (gamer != null)
+            {
+                gamer.AddComponent<UICowCow_GamerInfoComponent, GameObject, GamerInfo, int>(UIRoomGamer, info, 0);
+                gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(SmallSettlement.SmallBG);
+                gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(BigSettlement.BigBG);
+            }
+            if (GamerComponent.LocalGamer == null)
+            {
+                GamerComponent.Init(info.UserID);
+                if (GamerComponent.LocalGamer.GetComponent<UICowCow_GamerInfoComponent>().Status == UIGamerStatus.Down)
+                {
+                    ShowHideReadyButton(true);
+                }
+            }
+        }
+
+        /// <summary>
+        /// 再添加其他玩家
+        /// </summary>
         public void AddGamer(GamerInfo info, int posIndex)
         {
             Gamer gamer = GamerComponent.AddGamerUI(info);
@@ -145,17 +184,6 @@ namespace ETHotfix
                 gamer.AddComponent<UICowCow_GamerInfoComponent, GameObject, GamerInfo, int>(UIRoomGamer, info, posIndex);
                 gamer.AddComponent<UICowCow_SSGamerResultComponent, GameObject>(SmallSettlement.SmallBG);
                 gamer.AddComponent<UICowCow_BSGamerResultComponent, GameObject>(BigSettlement.BigBG);
-            }
-            if (GamerComponent.LocalGamer == null)
-            {
-                if (info.UserID == ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID)
-                {
-                    GamerComponent.Init(info.UserID);
-                    if (GamerComponent.LocalGamer.GetComponent<UICowCow_GamerInfoComponent>().Status == UIGamerStatus.Down)
-                    {
-                        ShowHideReadyButton(true);
-                    }
-                }
             }
         }
 
@@ -203,9 +231,9 @@ namespace ETHotfix
         private string Rule(int ruleBit)
         {
             sb.Clear();
-            foreach (var rule in this.rules)
+            foreach (KeyValuePair<CowType, string> rule in GameInfo.Rule)
             {
-                if ((ruleBit & rule.Key) == rule.Key)
+                if ((ruleBit & (int)rule.Key) == (int)rule.Key)
                 {
                     sb.Append(rule.Value + "/");
                 }
@@ -222,13 +250,17 @@ namespace ETHotfix
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(10 * 1000, cancellationToken);
             }
         }
+
+        /// <summary>
+        /// 表情
+        /// </summary>
         private void Onphiz()
         {
-            //表情
+            ChatComponent.ShowHideEmoji(true);
         }
         private void OnKeyboard()
         {
-
+            ChatComponent.ShowHideChatFont(true);
         }
         private void OnVoice()
         {

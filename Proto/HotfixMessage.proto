@@ -164,6 +164,7 @@ message C2G_CowCowCreateGameRoomGate // IRequest
 	string Name = 2;
 	int32 Bureau = 3;
 	int32 RuleBit = 4;
+	int32 People = 5;
 }
 
 message G2C_CowCowCreateGameRoomGate // IResponse
@@ -176,6 +177,7 @@ message G2C_CowCowCreateGameRoomGate // IResponse
 	int32 RuleBit = 3;
 	string RoomID = 4;
 	GamerInfo GamerInfo = 5;
+	int32 People = 6;
 }
 
 message C2G_CowCowJoinGameRoomGate // IRequest
@@ -195,6 +197,7 @@ message G2C_CowCowJoinGameRoomGate // IResponse
 	int32 RuleBit = 3;
 	string RoomID = 4;
 	int64 UserID = 5;
+	int32 People = 6;
 }
 
 message Actor_CowCowJoinGameRoomGroupSend // IActorMessage
@@ -202,7 +205,7 @@ message Actor_CowCowJoinGameRoomGroupSend // IActorMessage
 	int32 RpcId = 90;
 	int64 ActorId = 94;
 	repeated GamerInfo GamerInfo = 1;
-	int32 SeatID = 2;
+	GamerInfo LocalGamerInfo = 2;
 }
 
 message C2M_CowCowGamerReady // IRequest
@@ -286,4 +289,50 @@ message G2C_CowCowPing // IResponse
 	int32 RpcId = 90;
 	int32 Error = 91;
 	string Message = 92;
+}
+
+message C2G_CowCowChatFont // IRequest
+{
+	int32 RpcId = 90;
+	int32 ChatIndex = 1;
+	int32 SeatID = 2;
+	string ChatMessage = 3;
+}
+
+message G2C_CowCowChatFont // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+message Actor_CowCowChatFont // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	int32 ChatIndex = 1;
+	int32 SeatID = 2;
+	string ChatMessage = 3;
+}
+
+message C2G_CowCowEmoji // IRequest
+{
+	int32 RpcId = 90;
+	int32 index = 1;
+	int32 SeatID = 2;
+}
+
+message G2C_CowCowEmoji // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+message Actor_CowCowEmoji // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	int32 index = 1;
+	int32 SeatID = 2;
 }

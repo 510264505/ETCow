@@ -111,6 +111,24 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_CowCowPing)]
 	public partial class G2C_CowCowPing : IResponse {}
 
+	[Message(HotfixOpcode.C2G_CowCowChatFont)]
+	public partial class C2G_CowCowChatFont : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowChatFont)]
+	public partial class G2C_CowCowChatFont : IResponse {}
+
+	[Message(HotfixOpcode.Actor_CowCowChatFont)]
+	public partial class Actor_CowCowChatFont : IActorMessage {}
+
+	[Message(HotfixOpcode.C2G_CowCowEmoji)]
+	public partial class C2G_CowCowEmoji : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowEmoji)]
+	public partial class G2C_CowCowEmoji : IResponse {}
+
+	[Message(HotfixOpcode.Actor_CowCowEmoji)]
+	public partial class Actor_CowCowEmoji : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -151,5 +169,11 @@ namespace ETHotfix
 		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10033;
 		 public const ushort C2G_CowCowPing = 10034;
 		 public const ushort G2C_CowCowPing = 10035;
+		 public const ushort C2G_CowCowChatFont = 10036;
+		 public const ushort G2C_CowCowChatFont = 10037;
+		 public const ushort Actor_CowCowChatFont = 10038;
+		 public const ushort C2G_CowCowEmoji = 10039;
+		 public const ushort G2C_CowCowEmoji = 10040;
+		 public const ushort Actor_CowCowEmoji = 10041;
 	}
 }

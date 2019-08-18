@@ -35,7 +35,7 @@ namespace ETHotfix
                 room.UserID = message.UserID;
                 room.RoomID = roomId;
                 room.GameName = message.Name;
-                room.Bureau = message.Bureau;
+                room.Bureau = GameInfo.Bureau[message.Bureau];
                 room.RuleBit = message.RuleBit;
                 Game.Scene.GetComponent<RoomComponent>().Add(room);
 
@@ -52,9 +52,9 @@ namespace ETHotfix
                 gamer.Sex = userInfo.Sex;
                 room.Add(gamer);
 
-                response.GameName = message.Name;
-                response.Bureau = message.Bureau;
-                response.RuleBit = message.RuleBit;
+                response.GameName = room.GameName;
+                response.Bureau = room.Bureau;
+                response.RuleBit = room.RuleBit;
                 response.RoomID = room.RoomID;
                 //根据UserID从数据库拿到该用户信息并返回
                 response.GamerInfo = new GamerInfo();

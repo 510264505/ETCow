@@ -2,11 +2,11 @@ fileFormatVersion: 2
 guid: 2e48f616bc22f66448f036d93ea7b7c5
 TextureImporter:
   fileIDToRecycleName:
-    21300000: UIAlter_0
+    21300000: HelpBG
     21300002: HeadFrame
     21300004: QuitBtn
     21300006: UIAlter_3
-    21300008: UIAlter_4
+    21300008: GameSettingBtn
     21300010: VoiceBtn
     21300012: Btn_CYellow
     21300014: UIAlter_7
@@ -119,7 +119,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: UIAlter_0
+      name: HelpBG
       rect:
         serializedVersion: 2
         x: 4
@@ -199,7 +199,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: UIAlter_4
+      name: GameSettingBtn
       rect:
         serializedVersion: 2
         x: 343

@@ -18,6 +18,10 @@ namespace ETHotfix
             {
                 Game.EventSystem.Run(EventIdCowCowType.JoinGameRoom, g2c_Join);
             }
+            else
+            {
+                //弹窗显示异常消息
+            }
         }
     }
     [MessageHandler]
@@ -25,11 +29,12 @@ namespace ETHotfix
     {
         protected override void Run(ETModel.Session session, Actor_CowCowJoinGameRoomGroupSend message)
         {
-            //这里接收到所有玩家的消息
+            //这里接收到所有玩家的消息，做处理显示新加入房间的玩家
             UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
+            room.AddLocalGamer(message.LocalGamerInfo);
             for (int i = 0; i < message.GamerInfo.count; i++)
             {
-                int seatId = message.GamerInfo[i].SeatID - message.SeatID; //移位
+                int seatId = message.GamerInfo[i].SeatID - room.GamerComponent.LocalSeatID; //移位
                 if (seatId < 0)
                 {
                     room.AddGamer(message.GamerInfo[i], seatId + GamerData.Pos.Count);

@@ -93,6 +93,7 @@
     <Compile Include="Assets\Hotfix\CowCow\Factory\GamerFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Factory\UICowCowCreateChildGameObjectFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Factory\UICowCowGameRoomFactory.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_ChatMessageHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_GamerReadyHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_GamerSubmitHandCardHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_RoomDealCardsHandler.cs" />
@@ -101,12 +102,14 @@
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_GamerReadyHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_JoinRoomHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_LoginHelper.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_SendChatMessageHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_SubmitHandCardHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\CalculateCowTypeHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\CardHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Object\CowCowUIType.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_BigSettlementComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_BSGamerResultComponent.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_ChatComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_GamerInfoComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_GameRoomComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_SmallSettlementComponent.cs" />

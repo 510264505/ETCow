@@ -25,6 +25,7 @@ namespace ETHotfix
         private CanvasGroup joinRoomWindows;
         private Toggle[] bureauTog;
         private Toggle[] ruleTog;
+        private Dropdown peopleDrop;
         private Button createBtn;
         private Button closeCreateBtn;
         private Button closeJoinBtn;
@@ -44,7 +45,7 @@ namespace ETHotfix
         private Button mallBtn;
 
         private int bureauLen = 2;
-        private int ruleLen = 4;
+        private int ruleLen = 3;
         private int numLen = 6;
         private int numberLen = 10;
         private List<string> roomNumber = new List<string>();
@@ -68,6 +69,7 @@ namespace ETHotfix
             {
                 ruleTog[i] = rc.Get<GameObject>("RToggle" + i).GetComponent<Toggle>();
             }
+            peopleDrop = rc.Get<GameObject>("PDropdown0").GetComponent<Dropdown>();
             createBtn = rc.Get<GameObject>("CreateBtn").GetComponent<Button>();
             closeCreateBtn = rc.Get<GameObject>("CloseCreateBtn").GetComponent<Button>();
             closeJoinBtn = rc.Get<GameObject>("CloseJoinBtn").GetComponent<Button>();
@@ -143,8 +145,26 @@ namespace ETHotfix
         private void OnCreate()
         {
             //向服务器发送创建房间
+            int bureau = 0;
+            int ruleBit = 0;
+            for (int i = 0; i < bureauTog.Length; i++)
+            {
+                if (bureauTog[i].isOn)
+                {
+                    bureau = i;
+                    break;
+                }
+            }
+            for (int i = 0; i < ruleTog.Length; i++)
+            {
+                if (ruleTog[i].isOn)
+                {
+                    //五花牛是0x2开始的，所以加 +1
+                    ruleBit += 1 << (i + 1);
+                }
+            }
             long userId = ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID;
-            Actor_CreateRoomHelper.OnCreateGameRoom("牛牛", userId, 1, 1).Coroutine();
+            Actor_CreateRoomHelper.OnCreateGameRoom("柳州牛欢喜", userId, bureau, ruleBit, peopleDrop.value).Coroutine();
         }
         private void OnCloseCreateRoomWindows()
         {

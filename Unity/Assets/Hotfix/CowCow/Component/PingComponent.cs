@@ -58,16 +58,16 @@ namespace ETHotfix
                     await session.Call(_request);
                     _receviceTimer = TimeHelper.ClientNowSeconds();
                     long time = (_receviceTimer - _sendTimer) / 2;
-                    ping = time < 0 ? 0 : time;
-                    if (ping == 0)
+                    ping = time < 0 ? -1 : time;
+                    if (ping == -1)
                     {
-                        Log.Debug("断线了");
+                        Log.Debug("Ping断线了");
                         action?.Invoke();
                     }
                 }
                 catch(Exception e)
                 {
-                    Log.Debug("断线了");
+                    Log.Debug($"Ping异常:{e.Message}");
                     action?.Invoke();
                 }
                 await tiemr.WaitAsync(interval);

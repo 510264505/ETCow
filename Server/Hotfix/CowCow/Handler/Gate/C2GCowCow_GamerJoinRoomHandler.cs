@@ -52,7 +52,14 @@ namespace ETHotfix
 
                 Dictionary<int, Gamer> gamers = room.GetAll();
                 Actor_CowCowJoinGameRoomGroupSend allGamer = new Actor_CowCowJoinGameRoomGroupSend();
-                allGamer.SeatID = gamer.SeatID;
+                allGamer.LocalGamerInfo = new GamerInfo();
+                allGamer.LocalGamerInfo.Coin = gamer.Coin;
+                allGamer.LocalGamerInfo.Name = gamer.Name;
+                allGamer.LocalGamerInfo.HeadIcon = gamer.HeadIcon;
+                allGamer.LocalGamerInfo.SeatID = gamer.SeatID;
+                allGamer.LocalGamerInfo.Sex = gamer.Sex;
+                allGamer.LocalGamerInfo.Status = (int)gamer.Status;
+                allGamer.LocalGamerInfo.UserID = gamer.UserID;
                 allGamer.GamerInfo = new RepeatedField<GamerInfo>();
                 foreach (Gamer g in gamers.Values)
                 {

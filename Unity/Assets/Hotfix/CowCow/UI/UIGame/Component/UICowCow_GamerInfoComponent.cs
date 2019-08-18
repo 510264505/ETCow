@@ -27,7 +27,13 @@ namespace ETHotfix
         private List<int> cardList = new List<int>();
         private CalculateCowTypeData cowTypeData;
         private C2M_CowCowGamerSubmitCardType submitCard = new C2M_CowCowGamerSubmitCardType();
+
+        private Image emoji;
+        private CanvasGroup chatBG;
+        private Text chatText;
+        private float delayTimer = 3; //聊天信息延迟3秒消失
         public string gamerName { get; set; }
+        public int Sex { get; set; }
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
@@ -42,13 +48,13 @@ namespace ETHotfix
             ReferenceCollector rc = UIGameInfo.GetComponent<ReferenceCollector>();
 
             Image headIcon = rc.Get<GameObject>("HeadIcon").GetComponent<Image>();
-            headIcon.transform.localPosition = GamerData.Pos[info.SeatID].HeadPos;
+            headIcon.transform.localPosition = GamerData.Pos[posIndex].HeadPos;
             Text gamerNames = rc.Get<GameObject>("Names").GetComponent<Text>();
             coin = rc.Get<GameObject>("Coin").GetComponent<Text>();
             status = rc.Get<GameObject>("Status").GetComponent<Text>();
             cowType = rc.Get<GameObject>("CowType").GetComponent<Text>();
             HandCard = rc.Get<GameObject>("HandCard").GetComponent<CanvasGroup>();
-            HandCard.transform.localPosition = GamerData.Pos[info.SeatID].CardPos;
+            HandCard.transform.localPosition = GamerData.Pos[posIndex].CardPos;
             for (int i = 0; i < cards.Length; i++)
             {
                 cards[i] = rc.Get<GameObject>("Card" + i).GetComponent<Image>();
@@ -56,10 +62,15 @@ namespace ETHotfix
             promptBtn = rc.Get<GameObject>("PromptBtn").GetComponent<Button>();
             submitBtn = rc.Get<GameObject>("SubmitBtn").GetComponent<Button>();
 
+            emoji = rc.Get<GameObject>("Emoji").GetComponent<Image>();
+            chatBG = rc.Get<GameObject>("ChatBG").GetComponent<CanvasGroup>();
+            chatText = rc.Get<GameObject>("ChatText").GetComponent<Text>();
+
             promptBtn.onClick.Add(OnPrompt);
             submitBtn.onClick.Add(OnSubmit);
             gamerNames.text = info.Name;
             SetCoin(info.Coin.ToString());
+            this.Sex = info.Sex;
             //headIcon.sprite = info.HeadIcon;
         }
 
@@ -229,6 +240,27 @@ namespace ETHotfix
         private void UpMoveCard(int index, int offy)
         {
             cards[index].transform.DOLocalMoveY(offy, 0.5f);
+        }
+
+        public void ShowEmoji(int index)
+        {
+            Sprite sprite = (Sprite)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), $"Emoji_{index}");
+            emoji.sprite = sprite;
+            emoji.DOFade(1, 0);
+            emoji.DOFade(0, 1).SetDelay(3);
+        }
+
+        public void ShowChatFont(int index, string message, int sex)
+        {
+            chatText.text = message;
+            chatBG.alpha = 1;
+            if (index <= 8) //只有8个声音
+            {
+                //播放声音
+                string str = sex == 0 ? $"boy{index}" : $"girl{index}";
+                AnimationClip ac = (AnimationClip)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_SoundOther, str);
+            }
+            chatBG.DOFade(0, 1).SetDelay(delayTimer);
         }
 
         public override void Dispose()
