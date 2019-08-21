@@ -65,6 +65,9 @@ namespace ETHotfix
             emoji = rc.Get<GameObject>("Emoji").GetComponent<Image>();
             chatBG = rc.Get<GameObject>("ChatBG").GetComponent<CanvasGroup>();
             chatText = rc.Get<GameObject>("ChatText").GetComponent<Text>();
+            chatBG.transform.localPosition = GamerData.Pos[posIndex].ChatPosData.Pos;
+            chatBG.transform.Rotate(GamerData.Pos[posIndex].ChatPosData.Rotate);
+            chatText.transform.Rotate(GamerData.Pos[posIndex].ChatPosData.Rotate);
 
             promptBtn.onClick.Add(OnPrompt);
             submitBtn.onClick.Add(OnSubmit);

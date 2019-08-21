@@ -85,8 +85,9 @@ GameObject:
   - component: {fileID: 3418042506084339688}
   - component: {fileID: 1356632717248195370}
   - component: {fileID: 1722261671764428358}
+  - component: {fileID: 4684152606796485767}
   m_Layer: 5
-  m_Name: ChatVoice
+  m_Name: UIChatVoice
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -149,3 +150,15 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
+--- !u!225 &4684152606796485767
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6942596419140628644}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 1
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

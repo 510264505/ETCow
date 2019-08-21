@@ -20,10 +20,16 @@ namespace ETHotfix
     }
     public class UICowCow_GameRoomComponent : Component
     {
+        private class UIChatVoice
+        {
+            public CanvasGroup parent;
+            public Image image;
+        }
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
         private GamerComponent gamerComponent;
         private UICowCow_ChatComponent chatComponent;
+        private UIChatVoice uiChatVoice;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -95,6 +101,21 @@ namespace ETHotfix
                     chatComponent = ui.GetComponent<UICowCow_ChatComponent>();
                 }
                 return chatComponent;
+            }
+        }
+
+        private UIChatVoice ChatVoice
+        {
+            get
+            {
+                if (uiChatVoice == null)
+                {
+                    uiChatVoice = new UIChatVoice();
+                    GameObject prefab = (GameObject)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowChatVoice);
+                    uiChatVoice.parent = UnityEngine.Object.Instantiate(prefab).GetComponent<CanvasGroup>();
+                    uiChatVoice.image = uiChatVoice.parent.transform.GetChild(0).GetComponent<Image>();
+                }
+                return uiChatVoice;
             }
         }
 

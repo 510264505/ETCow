@@ -27,7 +27,7 @@ namespace ETHotfix
         public const string CowCowGamerInfo = "UIGamerInfo";
         public const string CowcowChat = "UIChat";
         public const string CowCowChatContentBtn = "ChatContentBtn";
-        public const string CowCowChatVoice = "ChatVoice";
+        public const string CowCowChatVoice = "UIChatVoice";
         public const string CowCowDissoltion = "UIDissoltion";
         public const string CowCowGamerDissInfo = "UIGamerDissInfo";
         public const string CowCowGameSetting = "UIGameSetting";
