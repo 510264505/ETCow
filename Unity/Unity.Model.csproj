@@ -154,6 +154,7 @@
     <Compile Include="Assets\Model\Helper\ActionHelper.cs" />
     <Compile Include="Assets\Model\Helper\BundleHelper.cs" />
     <Compile Include="Assets\Model\Helper\GameObjectHelper.cs" />
+    <Compile Include="Assets\Model\Helper\GzipHelper.cs" />
     <Compile Include="Assets\Model\Helper\ILHelper.cs" />
     <Compile Include="Assets\Model\Helper\PathHelper.cs" />
     <Compile Include="Assets\Model\Helper\PositionHelper.cs" />

@@ -285,7 +285,9 @@ namespace ETHotfix
         }
         private void OnVoice()
         {
-
+            //改一下事件，有按下抬起
+            //Game.Scene.GetComponent<MicrophoneComponent>().OnButtonDown();
+            //Game.Scene.GetComponent<MicrophoneComponent>().OnButtonUp();
         }
         private void OnDiss()
         {

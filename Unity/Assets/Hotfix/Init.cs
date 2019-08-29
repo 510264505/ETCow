@@ -38,6 +38,9 @@ namespace ETHotfix
 				UnitConfig unitConfig = (UnitConfig)Game.Scene.GetComponent<ConfigComponent>().Get(typeof(UnitConfig), 1001);
 				Log.Debug($"config {JsonHelper.ToJson(unitConfig)}");
 
+                // 添加麦克风组件
+                Game.Scene.AddComponent<MicrophoneComponent>();
+
                 //Game.EventSystem.Run(EventIdType.InitSceneStart);
                 Game.EventSystem.Run(EventIdCowCowType.InitScensStart); //初始化UI
             }
