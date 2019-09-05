@@ -11,8 +11,8 @@ namespace ETHotfix
 	        try
 	        {
 				ResourcesComponent resourcesComponent = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-				resourcesComponent.LoadBundle(UICowCowAB.CowCow_Prefabs.StringToAB());
-				GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset(UICowCowAB.CowCow_Prefabs.StringToAB(), UICowCowType.CowCowLogin);
+				resourcesComponent.LoadBundle(UICowCowAB.CowCow_Prefabs);
+				GameObject bundleGameObject = (GameObject)resourcesComponent.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowLogin);
 				GameObject gameObject = UnityEngine.Object.Instantiate(bundleGameObject);
 
 		        UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowLogin, gameObject, false);

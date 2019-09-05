@@ -11,8 +11,8 @@ namespace ETHotfix
             try
             {
                 ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-                rc.LoadBundle(UICowCowAB.CowCow_Prefabs.StringToAB());
-                GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs.StringToAB(), UICowCowType.CowCowGameRoom);
+                rc.LoadBundle(UICowCowAB.CowCow_Prefabs);
+                GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowGameRoom);
                 GameObject gameObject = UnityEngine.Object.Instantiate(ab);
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
@@ -33,8 +33,8 @@ namespace ETHotfix
             try
             {
                 ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
-                rc.LoadBundle(UICowCowAB.CowCow_Prefabs.StringToAB());
-                GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs.StringToAB(), UICowCowType.CowCowGameRoom);
+                rc.LoadBundle(UICowCowAB.CowCow_Prefabs);
+                GameObject ab = (GameObject)rc.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowGameRoom);
                 GameObject gameObject = UnityEngine.Object.Instantiate(ab);
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);

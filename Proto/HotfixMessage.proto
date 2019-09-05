@@ -337,3 +337,24 @@ message Actor_CowCowEmoji // IActorMessage
 	int32 SeatID = 2;
 }
 
+message C2G_CowCowDissoltion // IRequest
+{
+	int32 RpcId = 90;
+	int32 SeatID = 1;
+	bool IsAgree = 2;
+}
+
+message G2C_CowCowDissoltion // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+}
+
+message Actor_CowCowDissoltion // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	int32 SeatID = 1;
+	bool IsAgree = 2;
+}

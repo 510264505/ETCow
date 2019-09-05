@@ -129,6 +129,15 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowEmoji)]
 	public partial class Actor_CowCowEmoji : IActorMessage {}
 
+	[Message(HotfixOpcode.C2G_CowCowDissoltion)]
+	public partial class C2G_CowCowDissoltion : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowDissoltion)]
+	public partial class G2C_CowCowDissoltion : IResponse {}
+
+	[Message(HotfixOpcode.Actor_CowCowDissoltion)]
+	public partial class Actor_CowCowDissoltion : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -175,5 +184,8 @@ namespace ETHotfix
 		 public const ushort C2G_CowCowEmoji = 10039;
 		 public const ushort G2C_CowCowEmoji = 10040;
 		 public const ushort Actor_CowCowEmoji = 10041;
+		 public const ushort C2G_CowCowDissoltion = 10042;
+		 public const ushort G2C_CowCowDissoltion = 10043;
+		 public const ushort Actor_CowCowDissoltion = 10044;
 	}
 }

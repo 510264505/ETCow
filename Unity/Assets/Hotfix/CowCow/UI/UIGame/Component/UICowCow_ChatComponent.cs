@@ -6,11 +6,11 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_ChatComponentAwake : AwakeSystem<UICowCow_ChatComponent>
+    public class UICowCow_ChatComponentAwake : AwakeSystem<UICowCow_ChatComponent, GameObject>
     {
-        public override void Awake(UICowCow_ChatComponent self)
+        public override void Awake(UICowCow_ChatComponent self, GameObject parent)
         {
-            self.Awake();
+            self.Awake(parent);
         }
     }
 
@@ -36,8 +36,14 @@ namespace ETHotfix
             "下次再玩吧，我先走啦！"
         };
 
-        public void Awake()
+        public void Awake(GameObject parent)
         {
+            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            GameObject ab = (GameObject)res.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowcowChat);
+            this.GameObject = UnityEngine.Object.Instantiate(ab);
+            this.GameObject.transform.SetParent(parent.transform, false);
+            this.GameObject.name = UICowCowType.CowcowChat;
+
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
 
             chatContent = rc.Get<GameObject>("ChatContent").GetComponent<CanvasGroup>();

@@ -8,10 +8,10 @@ namespace ETHotfix
     /// </summary>
     public static partial class UICowCowAB
     {
-        public const string CowCow_Prefabs = "cowcow_prefabs";
-        public const string CowCow_Sound = "cowcow_sound";
-        public const string CowCow_Texture = "cowcow_texture";
-        public const string CowCow_SoundOther = "cowcow_soundother";
+        public const string CowCow_Prefabs = "cowcow_prefabs.unity3d";
+        public const string CowCow_Sound = "cowcow_sound.unity3d";
+        public const string CowCow_Texture = "cowcow_texture.unity3d";
+        public const string CowCow_SoundOther = "cowcow_soundother.unity3d";
     }
     public static partial class UICowCowType
     {
@@ -29,7 +29,7 @@ namespace ETHotfix
         public const string CowCowChatContentBtn = "ChatContentBtn";
         public const string CowCowChatVoice = "UIChatVoice";
         public const string CowCowDissoltion = "UIDissoltion";
-        public const string CowCowGamerDissInfo = "UIGamerDissInfo";
+        public const string CowCowGamerDissInfo = "GamerDissInfo";
         public const string CowCowGameSetting = "UIGameSetting";
     }
     public static partial class SoundCowCow

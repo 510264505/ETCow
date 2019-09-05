@@ -163,9 +163,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2302007547161945161}
-  - component: {fileID: 3266012379873296925}
   m_Layer: 5
-  m_Name: UIGamerDissInfo
+  m_Name: GamerDissInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -193,25 +192,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 120, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3266012379873296925
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4611272231384853288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 502d8cafd6a5a0447ab1db9a24cdcb10, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data:
-  - key: HeadIcon
-    gameObject: {fileID: 2009256843513480749}
-  - key: Name
-    gameObject: {fileID: 8666044790972883130}
-  - key: Condition
-    gameObject: {fileID: 1795497933647285970}
 --- !u!1 &8616944969197122400
 GameObject:
   m_ObjectHideFlags: 0

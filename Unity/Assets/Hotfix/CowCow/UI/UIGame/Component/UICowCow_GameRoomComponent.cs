@@ -7,6 +7,8 @@ using System.Text;
 using System;
 using System.Threading;
 using System.Linq;
+using UnityEngine.EventSystems;
+using UnityEngine.Events;
 
 namespace ETHotfix
 {
@@ -30,6 +32,7 @@ namespace ETHotfix
         private GamerComponent gamerComponent;
         private UICowCow_ChatComponent chatComponent;
         private UIChatVoice uiChatVoice;
+        private UICowCow_DissoltionComponent dissComponent;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -55,9 +58,7 @@ namespace ETHotfix
             {
                 if (bigSettlement == null)
                 {
-                    UI uiRoom = this.GetParent<UI>();
-                    UI ui = UICowCowCreateChildGameObjectFactory.Create<UICowCow_BigSettlementComponent>(UICowCowType.CowCowBigSettlement, uiRoom, BackGround);
-                    bigSettlement = ui.GetComponent<UICowCow_BigSettlementComponent>();
+                    bigSettlement = this.GetParent<UI>().AddComponent<UICowCow_BigSettlementComponent, GameObject>(BackGround);
                 }
                 return bigSettlement;
             }
@@ -69,9 +70,7 @@ namespace ETHotfix
             {
                 if (smallSettlement == null)
                 {
-                    UI uiRoom = this.GetParent<UI>();
-                    UI ui = UICowCowCreateChildGameObjectFactory.Create<UICowCow_SmallSettlementComponent>(UICowCowType.CowCowSmallSettlement, uiRoom, BackGround);
-                    smallSettlement = ui.GetComponent<UICowCow_SmallSettlementComponent>();
+                    smallSettlement = this.GetParent<UI>().AddComponent<UICowCow_SmallSettlementComponent, GameObject>(BackGround);
                 }
                 return smallSettlement;
             }
@@ -83,8 +82,7 @@ namespace ETHotfix
             {
                 if (gamerComponent == null)
                 {
-                    UI uiRoom = this.GetParent<UI>();
-                    gamerComponent = uiRoom.AddComponent<GamerComponent>();
+                    gamerComponent = this.GetParent<UI>().AddComponent<GamerComponent>();
                 }
                 return gamerComponent;
             }
@@ -96,9 +94,7 @@ namespace ETHotfix
             {
                 if (chatComponent == null)
                 {
-                    UI uiRoom = this.GetParent<UI>();
-                    UI ui = UICowCowCreateChildGameObjectFactory.Create<UICowCow_ChatComponent>(UICowCowType.CowcowChat, uiRoom, BackGround);
-                    chatComponent = ui.GetComponent<UICowCow_ChatComponent>();
+                    chatComponent = this.GetParent<UI>().AddComponent<UICowCow_ChatComponent, GameObject>(BackGround);
                 }
                 return chatComponent;
             }
@@ -119,6 +115,18 @@ namespace ETHotfix
             }
         }
 
+        public UICowCow_DissoltionComponent DissComponent
+        {
+            get
+            {
+                if (dissComponent == null)
+                {
+                    dissComponent = this.GetParent<UI>().AddComponent<UICowCow_DissoltionComponent, GameObject>(BackGround);
+                }
+                return dissComponent;
+            }
+        }
+
         public string RoomID { get; set; }
 
         private void ReSet()
@@ -130,6 +138,9 @@ namespace ETHotfix
         }
         public void Awake()
         {
+            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            res.LoadBundle(UICowCowAB.CowCow_Prefabs);
+
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             BackGround = rc.Get<GameObject>("BackGround");
             UIRoomGamer = rc.Get<GameObject>("UIRoomGamer");
@@ -140,20 +151,24 @@ namespace ETHotfix
             Text nowTime = rc.Get<GameObject>("NowTime").GetComponent<Text>();
             Button phizBtn = rc.Get<GameObject>("PhizBtn").GetComponent<Button>();
             Button keyboardBtn = rc.Get<GameObject>("KeyboardBtn").GetComponent<Button>();
-            Button voiceBtn = rc.Get<GameObject>("VoiceBtn").GetComponent<Button>();
+            EventTrigger voiceEvent = rc.Get<GameObject>("VoiceBtn").GetComponent<EventTrigger>();
             Button dissBtn = rc.Get<GameObject>("DissBtn").GetComponent<Button>();
             readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
 
             phizBtn.onClick.Add(Onphiz); // 表情
             keyboardBtn.onClick.Add(OnKeyboard);
-            voiceBtn.onClick.Add(OnVoice);
             dissBtn.onClick.Add(OnDiss);
             readyBtn.onClick.Add(OnReady);
             inviteBtn.onClick.Add(OnInvite);
 
+            voiceEvent.triggers.Add(AddEventTrigger(EventTriggerType.PointerDown, OnVoiceDown));
+            voiceEvent.triggers.Add(AddEventTrigger(EventTriggerType.PointerUp, OnVoiceUp));
+
             isShowTime = true;
             NowTime(nowTime).Coroutine();
+
+            
 
             Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
         }
@@ -168,6 +183,14 @@ namespace ETHotfix
             Bureau();
         }
         
+        private EventTrigger.Entry AddEventTrigger(EventTriggerType type, UnityAction<BaseEventData> action)
+        {
+            EventTrigger.Entry entry = new EventTrigger.Entry();
+            entry.eventID = type;
+            entry.callback.AddListener(action);
+            return entry;
+        }
+
         /// <summary>
         /// 先讲自己克隆出来
         /// </summary>
@@ -283,11 +306,14 @@ namespace ETHotfix
         {
             ChatComponent.ShowHideChatFont(true);
         }
-        private void OnVoice()
+
+        private void OnVoiceDown(BaseEventData eventData)
         {
-            //改一下事件，有按下抬起
-            //Game.Scene.GetComponent<MicrophoneComponent>().OnButtonDown();
-            //Game.Scene.GetComponent<MicrophoneComponent>().OnButtonUp();
+            Game.Scene.GetComponent<MicrophoneComponent>().OnButtonDown();
+        }
+        private void OnVoiceUp(BaseEventData eventData)
+        {
+            Game.Scene.GetComponent<MicrophoneComponent>().OnButtonUp();
         }
         private void OnDiss()
         {
@@ -338,7 +364,7 @@ namespace ETHotfix
                 if (gamer.Key != GamerComponent.LocalSeatID)
                 {
                     UICowCow_GamerInfoComponent gic = gamer.Value.GetComponent<UICowCow_GamerInfoComponent>();
-                    gic.SetCards((Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), "CardBG"));
+                    gic.SetCards((Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, "CardBG"));
                 }
             }
         }

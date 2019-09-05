@@ -75,7 +75,7 @@ namespace ETHotfix
             ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             for (int i = 0; i < cards.Length; i++)
             {
-                cards[i].sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(info.Cards[i]));
+                cards[i].sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(info.Cards[i]));
             }
         }
     }

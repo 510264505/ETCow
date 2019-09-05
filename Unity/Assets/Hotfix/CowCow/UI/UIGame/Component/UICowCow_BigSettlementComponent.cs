@@ -10,19 +10,25 @@ using UnityEngine.UI;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_BigSettlementAwake : AwakeSystem<UICowCow_BigSettlementComponent>
+    public class UICowCow_BigSettlementComponentAwake : AwakeSystem<UICowCow_BigSettlementComponent, GameObject>
     {
-        public override void Awake(UICowCow_BigSettlementComponent self)
+        public override void Awake(UICowCow_BigSettlementComponent self, GameObject parent)
         {
-            self.Awake();
+            self.Awake(parent);
         }
     }
     public class UICowCow_BigSettlementComponent : Component
     {
         public GameObject BigBG { get; set; }
-        public void Awake()
+        public void Awake(GameObject parent)
         {
-            ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            GameObject ab = (GameObject)res.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowBigSettlement);
+            this.GameObject = UnityEngine.Object.Instantiate(ab);
+            this.GameObject.transform.SetParent(parent.transform, false);
+            this.GameObject.name = UICowCowType.CowCowBigSettlement;
+
+            ReferenceCollector rc = this.GameObject.GetComponent<ReferenceCollector>();
 
             BigBG = rc.Get<GameObject>("BigBG");
             Button shareBtn = rc.Get<GameObject>("ShareBtn").GetComponent<Button>();

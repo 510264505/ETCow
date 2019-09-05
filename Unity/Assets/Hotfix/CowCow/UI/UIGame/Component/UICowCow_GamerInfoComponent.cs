@@ -223,7 +223,7 @@ namespace ETHotfix
             ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             for (int i = 0; i < this.cards.Length; i++)
             {
-                Sprite sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), CardHelper.GetCardAssetName(indexs[i]));
+                Sprite sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(indexs[i]));
                 this.cards[i].sprite = sprite;
             }
             ShowHideHandCard(true);
@@ -247,7 +247,7 @@ namespace ETHotfix
 
         public void ShowEmoji(int index)
         {
-            Sprite sprite = (Sprite)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_Texture.StringToAB(), $"Emoji_{index}");
+            Sprite sprite = (Sprite)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_Texture, $"Emoji_{index}");
             emoji.sprite = sprite;
             emoji.DOFade(1, 0);
             emoji.DOFade(0, 1).SetDelay(3);

@@ -6,19 +6,25 @@ using DG.Tweening;
 namespace ETHotfix
 {
     [ObjectSystem]
-    public class UICowCow_SmallSettlementAwake : AwakeSystem<UICowCow_SmallSettlementComponent>
+    public class UICowCow_SmallSettlementAwake : AwakeSystem<UICowCow_SmallSettlementComponent, GameObject>
     {
-        public override void Awake(UICowCow_SmallSettlementComponent self)
+        public override void Awake(UICowCow_SmallSettlementComponent self, GameObject parent)
         {
-            self.Awake();
+            self.Awake(parent);
         }
     }
     public class UICowCow_SmallSettlementComponent : Component
     {
         public GameObject SmallBG { get; set; }
-        public void Awake()
+        public void Awake(GameObject parent)
         {
-            ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            GameObject ab = (GameObject)res.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowSmallSettlement);
+            this.GameObject = UnityEngine.Object.Instantiate(ab);
+            this.GameObject.transform.SetParent(parent.transform, false);
+            this.GameObject.name = UICowCowType.CowCowSmallSettlement;
+
+            ReferenceCollector rc = this.GameObject.GetComponent<ReferenceCollector>();
 
             SmallBG = rc.Get<GameObject>("SmallBG");
             Button shareBtn = rc.Get<GameObject>("ShareBtn").GetComponent<Button>();
