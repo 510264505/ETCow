@@ -297,6 +297,7 @@ message C2G_CowCowChatFont // IRequest
 	int32 ChatIndex = 1;
 	int32 SeatID = 2;
 	string ChatMessage = 3;
+	string RoomID = 4;
 }
 
 message G2C_CowCowChatFont // IResponse
@@ -320,6 +321,7 @@ message C2G_CowCowEmoji // IRequest
 	int32 RpcId = 90;
 	int32 index = 1;
 	int32 SeatID = 2;
+	string RoomID = 3;
 }
 
 message G2C_CowCowEmoji // IResponse
@@ -337,11 +339,18 @@ message Actor_CowCowEmoji // IActorMessage
 	int32 SeatID = 2;
 }
 
+message DissolutionInfo // IMessage
+{
+	int32 SeatID = 1;
+	bool IsAgree = 2;
+}
+
 message C2G_CowCowDissoltion // IRequest
 {
 	int32 RpcId = 90;
 	int32 SeatID = 1;
 	bool IsAgree = 2;
+	string RoomID = 3;
 }
 
 message G2C_CowCowDissoltion // IResponse
@@ -355,6 +364,6 @@ message Actor_CowCowDissoltion // IActorMessage
 {
 	int32 RpcId = 90;
 	int64 ActorId = 94;
-	int32 SeatID = 1;
-	bool IsAgree = 2;
+	repeated DissolutionInfo Info = 1;
+	bool IsDiss = 2;
 }

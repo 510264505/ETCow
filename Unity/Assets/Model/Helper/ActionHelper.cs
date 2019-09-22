@@ -9,5 +9,9 @@ namespace ETModel
 		{
 			buttonClickedEvent.AddListener(() => { action(); });
 		}
+        public static void Add(this Slider.SliderEvent sliderEvent, Action<float> action)
+        {
+            sliderEvent.AddListener((slider) => { action(slider); });
+        }
 	}
 }

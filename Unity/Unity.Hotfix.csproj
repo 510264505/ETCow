@@ -94,6 +94,7 @@
     <Compile Include="Assets\Hotfix\CowCow\Factory\GamerFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Factory\UICowCowGameRoomFactory.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_ChatMessageHandler.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_DissoltionHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_GamerReadyHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_GamerSubmitHandCardHandler.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Handler\Actor_RoomDealCardsHandler.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_DissoltionComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_GamerInfoComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_GameRoomComponent.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_GameSettingComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_SmallSettlementComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\Component\UICowCow_SSGamerResultComponent.cs" />
     <Compile Include="Assets\Hotfix\CowCow\UI\UIGame\System\CowCow_CreateGameRoomUI.cs" />

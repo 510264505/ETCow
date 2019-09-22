@@ -16,6 +16,8 @@ namespace ETHotfix
     }
     public class UICowCow_GamerInfoComponent : Component
     {
+        private ResourcesComponent res;
+        private MicrophoneComponent microphone;
         private GameObject UIGameInfo { get; set; }
         private Text coin;
         private Text status;
@@ -31,9 +33,11 @@ namespace ETHotfix
         private Image emoji;
         private CanvasGroup chatBG;
         private Text chatText;
-        private float delayTimer = 3; //聊天信息延迟3秒消失
+        private float delayTimer = 2; //聊天信息延迟3秒消失
         public string gamerName { get; set; }
         public int Sex { get; set; }
+        private Tweener emojiTweener;
+        private Tweener chatTweener;
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
@@ -41,10 +45,15 @@ namespace ETHotfix
 
         public void Awake(GameObject parent, GamerInfo info, int posIndex)
         {
+            res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            res.LoadBundle(UICowCowAB.CowCow_Texture);
+            res.LoadBundle(UICowCowAB.CowCow_SoundOther);
+            microphone = Game.Scene.GetComponent<MicrophoneComponent>();
             this.Status = (UIGamerStatus)info.Status;
             this.gamerName = info.Name;
             UIGameInfo = GamerFactory.Create(UICowCowType.CowCowGamerInfo);
             UIGameInfo.transform.SetParent(parent.transform, false);
+            UIGameInfo.name = UICowCowType.CowCowGamerInfo;
             ReferenceCollector rc = UIGameInfo.GetComponent<ReferenceCollector>();
 
             Image headIcon = rc.Get<GameObject>("HeadIcon").GetComponent<Image>();
@@ -220,10 +229,9 @@ namespace ETHotfix
 
         public void SetCards(int[] indexs)
         {
-            ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             for (int i = 0; i < this.cards.Length; i++)
             {
-                Sprite sprite = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(indexs[i]));
+                Sprite sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(indexs[i]));
                 this.cards[i].sprite = sprite;
             }
             ShowHideHandCard(true);
@@ -247,23 +255,35 @@ namespace ETHotfix
 
         public void ShowEmoji(int index)
         {
-            Sprite sprite = (Sprite)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_Texture, $"Emoji_{index}");
+            Sprite sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, $"Emoji_{index}");
             emoji.sprite = sprite;
-            emoji.DOFade(1, 0);
-            emoji.DOFade(0, 1).SetDelay(3);
+            emoji.DOFade(1, 0.5f);
+            emoji.transform.DOShakeScale(1);
+            if (emojiTweener != null)
+            {
+                emojiTweener.Kill();
+                emojiTweener = null;
+            }
+            emojiTweener = emoji.DOFade(0, 1).SetDelay(delayTimer);
         }
 
         public void ShowChatFont(int index, string message, int sex)
         {
             chatText.text = message;
-            chatBG.alpha = 1;
+            chatBG.DOFade(1, 0.5f);
             if (index <= 8) //只有8个声音
             {
                 //播放声音
                 string str = sex == 0 ? $"boy{index}" : $"girl{index}";
-                AnimationClip ac = (AnimationClip)ETModel.Game.Scene.GetComponent<ResourcesComponent>().GetAsset(UICowCowAB.CowCow_SoundOther, str);
+                AudioClip ac = (AudioClip)res.GetAsset(UICowCowAB.CowCow_SoundOther, str);
+                microphone.PlaySound(ac);
             }
-            chatBG.DOFade(0, 1).SetDelay(delayTimer);
+            if (chatTweener != null)
+            {
+                chatTweener.Kill();
+                chatTweener = null;
+            }
+            chatTweener = chatBG.DOFade(0, 1).SetDelay(delayTimer);
         }
 
         public override void Dispose()
@@ -275,6 +295,8 @@ namespace ETHotfix
             base.Dispose();
 
             UnityEngine.Object.Destroy(UIGameInfo);
+            res.UnloadBundle(UICowCowAB.CowCow_Texture);
+            res.UnloadBundle(UICowCowAB.CowCow_SoundOther);
         }
     }
 }

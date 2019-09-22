@@ -12,7 +12,7 @@ namespace ETModel
     public sealed class Room : Entity
     {
         public readonly Dictionary<int, Gamer> gamers = new Dictionary<int, Gamer>();
-
+        public readonly Dictionary<int, bool> dissoltions = new Dictionary<int, bool>();
         public string GameName { get; set; }
         //创建房间的玩家ID
         public long UserID { get; set; }
@@ -21,6 +21,7 @@ namespace ETModel
         public int RuleBit { get; set; }
         public RoomState State { get; set; } = RoomState.None;
         public int GamerCount { get { return gamers.Values.Count; } }
+        public int DissoltionCount { get { return dissoltions.Values.Count; } }
         public int PeopleCount { get { return 2; } }
         public override void Dispose()
         {

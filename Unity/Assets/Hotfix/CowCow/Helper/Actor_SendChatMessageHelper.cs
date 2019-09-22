@@ -6,8 +6,9 @@ namespace ETHotfix
     {
         public static async ETVoid SendFont(int index, int seatId, string msg = null)
         {
+            UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
             Session session = Game.Scene.GetComponent<SessionComponent>().Session;
-            G2C_CowCowChatFont response = (G2C_CowCowChatFont)await session.Call(new C2G_CowCowChatFont() { ChatIndex = index, SeatID = seatId, ChatMessage = msg });
+            G2C_CowCowChatFont response = (G2C_CowCowChatFont)await session.Call(new C2G_CowCowChatFont() { ChatIndex = index, SeatID = seatId, ChatMessage = msg, RoomID = room.RoomID });
             if (response.Error != 0)
             {
                 //发送失败弹窗
@@ -15,8 +16,9 @@ namespace ETHotfix
         }
         public static async ETVoid SendEmoji(int index, int seatId)
         {
+            UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
             Session session = Game.Scene.GetComponent<SessionComponent>().Session;
-            G2C_CowCowEmoji response = (G2C_CowCowEmoji)await session.Call(new C2G_CowCowEmoji() { Index = index, SeatID = seatId });
+            G2C_CowCowEmoji response = (G2C_CowCowEmoji)await session.Call(new C2G_CowCowEmoji() { Index = index, SeatID = seatId, RoomID = room.RoomID });
             if (response.Error != 0)
             {
                 //发送失败弹窗

@@ -27,12 +27,15 @@ namespace ETHotfix
             public CanvasGroup parent;
             public Image image;
         }
+        private ResourcesComponent res;
+
         private UICowCow_SmallSettlementComponent smallSettlement;
         private UICowCow_BigSettlementComponent bigSettlement;
         private GamerComponent gamerComponent;
         private UICowCow_ChatComponent chatComponent;
         private UIChatVoice uiChatVoice;
         private UICowCow_DissoltionComponent dissComponent;
+        private UICowCow_GameSettingComponent settingComponent;
         
         private GameObject BackGround { get; set; }
         private GameObject UIRoomGamer { get; set; }
@@ -127,6 +130,18 @@ namespace ETHotfix
             }
         }
 
+        public UICowCow_GameSettingComponent SettingComponent
+        {
+            get
+            {
+                if (settingComponent == null)
+                {
+                    settingComponent = this.GetParent<UI>().AddComponent<UICowCow_GameSettingComponent, GameObject>(BackGround);
+                }
+                return settingComponent;
+            }
+        }
+
         public string RoomID { get; set; }
 
         private void ReSet()
@@ -138,7 +153,7 @@ namespace ETHotfix
         }
         public void Awake()
         {
-            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             res.LoadBundle(UICowCowAB.CowCow_Prefabs);
 
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
@@ -153,6 +168,7 @@ namespace ETHotfix
             Button keyboardBtn = rc.Get<GameObject>("KeyboardBtn").GetComponent<Button>();
             EventTrigger voiceEvent = rc.Get<GameObject>("VoiceBtn").GetComponent<EventTrigger>();
             Button dissBtn = rc.Get<GameObject>("DissBtn").GetComponent<Button>();
+            Button settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
             readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
 
@@ -161,6 +177,7 @@ namespace ETHotfix
             dissBtn.onClick.Add(OnDiss);
             readyBtn.onClick.Add(OnReady);
             inviteBtn.onClick.Add(OnInvite);
+            settingBtn.onClick.Add(OnSetting);
 
             voiceEvent.triggers.Add(AddEventTrigger(EventTriggerType.PointerDown, OnVoiceDown));
             voiceEvent.triggers.Add(AddEventTrigger(EventTriggerType.PointerUp, OnVoiceUp));
@@ -317,7 +334,19 @@ namespace ETHotfix
         }
         private void OnDiss()
         {
-
+            //弹窗是否发起解散
+            GameObject go = UnityEngine.Object.Instantiate((GameObject)res.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowInitiateDissPanel));
+            go.transform.SetParent(BackGround.transform, false);
+            Action action = () => { UnityEngine.Object.Destroy(go.gameObject); };
+            go.GetComponent<Button>().onClick.Add(action);
+            Button initiateBtn = go.transform.Find("BG/InitiateBtn").GetComponent<Button>();
+            Button cancelBtn = go.transform.Find("BG/CancelBtn").GetComponent<Button>();
+            initiateBtn.onClick.Add(() =>
+            {
+                Actor_DissoltionHelper.OnSendVOte(GamerComponent.LocalSeatID, true).Coroutine();
+                action?.Invoke();
+            });
+            cancelBtn.onClick.Add(action);
         }
         private void OnReady()
         {
@@ -326,6 +355,10 @@ namespace ETHotfix
         private void OnInvite()
         {
 
+        }
+        private void OnSetting()
+        {
+            SettingComponent.ShowHideUIGameSetting(true);
         }
         public void Bureau()
         {
@@ -378,6 +411,7 @@ namespace ETHotfix
             base.Dispose();
 
             ReSet();
+            res.UnloadBundle(UICowCowAB.CowCow_Prefabs);
         }
     }
 }

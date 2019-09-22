@@ -3869,6 +3869,14 @@ namespace ETHotfix {
       }
     }
 
+    private string roomID_ = "";
+    public string RoomID {
+      get { return roomID_; }
+      set {
+        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       if (ChatIndex != 0) {
         output.WriteRawTag(8);
@@ -3881,6 +3889,10 @@ namespace ETHotfix {
       if (ChatMessage.Length != 0) {
         output.WriteRawTag(26);
         output.WriteString(ChatMessage);
+      }
+      if (RoomID.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(RoomID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -3902,6 +3914,9 @@ namespace ETHotfix {
       if (ChatMessage.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ChatMessage);
       }
+      if (RoomID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      }
       return size;
     }
 
@@ -3909,6 +3924,7 @@ namespace ETHotfix {
       chatIndex_ = 0;
       seatID_ = 0;
       chatMessage_ = "";
+      roomID_ = "";
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -3926,6 +3942,10 @@ namespace ETHotfix {
           }
           case 26: {
             ChatMessage = input.ReadString();
+            break;
+          }
+          case 34: {
+            RoomID = input.ReadString();
             break;
           }
           case 720: {
@@ -4176,6 +4196,14 @@ namespace ETHotfix {
       }
     }
 
+    private string roomID_ = "";
+    public string RoomID {
+      get { return roomID_; }
+      set {
+        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       if (Index != 0) {
         output.WriteRawTag(8);
@@ -4184,6 +4212,10 @@ namespace ETHotfix {
       if (SeatID != 0) {
         output.WriteRawTag(16);
         output.WriteInt32(SeatID);
+      }
+      if (RoomID.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RoomID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -4202,12 +4234,16 @@ namespace ETHotfix {
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
       }
+      if (RoomID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
       index_ = 0;
       seatID_ = 0;
+      roomID_ = "";
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -4221,6 +4257,10 @@ namespace ETHotfix {
           }
           case 16: {
             SeatID = input.ReadInt32();
+            break;
+          }
+          case 26: {
+            RoomID = input.ReadString();
             break;
           }
           case 720: {
@@ -4423,6 +4463,71 @@ namespace ETHotfix {
 
   }
 
+  public partial class DissolutionInfo : pb::IMessage {
+    private static readonly pb::MessageParser<DissolutionInfo> _parser = new pb::MessageParser<DissolutionInfo>(() => (DissolutionInfo)MessagePool.Instance.Fetch(typeof(DissolutionInfo)));
+    public static pb::MessageParser<DissolutionInfo> Parser { get { return _parser; } }
+
+    private int seatID_;
+    public int SeatID {
+      get { return seatID_; }
+      set {
+        seatID_ = value;
+      }
+    }
+
+    private bool isAgree_;
+    public bool IsAgree {
+      get { return isAgree_; }
+      set {
+        isAgree_ = value;
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (SeatID != 0) {
+        output.WriteRawTag(8);
+        output.WriteInt32(SeatID);
+      }
+      if (IsAgree != false) {
+        output.WriteRawTag(16);
+        output.WriteBool(IsAgree);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (SeatID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
+      }
+      if (IsAgree != false) {
+        size += 1 + 1;
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      seatID_ = 0;
+      isAgree_ = false;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            SeatID = input.ReadInt32();
+            break;
+          }
+          case 16: {
+            IsAgree = input.ReadBool();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
   public partial class C2G_CowCowDissoltion : pb::IMessage {
     private static readonly pb::MessageParser<C2G_CowCowDissoltion> _parser = new pb::MessageParser<C2G_CowCowDissoltion>(() => (C2G_CowCowDissoltion)MessagePool.Instance.Fetch(typeof(C2G_CowCowDissoltion)));
     public static pb::MessageParser<C2G_CowCowDissoltion> Parser { get { return _parser; } }
@@ -4451,6 +4556,14 @@ namespace ETHotfix {
       }
     }
 
+    private string roomID_ = "";
+    public string RoomID {
+      get { return roomID_; }
+      set {
+        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
       if (SeatID != 0) {
         output.WriteRawTag(8);
@@ -4459,6 +4572,10 @@ namespace ETHotfix {
       if (IsAgree != false) {
         output.WriteRawTag(16);
         output.WriteBool(IsAgree);
+      }
+      if (RoomID.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(RoomID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -4477,12 +4594,16 @@ namespace ETHotfix {
       if (IsAgree != false) {
         size += 1 + 1;
       }
+      if (RoomID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
       seatID_ = 0;
       isAgree_ = false;
+      roomID_ = "";
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -4496,6 +4617,10 @@ namespace ETHotfix {
           }
           case 16: {
             IsAgree = input.ReadBool();
+            break;
+          }
+          case 26: {
+            RoomID = input.ReadString();
             break;
           }
           case 720: {
@@ -4613,30 +4738,27 @@ namespace ETHotfix {
       }
     }
 
-    private int seatID_;
-    public int SeatID {
-      get { return seatID_; }
-      set {
-        seatID_ = value;
-      }
+    private static readonly pb::FieldCodec<global::ETHotfix.DissolutionInfo> _repeated_info_codec
+        = pb::FieldCodec.ForMessage(10, global::ETHotfix.DissolutionInfo.Parser);
+    private pbc::RepeatedField<global::ETHotfix.DissolutionInfo> info_ = new pbc::RepeatedField<global::ETHotfix.DissolutionInfo>();
+    public pbc::RepeatedField<global::ETHotfix.DissolutionInfo> Info {
+      get { return info_; }
+      set { info_ = value; }
     }
 
-    private bool isAgree_;
-    public bool IsAgree {
-      get { return isAgree_; }
+    private bool isDiss_;
+    public bool IsDiss {
+      get { return isDiss_; }
       set {
-        isAgree_ = value;
+        isDiss_ = value;
       }
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
-      if (SeatID != 0) {
-        output.WriteRawTag(8);
-        output.WriteInt32(SeatID);
-      }
-      if (IsAgree != false) {
+      info_.WriteTo(output, _repeated_info_codec);
+      if (IsDiss != false) {
         output.WriteRawTag(16);
-        output.WriteBool(IsAgree);
+        output.WriteBool(IsDiss);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -4656,18 +4778,17 @@ namespace ETHotfix {
       if (ActorId != 0L) {
         size += 2 + pb::CodedOutputStream.ComputeInt64Size(ActorId);
       }
-      if (SeatID != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
-      }
-      if (IsAgree != false) {
+      size += info_.CalculateSize(_repeated_info_codec);
+      if (IsDiss != false) {
         size += 1 + 1;
       }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
-      seatID_ = 0;
-      isAgree_ = false;
+      for (int i = 0; i < info_.Count; i++) { MessagePool.Instance.Recycle(info_[i]); }
+      info_.Clear();
+      isDiss_ = false;
       rpcId_ = 0;
       actorId_ = 0;
       uint tag;
@@ -4676,12 +4797,12 @@ namespace ETHotfix {
           default:
             input.SkipLastField();
             break;
-          case 8: {
-            SeatID = input.ReadInt32();
+          case 10: {
+            info_.AddEntriesFrom(input, _repeated_info_codec);
             break;
           }
           case 16: {
-            IsAgree = input.ReadBool();
+            IsDiss = input.ReadBool();
             break;
           }
           case 720: {

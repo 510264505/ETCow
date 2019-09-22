@@ -44,7 +44,7 @@ namespace ETHotfix
             this.GameObject.transform.SetParent(parent.transform, false);
             this.GameObject.name = UICowCowType.CowcowChat;
 
-            ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
+            ReferenceCollector rc = this.GameObject.GetComponent<ReferenceCollector>();
 
             chatContent = rc.Get<GameObject>("ChatContent").GetComponent<CanvasGroup>();
             GameObject content = rc.Get<GameObject>("Content");
@@ -60,13 +60,15 @@ namespace ETHotfix
                 emojiBtn[i] = rc.Get<GameObject>($"EmojiBtn{i}").GetComponent<Button>();
                 emojiBtn[i].onClick.Add(() => {
                     Actor_SendChatMessageHelper.SendEmoji(n, seatId).Coroutine();
+                    this.ShowHideEmoji(false);
                 });
             }
             sendBtn.onClick.Add(() => {
                 Actor_SendChatMessageHelper.SendFont(customMessage, seatId, inputChatContent.text).Coroutine();
                 inputChatContent.text = string.Empty;
+                this.ShowHideChatFont(false);
             });
-            this.GetParent<UI>().GameObject.GetComponent<Button>().onClick.Add(() => {
+            this.GameObject.GetComponent<Button>().onClick.Add(() => {
                 this.ShowHideChatFont(false);
                 this.ShowHideEmoji(false);
             });
@@ -81,6 +83,7 @@ namespace ETHotfix
                 chatContentBtn[i].transform.GetChild(0).GetComponent<Text>().text = systemText[i];
                 chatContentBtn[i].onClick.Add(() => {
                     Actor_SendChatMessageHelper.SendFont(n, seatId, systemText[n]).Coroutine();
+                    this.ShowHideChatFont(false);
                 });
             }
         }
@@ -90,8 +93,12 @@ namespace ETHotfix
         /// </summary>
         public void ShowHideChatFont(bool isShow)
         {
+            emoji.alpha = !isShow ? 1 : 0;
+            emoji.blocksRaycasts = !isShow;
             chatContent.alpha = isShow ? 1 : 0;
             chatContent.blocksRaycasts = isShow;
+            this.GameObject.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
+            this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
         }
 
         /// <summary>
@@ -101,6 +108,10 @@ namespace ETHotfix
         {
             emoji.alpha = isShow ? 1 : 0;
             emoji.blocksRaycasts = isShow;
+            chatContent.alpha = !isShow ? 1 : 0;
+            chatContent.blocksRaycasts = !isShow;
+            this.GameObject.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
+            this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
         }
     }
 }

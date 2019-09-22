@@ -25,8 +25,8 @@ namespace ETHotfix
             public float time;
             public int seatId;
         }
-        private AudioSource audioSource;
-        private AudioSource soundSource;
+        private AudioSource musicSource; //背景音乐
+        private AudioSource soundSource; //音效和播放语音
         private bool isGetMicrophone = false;
         private string device;
         private readonly int maxRecordTime = 10;
@@ -34,12 +34,13 @@ namespace ETHotfix
         private CancellationTokenSource tokenSource;
         private CancellationToken cancellationToken;
         private Queue<Sound> soundQueue = new Queue<Sound>();
+        private Queue<AudioClip> clipQueue = new Queue<AudioClip>();
         private bool isPlaying = false; //是否正在播放语音
         public Action<int> playingSound;
 
         public void Awake()
         {
-            audioSource = ETModel.Component.Global.GetComponent<AudioSource>();
+            musicSource = ETModel.Component.Global.GetComponent<AudioSource>();
             soundSource = ETModel.Component.Global.AddComponent<AudioSource>();
             InitGetMicrophone();
         }
@@ -69,9 +70,9 @@ namespace ETHotfix
         {
             InitGetMicrophone();
 
-            audioSource.Stop();
-            audioSource.mute = true;
-            audioSource.clip = Microphone.Start(device, false, maxRecordTime, samplingRate);
+            musicSource.Stop();
+            musicSource.mute = true;
+            soundSource.clip = Microphone.Start(device, false, maxRecordTime, samplingRate);
             Debug.Log("开始录音");
             LimitRecordTime().Coroutine();
         }
@@ -84,8 +85,8 @@ namespace ETHotfix
                 this.tokenSource = null;
             }
             Microphone.End(device);
-            audioSource.mute = false;
-            byte[] bytes = GetData(audioSource.clip);
+            soundSource.mute = false;
+            byte[] bytes = GetData(soundSource.clip);
             bytes = GzipHelper.CompressBytes(bytes);
             //发送数据给服务器
         }
@@ -102,21 +103,28 @@ namespace ETHotfix
 
         private async ETVoid PlaySound()
         {
-            while(soundQueue.Count > 0)
+            this.isPlaying = true;
+            while (soundQueue.Count > 0)
             {
-                this.isPlaying = true;
                 Sound sound = soundQueue.Dequeue();
                 sound.bytes = GzipHelper.Decompress(sound.bytes);
                 SetData(soundSource.clip, sound.bytes);
-                float volume = audioSource.volume;
-                audioSource.volume = volume > 0.1f ? 0.1f : volume;
+                float volume = musicSource.volume;
+                musicSource.volume = volume > 0.1f ? 0.1f : volume;
                 soundSource.mute = false;
                 soundSource.Play();
                 playingSound?.Invoke(sound.seatId);
                 await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync((long)(sound.time * 1000));
-                audioSource.volume = volume;
-                this.isPlaying = false;
+                musicSource.volume = volume;
+                
             }
+            while(clipQueue.Count > 0)
+            {
+                soundSource.clip = clipQueue.Dequeue();
+                soundSource.Play();
+                await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(1000);
+            }
+            this.isPlaying = false;
         }
         /// <summary>
         /// 播放语音
@@ -132,6 +140,48 @@ namespace ETHotfix
             {
                 PlaySound().Coroutine();
             }
+        }
+
+        /// <summary>
+        /// 播放声音
+        /// </summary>
+        public void PlaySound(AudioClip clip)
+        {
+            if (!isPlaying)
+            {
+                soundSource.clip = clip;
+                soundSource.Play();
+            }
+            else
+            {
+                this.clipQueue.Enqueue(clip);
+            }
+        }
+
+        /// <summary>
+        /// 设置背景音乐声音大小
+        /// </summary>
+        public void SetMusicVolume(float volume)
+        {
+            musicSource.volume = volume;
+        }
+
+        /// <summary>
+        /// 设置音效大小
+        /// </summary>
+        public void SetSoundVolume(float volume)
+        {
+            soundSource.volume = volume;
+        }
+
+        public float MusicVolume()
+        {
+            return musicSource.volume;
+        }
+
+        public float SoundVolume()
+        {
+            return soundSource.volume;
         }
 
         /// <summary>

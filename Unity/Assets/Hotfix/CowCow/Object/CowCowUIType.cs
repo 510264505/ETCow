@@ -31,6 +31,7 @@ namespace ETHotfix
         public const string CowCowDissoltion = "UIDissoltion";
         public const string CowCowGamerDissInfo = "GamerDissInfo";
         public const string CowCowGameSetting = "UIGameSetting";
+        public const string CowCowInitiateDissPanel = "InitiateDissPanel";
     }
     public static partial class SoundCowCow
     {

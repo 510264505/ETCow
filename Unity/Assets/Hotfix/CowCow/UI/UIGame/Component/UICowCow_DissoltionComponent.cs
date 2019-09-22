@@ -81,10 +81,7 @@ namespace ETHotfix
                     }
                 }
             }
-            else
-            {
-                ShowHideDissoltion(false);
-            }
+            this.ShowHideDissoltion(true);
         }
 
         /// <summary>

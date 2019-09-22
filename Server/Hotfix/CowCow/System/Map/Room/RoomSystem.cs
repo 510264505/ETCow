@@ -87,5 +87,20 @@ namespace ETHotfix
                 actorProxy.Send(message);
             }
         }
+
+        public static void AddDissoltion(this Room self, int seatId, bool isAgree)
+        {
+            self.dissoltions.Add(seatId, isAgree);
+        }
+
+        public static Dictionary<int, bool> GetDissoltions(this Room self)
+        {
+            return self.dissoltions;
+        }
+
+        public static void DissoltionClear(this Room self)
+        {
+            self.dissoltions.Clear();
+        }
     }
 }
