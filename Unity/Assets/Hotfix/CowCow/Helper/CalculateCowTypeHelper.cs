@@ -27,6 +27,7 @@ namespace ETHotfix
         private const int eleven = 11;
         private const int tan = 10;
         private const int three = 3;
+        private const int four = 4;
         private static CalculateCowTypeData data = new CalculateCowTypeData();
         /// <summary>
         /// 取最大的牛牌型，并取出同牌型最大的那张比拼
@@ -86,33 +87,35 @@ namespace ETHotfix
         /// </summary>
         public static bool BombCow(List<int> card)
         {
-            int count = 0;
-            int num = 0;
-            Dictionary<int, bool> dic = new Dictionary<int, bool>();
+            bool isBomb = false;
+            Dictionary<int, int> dic = new Dictionary<int, int>();
             for (int i = 0; i < card.Count; i++)
             {
-                if (!dic.ContainsKey(card[i] % thirteen))
+                int n = card[i] % thirteen;
+                if (!dic.ContainsKey(n))
                 {
-                    dic.Add(card[i] % thirteen, true);
+                    dic.Add(n, 1);
                 }
                 else
                 {
-                    count++;
-                    num = card[i] % thirteen;
+                    dic[n]++;
                 }
             }
-            bool isBomb = count >= three;
-            if (isBomb)
+            foreach (var item in dic)
             {
-                data.cowType = CowType.BombCow;
-                data.indexs = new int[4];
-                int n = 0;
-                for (int i = 0; i < card.Count; i++)
+                if (item.Value >= four)
                 {
-                    if (card[i] % thirteen == num)
+                    isBomb = true;
+                    data.cowType = CowType.BombCow;
+                    data.indexs = new int[four];
+                    int n = 0;
+                    for (int i = 0; i < card.Count; i++)
                     {
-                        data.indexs[n] = i;
-                        n++;
+                        if (card[i] % thirteen == item.Key)
+                        {
+                            data.indexs[n] = i;
+                            n++;
+                        }
                     }
                 }
             }

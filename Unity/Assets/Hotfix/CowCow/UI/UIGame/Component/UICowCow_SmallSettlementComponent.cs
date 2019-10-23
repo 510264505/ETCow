@@ -39,14 +39,12 @@ namespace ETHotfix
         }
         private void OnContinue()
         {
-            Debug.Log("小结算继续游戏！");
-            ShowHideSmallSettlement(false, 500).Coroutine();
+            this.ShowHideSmallSettlement(false);
         }
 
-        public async ETVoid ShowHideSmallSettlement(bool isShow, long timer)
+        public void ShowHideSmallSettlement(bool isShow)
         {
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(timer);
-            CanvasGroup canvasGroup = this.GetParent<UI>().GameObject.GetComponent<CanvasGroup>();
+            CanvasGroup canvasGroup = this.GameObject.GetComponent<CanvasGroup>();
             canvasGroup.blocksRaycasts = isShow;
             canvasGroup.DOFade(isShow ? 1 : 0, 0.5f);
             UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
@@ -54,6 +52,17 @@ namespace ETHotfix
             {
                 Actor_GamerReadyHelper.OnReady(room.GamerComponent.LocalSeatID, room.RoomID).Coroutine();
             }
+        }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            UnityEngine.Object.Destroy(this.GameObject);
         }
     }
 }

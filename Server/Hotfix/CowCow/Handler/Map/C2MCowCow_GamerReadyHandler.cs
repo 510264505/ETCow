@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using ETModel;
 using Google.Protobuf.Collections;
 
@@ -37,27 +36,9 @@ namespace ETHotfix
                 }
                 reply(response);
 
-                //给各个玩家发牌
-                if (readyInfo.SeatIDs.count == room.PeopleCount)
-                {
-                    List<int> allCards = CowCowDealCardSystem.DealAllCards(CardCount * room.GamerCount);
-                    foreach (Gamer g in gamers.Values)
-                    {
-                        g.Status = GamerStatus.Playing; //正在玩的状态 
-                        Actor_CowCowRoomDealCards sendCards = new Actor_CowCowRoomDealCards();
-                        sendCards.Cards = new RepeatedField<int>();
-                        int index = g.SeatID * CardCount;
-                        for (int i = 0; i < CardCount; i++)
-                        {
-                            sendCards.Cards.Add(allCards[index + i]);
-                        }
-                        room.Send(g, sendCards);
-                    }
-                }
-                else
-                {
-                    room.Broadcast(readyInfo);
-                }
+                readyInfo.IsFullPeople = readyInfo.SeatIDs.Count == room.PeopleCount;
+                //广播准备玩家，所有人准备后，玩家即可开始抢庄
+                room.Broadcast(readyInfo);
             }
             catch(Exception e)
             {

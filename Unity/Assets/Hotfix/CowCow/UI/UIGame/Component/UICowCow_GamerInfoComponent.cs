@@ -32,12 +32,16 @@ namespace ETHotfix
 
         private Image emoji;
         private CanvasGroup chatBG;
+        private Image bankerIcon;
+
         private Text chatText;
         private float delayTimer = 2; //聊天信息延迟3秒消失
         public string gamerName { get; set; }
         public int Sex { get; set; }
         private Tweener emojiTweener;
         private Tweener chatTweener;
+
+        private float dealCardTime = 0.5f;
         //是否准备
         public UIGamerStatus Status { get; set; } = UIGamerStatus.None;
 
@@ -74,14 +78,16 @@ namespace ETHotfix
             emoji = rc.Get<GameObject>("Emoji").GetComponent<Image>();
             chatBG = rc.Get<GameObject>("ChatBG").GetComponent<CanvasGroup>();
             chatText = rc.Get<GameObject>("ChatText").GetComponent<Text>();
+            bankerIcon = rc.Get<GameObject>("BankerIcon").GetComponent<Image>();
             chatBG.transform.localPosition = GamerData.Pos[posIndex].ChatPosData.Pos;
             chatBG.transform.Rotate(GamerData.Pos[posIndex].ChatPosData.Rotate);
             chatText.transform.Rotate(GamerData.Pos[posIndex].ChatPosData.Rotate);
+            
 
             promptBtn.onClick.Add(OnPrompt);
             submitBtn.onClick.Add(OnSubmit);
             gamerNames.text = info.Name;
-            SetCoin(info.Coin.ToString());
+            this.SetCoin(info.Coin.ToString());
             this.Sex = info.Sex;
             //headIcon.sprite = info.HeadIcon;
         }
@@ -128,10 +134,13 @@ namespace ETHotfix
                     SetCowType("五小牛");
                     break;
             }
-            ShowHidePromptButton(false);
-            ShowHideSubmitButton(true);
+            this.ShowHidePromptButton(false);
+            this.ShowHideSubmitButton(true);
         }
 
+        /// <summary>
+        /// 提交手牌
+        /// </summary>
         private void OnSubmit()
         {
             submitCard.MaxCard = cowTypeData.maxCard;
@@ -204,6 +213,19 @@ namespace ETHotfix
         }
 
         /// <summary>
+        /// 结算显示手牌
+        /// </summary>
+        public void ShowCards(int[] cards)
+        {
+            for (int i = 0; i < this.cards.Length; i++)
+            {
+                Sprite sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(cards[i]));
+                this.cards[i].sprite = sprite;
+            }
+            this.ShowHideHandCard(true);
+        }
+
+        /// <summary>
         /// 设置手牌
         /// </summary>
         public void SetCards(Sprite[] sprites)
@@ -212,40 +234,74 @@ namespace ETHotfix
             {
                 this.cards[i].sprite = sprites[i];
             }
-            ShowHideHandCard(true);
+            this.ShowHideHandCard(true);
         }
 
         /// <summary>
-        /// 设置牌背面
+        /// 设置所有玩家手牌显示背面
         /// </summary>
-        public void SetCards(Sprite sprite)
+        public void SetCards(Sprite sprite, bool isShow)
         {
+            Sequence sequence = DOTween.Sequence();
             for (int i = 0; i < this.cards.Length; i++)
             {
+                this.cards[i].transform.localPosition = -this.HandCard.transform.localPosition;
                 this.cards[i].sprite = sprite;
+                sequence.Join(this.cards[i].transform.DOLocalMove(GamerData.LocalPos[i], dealCardTime).SetEase(Ease.OutCubic));
             }
-            ShowHideHandCard(true);
+            sequence.OnComplete(() => {
+                //发牌动画结束后显示押注倍率
+                if (isShow)
+                {
+                    Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>().ShowBetBtns(true);
+                }
+                Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>().ShowHideCardHeap(false);
+            });
+            this.ShowHideHandCard(true);
         }
 
-        public void SetCards(int[] indexs)
+        /// <summary>
+        /// 设置庄家手牌并显示
+        /// </summary>
+        public void SetBankerCards(Sprite sprite, int multiple)
         {
+            Sequence sequence = DOTween.Sequence();
             for (int i = 0; i < this.cards.Length; i++)
             {
-                Sprite sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(indexs[i]));
+                this.cards[i].transform.localPosition = -this.HandCard.transform.localPosition;
                 this.cards[i].sprite = sprite;
+                sequence.Join(this.cards[i].transform.DOLocalMove(GamerData.LocalPos[i], dealCardTime).SetEase(Ease.OutCubic));
             }
-            ShowHideHandCard(true);
+            sequence.OnComplete(() => {
+                //发牌动画结束后显示押注倍率
+                this.SeeSelfCards(multiple);
+            });
+            this.ShowHideHandCard(true);
         }
 
-        public void SetCard(int index, int card, Sprite sprite)
+        /// <summary>
+        /// 给自己发牌并显示
+        /// </summary>
+        public void SetCards(int[] cards)
         {
-            if (index == 0)
+            cardList.Clear();
+            cardList.AddRange(cards);
+            //for (int i = 0; i < cards.Length; i++)
+            //{
+            //    this.cards[i].sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(cards[i]));
+            //}
+            //this.ShowHideHandCard(true);
+            //this.ShowHidePromptButton(true);
+        }
+
+        public void SeeSelfCards(int n)
+        {
+            submitCard.Multiple = n;
+            for (int i = 0; i < cardList.Count; i++)
             {
-                cardList.Clear();
+                this.cards[i].sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, CardHelper.GetCardAssetName(cardList[i]));
             }
-            cardList.Add(card);
-            this.cards[index].sprite = sprite;
-            ShowHideHandCard(index + 1 == this.cards.Length);
+            this.ShowHidePromptButton(true);
         }
 
         private void UpMoveCard(int index, int offy)
@@ -284,6 +340,11 @@ namespace ETHotfix
                 chatTweener = null;
             }
             chatTweener = chatBG.DOFade(0, 1).SetDelay(delayTimer);
+        }
+
+        public void ShowHideBankerIcon(bool isShow)
+        {
+            bankerIcon.DOFade(isShow ? 1 : 0, 0);
         }
 
         public override void Dispose()

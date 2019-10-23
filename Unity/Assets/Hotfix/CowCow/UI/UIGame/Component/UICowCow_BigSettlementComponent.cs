@@ -45,5 +45,16 @@ namespace ETHotfix
         {
             Debug.Log("小结算继续游戏！");
         }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            UnityEngine.Object.Destroy(this.GameObject);
+        }
     }
 }

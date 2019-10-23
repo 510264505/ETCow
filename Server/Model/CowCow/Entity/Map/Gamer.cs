@@ -46,6 +46,10 @@ namespace ETModel
         public int FloweColor { get; set; }
         //牛几
         public int CowNumber { get; set; }
+        //倍数
+        public int Multiple { get; set; }
+        //抢庄
+        public int GrabBanker { get; set; }
         public void Awake()
         {
             this.UserID = this.Id;

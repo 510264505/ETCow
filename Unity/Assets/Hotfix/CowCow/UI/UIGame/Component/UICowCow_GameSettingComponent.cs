@@ -19,21 +19,21 @@ namespace ETHotfix
     }
     public class UICowCow_GameSettingComponent : Component
     {
+        private ResourcesComponent res;
         private MicrophoneComponent microphone;
         private CanvasGroup uiVoiceSetting;
         private CanvasGroup uiHelp;
         private Slider musicSlider;
         private Slider soundSlider;
-
-        private float tempMusicSlider;
-        private float tempSoundSlider;
+        private Button musicSwitchBtn;
+        private Button soundSwitchBtn;
 
         public void Awake(GameObject parent)
         {
             microphone = Game.Scene.GetComponent<MicrophoneComponent>();
-            tempMusicSlider = microphone.MusicVolume();
-            tempMusicSlider = microphone.SoundVolume();
-            ResourcesComponent res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
+            res.LoadBundle(UICowCowAB.CowCow_Prefabs);
+            res.LoadBundle(UICowCowAB.CowCow_Texture);
             GameObject ab = (GameObject)res.GetAsset(UICowCowAB.CowCow_Prefabs, UICowCowType.CowCowGameSetting);
             this.GameObject = UnityEngine.Object.Instantiate(ab);
             this.GameObject.transform.SetParent(parent.transform, false);
@@ -43,8 +43,8 @@ namespace ETHotfix
             uiVoiceSetting = rc.Get<GameObject>("UIVoiceSetting").GetComponent<CanvasGroup>();
             musicSlider = rc.Get<GameObject>("MusicSlider").GetComponent<Slider>();
             soundSlider = rc.Get<GameObject>("SoundSlider").GetComponent<Slider>();
-            Button musicSwitchBtn = rc.Get<GameObject>("MusicSwitchButton").GetComponent<Button>();
-            Button soundSwitchBtn = rc.Get<GameObject>("SoundSwitchButton").GetComponent<Button>();
+            musicSwitchBtn = rc.Get<GameObject>("MusicSwitchButton").GetComponent<Button>();
+            soundSwitchBtn = rc.Get<GameObject>("SoundSwitchButton").GetComponent<Button>();
             Button helpBtn = rc.Get<GameObject>("HelpBtn").GetComponent<Button>();
             Button comfirmBtn = rc.Get<GameObject>("ComfirmBtn").GetComponent<Button>();
 
@@ -61,32 +61,37 @@ namespace ETHotfix
         }
         private void OnMusicSlider(float slider)
         {
-            this.SetMusicVolume(slider);
+            microphone.SetMusicVolume(slider);
         }
         private void OnSoundSlider(float slider)
         {
-            this.SetSoundVolume(slider);
+            microphone.SetSoundVolume(slider);
         }
         private void OnMusicSwitch()
         {
-            if (microphone.MusicVolume() > 0)
+            if (musicSlider.value > 0)
             {
-                microphone.SetMusicVolume(0);
+                // 当slider值改变时，会触发事件onValueChanged
+                musicSlider.value = 0;
+                musicSwitchBtn.GetComponent<Image>().sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, "set_btn_voice_off");
             }
             else
             {
-                this.SetMusicVolume(tempMusicSlider);
+                musicSlider.value = 1;
+                musicSwitchBtn.GetComponent<Image>().sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, "set_btn_voice_on");
             }
         }
         private void OnSoundSwitch()
         {
-            if (microphone.SoundVolume() > 0)
+            if (soundSlider.value > 0)
             {
-                microphone.SetSoundVolume(0);
+                soundSlider.value = 0;
+                soundSwitchBtn.GetComponent<Image>().sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, "set_btn_voice_off");
             }
             else
             {
-                this.SetSoundVolume(tempSoundSlider);
+                soundSlider.value = 1;
+                soundSwitchBtn.GetComponent<Image>().sprite = (Sprite)res.GetAsset(UICowCowAB.CowCow_Texture, "set_btn_voice_on");
             }
         }
         private void OnHelp()
@@ -109,21 +114,23 @@ namespace ETHotfix
             uiHelp.blocksRaycasts = isShow;
         }
 
-        private void SetMusicVolume(float volume)
-        {
-            microphone.SetMusicVolume(volume);
-            this.tempMusicSlider = volume;
-        }
-        private void SetSoundVolume(float volume)
-        {
-            microphone.SetSoundVolume(volume);
-            this.tempSoundSlider = volume;
-        }
-
         public void ShowHideUIGameSetting(bool isShow)
         {
             this.GameObject.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
             this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
+        }
+
+        public override void Dispose()
+        {
+            if (IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            res.UnloadBundle(UICowCowAB.CowCow_Prefabs);
+            res.UnloadBundle(UICowCowAB.CowCow_Texture);
+            UnityEngine.Object.Destroy(this.GameObject);
         }
     }
 }

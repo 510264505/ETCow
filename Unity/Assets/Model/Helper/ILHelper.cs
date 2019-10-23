@@ -28,8 +28,24 @@ namespace ETModel
 			appdomain.DelegateManager.RegisterMethodDelegate<ILTypeInstance>();
 			appdomain.DelegateManager.RegisterFunctionDelegate<Google.Protobuf.Adapt_IMessage.Adaptor>();
 			appdomain.DelegateManager.RegisterMethodDelegate<Google.Protobuf.Adapt_IMessage.Adaptor>();
+            appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.EventSystems.BaseEventData>();
+            appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData>>((act) =>
+            {
+                return new UnityEngine.Events.UnityAction<UnityEngine.EventSystems.BaseEventData>((arg0) =>
+                {
+                    ((Action<UnityEngine.EventSystems.BaseEventData>)act)(arg0);
+                });
+            });
+            appdomain.DelegateManager.RegisterMethodDelegate<float>();            appdomain.DelegateManager.RegisterDelegateConvertor<DG.Tweening.TweenCallback>((act) =>
+            {
+                return new DG.Tweening.TweenCallback(() =>
+                {
+                    ((Action)act)();
+                });
+            });
 
-			CLRBindings.Initialize(appdomain);
+
+            CLRBindings.Initialize(appdomain);
 
 			// 注册适配器
 			Assembly assembly = typeof(Init).Assembly;

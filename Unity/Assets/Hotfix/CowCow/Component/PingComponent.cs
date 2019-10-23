@@ -36,7 +36,7 @@ namespace ETHotfix
         /// <summary>
         /// 间隔
         /// </summary>
-        private long interval = 5000;
+        private long interval = 60 * 1000;
         /// <summary>
         /// 断线执行的事件
         /// </summary>

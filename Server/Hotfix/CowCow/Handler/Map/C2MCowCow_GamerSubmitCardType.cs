@@ -29,6 +29,7 @@ namespace ETHotfix
                 gamer.cardType = message.CardType;
                 gamer.FloweColor = message.FlowerColor;
                 gamer.CowNumber = message.CowNumber;
+                gamer.Multiple = message.Multiple;
                 gamer.cards.Clear();
                 gamer.cards.AddRange(message.Cards);
 
@@ -45,7 +46,7 @@ namespace ETHotfix
                 reply(response);
                 if (submits.SeatIDs.count == room.GamerCount)
                 {
-                    SmallSettlement(gamers, room);
+                    this.SmallSettlement(gamers, room);
                 }
                 else
                 {
@@ -64,20 +65,49 @@ namespace ETHotfix
         {
             Actor_CowCowRoomOpenCardsAndSettlement openCards = new Actor_CowCowRoomOpenCardsAndSettlement();
             openCards.SmallSettlemntInfo = new RepeatedField<CowCowSmallSettlementInfo>();
+            int bankerCoin = 0;
+            //计算各个玩家输赢,判断谁是庄
             foreach (Gamer g in gamers.Values)
             {
                 //坐下
                 g.Status = GamerStatus.Down;
                 g.IsSubmitHandCards = false;
-                CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
-                info.Cards = new RepeatedField<int>();
-                info.SeatID = g.SeatID;
-                info.Cards.AddRange(g.cards);
-                info.CardsType = g.cardType;
-                info.CowNumber = g.CowNumber;
-                openCards.SmallSettlemntInfo.Add(info);
+                if (room.CurBankerSeatID != g.SeatID)
+                {
+                    CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
+                    info.Cards = new RepeatedField<int>();
+                    info.SeatID = g.SeatID;
+                    info.Cards.AddRange(g.cards);
+                    info.CardsType = g.cardType;
+                    info.CowNumber = g.CowNumber;
+                    info.Multiple = g.Multiple;
+                    int loseWin = CowComparisonHelper.CalculCoin(gamers[room.CurBankerSeatID], g, room.CurMultiple);
+                    g.Coin += loseWin;
+                    info.LoseWin = loseWin;
+                    bankerCoin += -loseWin;
+                    info.BetCoin = g.Coin;
+                    openCards.SmallSettlemntInfo.Add(info);
+                }
             }
+            gamers[room.CurBankerSeatID].Coin += bankerCoin;
+            openCards.SmallSettlemntInfo.Add(SetBankerInfo(gamers[room.CurBankerSeatID], bankerCoin));
+
             room.Broadcast(openCards);
+        }
+
+        private CowCowSmallSettlementInfo SetBankerInfo(Gamer g, int bankerCoin)
+        {
+            CowCowSmallSettlementInfo info = new CowCowSmallSettlementInfo();
+            info.Cards = new RepeatedField<int>();
+            info.SeatID = g.SeatID;
+            info.Cards.AddRange(g.cards);
+            info.CardsType = g.cardType;
+            info.CowNumber = g.CowNumber;
+            info.Multiple = g.Multiple;
+            info.LoseWin = bankerCoin;
+            info.BetCoin = g.Coin;
+
+            return info;
         }
     }
 }

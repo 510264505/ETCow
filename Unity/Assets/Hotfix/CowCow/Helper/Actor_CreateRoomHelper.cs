@@ -18,12 +18,12 @@ namespace ETHotfix
                 UserID = userId,
                 Bureau = bureau,
                 RuleBit = ruleBit,
-                People = peopleCount + 2,
+                People = peopleCount,
             });
 
             if (g2c_Create.Error == 0)
             {
-                Game.EventSystem.Run(EventIdCowCowType.CreateGameRoom, g2c_Create);
+                Game.EventSystem.Run(CowCowEventIdType.CreateGameRoom, g2c_Create);
             }
         }
     }

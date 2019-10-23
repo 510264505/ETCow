@@ -19,6 +19,7 @@ namespace ETHotfix
                 if (room == null)
                 {
                     response.Error = ErrorCode.ERR_NotRoomNumberError;
+                    response.Message = "房间号不存在";
                     reply(response);
                     return;
                 }
@@ -27,6 +28,7 @@ namespace ETHotfix
                 if (room.GamerCount >= room.PeopleCount)
                 {
                     response.Error = ErrorCode.ERR_RoomPeopleFullError;
+                    response.Message = "房间人已满";
                     reply(response);
                     return;
                 }

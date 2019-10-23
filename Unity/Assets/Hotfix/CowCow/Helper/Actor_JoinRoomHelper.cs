@@ -16,7 +16,7 @@ namespace ETHotfix
 
             if (g2c_Join.Error == 0)
             {
-                Game.EventSystem.Run(EventIdCowCowType.JoinGameRoom, g2c_Join);
+                Game.EventSystem.Run(CowCowEventIdType.JoinGameRoom, g2c_Join);
             }
             else
             {

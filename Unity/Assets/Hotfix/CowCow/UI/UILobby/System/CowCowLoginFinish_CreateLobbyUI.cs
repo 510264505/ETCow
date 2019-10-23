@@ -2,7 +2,7 @@
 
 namespace ETHotfix
 {
-	[Event(EventIdCowCowType.LoginFinish)]
+	[Event(CowCowEventIdType.LoginFinish)]
 	public class CowCowLoginFinish_CreateLobbyUI : AEvent<G2C_CowCowLoginGate>
 	{
 		public override void Run(G2C_CowCowLoginGate data)

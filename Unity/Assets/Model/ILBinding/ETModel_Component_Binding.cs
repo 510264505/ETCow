@@ -23,14 +23,28 @@ namespace ILRuntime.Runtime.Generated
             Type[] args;
             Type type = typeof(ETModel.Component);
             args = new Type[]{};
+            method = type.GetMethod("get_Global", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_Global_0);
+            args = new Type[]{};
             method = type.GetMethod("Dispose", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Dispose_0);
+            app.RegisterCLRMethodRedirection(method, Dispose_1);
 
 
         }
 
 
-        static StackObject* Dispose_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* get_Global_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
+
+
+            var result_of_this_method = ETModel.Component.Global;
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* Dispose_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;

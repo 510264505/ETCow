@@ -22,6 +22,7 @@ namespace ETHotfix
             if (r2cLogin.Error == ErrorCode.ERR_LoginError)
             {
                 Log.Debug($"登录错误:{r2cLogin.Message}");
+                PopupsHelper.ShowPopups($"登录错误:{r2cLogin.Message}");
                 return;
             }
             Log.Debug("地址" + r2cLogin.Address);
@@ -44,14 +45,15 @@ namespace ETHotfix
             if (g2cLoginGate.Error == 0)
             {
                 Log.Debug("登录成功！");
-                Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
+                Game.EventSystem.Run(CowCowEventIdType.LoginFinish, g2cLoginGate);
                 ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
                 clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.UserID);
             }
             else
             {
-                Log.Debug("登录失败:" + g2cLoginGate.Message);
-                Game.EventSystem.Run(EventIdCowCowType.LoginFail, g2cLoginGate);
+                Log.Debug($"登录失败:{ g2cLoginGate.Message}");
+                PopupsHelper.ShowPopups($"登录失败:{ g2cLoginGate.Message}");
+                Game.EventSystem.Run(CowCowEventIdType.LoginFail, g2cLoginGate);
             }
         }
         /// <summary>
@@ -89,20 +91,22 @@ namespace ETHotfix
                 if (g2cLoginGate.Error == 0)
                 {
                     Log.Debug("登录成功！");
-                    Game.EventSystem.Run(EventIdCowCowType.LoginFinish, g2cLoginGate);
+                    Game.EventSystem.Run(CowCowEventIdType.LoginFinish, g2cLoginGate);
                     ClientComponent clientComponent = ETModel.Game.Scene.GetComponent<ClientComponent>();
                     clientComponent.User = ETModel.ComponentFactory.Create<User, long>(g2cLoginGate.UserID);
                 }
                 else
                 {
                     Log.Debug("登录失败:" + g2cLoginGate.Message);
-                    Game.EventSystem.Run(EventIdCowCowType.LoginFail, g2cLoginGate);
+                    PopupsHelper.ShowPopups($"登录失败:{ g2cLoginGate.Message}");
+                    Game.EventSystem.Run(CowCowEventIdType.LoginFail, g2cLoginGate);
                 }
             }
             else
             {
-                Log.Debug("注册失败:" + r2cLogin.Message);
-                Game.EventSystem.Run(EventIdCowCowType.RegisteredFail, r2cLogin);
+                Log.Debug($"注册失败:{r2cLogin.Message}");
+                PopupsHelper.ShowPopups($"注册失败:{r2cLogin.Message}");
+                Game.EventSystem.Run(CowCowEventIdType.RegisteredFail, r2cLogin);
             }
         }
     }

@@ -37,6 +37,7 @@ namespace ETHotfix
                 room.GameName = message.Name;
                 room.Bureau = GameInfo.Bureau[message.Bureau];
                 room.RuleBit = message.RuleBit;
+                room.PeopleCount = message.People;
                 Game.Scene.GetComponent<RoomComponent>().Add(room);
 
                 Gamer gamer = GamerFactory.Create(message.UserID, session.InstanceId);
@@ -56,6 +57,7 @@ namespace ETHotfix
                 response.Bureau = room.Bureau;
                 response.RuleBit = room.RuleBit;
                 response.RoomID = room.RoomID;
+                response.People = room.PeopleCount;
                 //根据UserID从数据库拿到该用户信息并返回
                 response.GamerInfo = new GamerInfo();
                 response.GamerInfo.Name = gamer.Name;

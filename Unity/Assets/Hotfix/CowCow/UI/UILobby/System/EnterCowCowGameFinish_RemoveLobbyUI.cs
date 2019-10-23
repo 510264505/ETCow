@@ -2,7 +2,7 @@
 
 namespace ETHotfix
 {
-	[Event(EventIdCowCowType.RemoveLobby)]
+	[Event(CowCowEventIdType.RemoveLobby)]
 	public class EnterCowCowGameFinish_RemoveLobbyUI: AEvent
 	{
 		public override void Run()

@@ -9,6 +9,7 @@ using System.Threading;
 using System.Linq;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
+using DG.Tweening;
 
 namespace ETHotfix
 {
@@ -54,6 +55,10 @@ namespace ETHotfix
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
         private CancellationToken cancellationToken;
         private string timeFormat = "t"; //时:分
+
+        private Image cardHeap;
+        private CanvasGroup betButtonPanel;
+        private CanvasGroup grabBankerButtonPanel;
 
         public UICowCow_BigSettlementComponent BigSettlement
         {
@@ -155,6 +160,7 @@ namespace ETHotfix
         {
             res = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             res.LoadBundle(UICowCowAB.CowCow_Prefabs);
+            res.LoadBundle(UICowCowAB.CowCow_Texture);
 
             ReferenceCollector rc = this.GetParent<UI>().GameObject.GetComponent<ReferenceCollector>();
             BackGround = rc.Get<GameObject>("BackGround");
@@ -172,6 +178,25 @@ namespace ETHotfix
             readyBtn = rc.Get<GameObject>("ReadyBtn").GetComponent<Button>();
             inviteBtn = rc.Get<GameObject>("InviteBtn").GetComponent<Button>();
 
+            cardHeap = rc.Get<GameObject>("CardHeap").GetComponent<Image>();
+            betButtonPanel = rc.Get<GameObject>("BetButtonPanel").GetComponent<CanvasGroup>();
+            grabBankerButtonPanel = rc.Get<GameObject>("GrabBankerButtonPanel").GetComponent<CanvasGroup>();
+            Button[] betBtns = new Button[betButtonPanel.transform.childCount];
+            Button[] grabBankerBtns = new Button[grabBankerButtonPanel.transform.childCount];
+            for (int i = 0; i < betBtns.Length; i++)
+            {
+                int n = i + 1;
+                betBtns[i] = rc.Get<GameObject>($"X{(i + 1)}Btn").GetComponent<Button>();
+                betBtns[i].onClick.Add(() => { this.OnBet(n); });
+                grabBankerBtns[i] = rc.Get<GameObject>($"GrabBankerX{(i + 1)}Btn").GetComponent<Button>();
+                grabBankerBtns[i].onClick.Add(() => { this.OnGrabBanker(n); });
+            }
+            Button grabBankerCloseBtn = rc.Get<GameObject>("GrabBankerCloseBtn").GetComponent<Button>();
+            grabBankerCloseBtn.onClick.Add(() => { 
+                this.OnGrabBanker(-1);
+            });
+            
+
             phizBtn.onClick.Add(Onphiz); // 表情
             keyboardBtn.onClick.Add(OnKeyboard);
             dissBtn.onClick.Add(OnDiss);
@@ -185,9 +210,10 @@ namespace ETHotfix
             isShowTime = true;
             NowTime(nowTime).Coroutine();
 
-            
 
-            Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
+            // 隐藏即可
+            Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GameObject.SetActive(false);
+            //Game.EventSystem.Run(CowCowEventIdType.RemoveLobby);
         }
 
         public void Init(string gameName, int bureau, int ruleBit, string roomId, int people)
@@ -204,7 +230,7 @@ namespace ETHotfix
         {
             EventTrigger.Entry entry = new EventTrigger.Entry();
             entry.eventID = type;
-            entry.callback.AddListener(action);
+            entry.callback.Add(action);
             return entry;
         }
 
@@ -360,6 +386,16 @@ namespace ETHotfix
         {
             SettingComponent.ShowHideUIGameSetting(true);
         }
+        private void OnBet(int n)
+        {
+            GamerComponent.Get(GamerComponent.LocalSeatID).GetComponent<UICowCow_GamerInfoComponent>().SeeSelfCards(n);
+            this.ShowBetBtns(false);
+        }
+        private void OnGrabBanker(int n)
+        {
+            //把发送准备那里改了，以及服务器的准备并发牌逻辑那里
+            Actor_GrabBankerHelper.SendGrabBanker(RoomID, GamerComponent.LocalSeatID, n).Coroutine();
+        }
         public void Bureau()
         {
             bureau.text = curBureauCount + "/" + bureauCount;
@@ -369,35 +405,62 @@ namespace ETHotfix
             BackGround.GetComponent<Image>().sprite = sprite;
         }
 
+        public void ShowBetBtns(bool isShow)
+        {
+            this.betButtonPanel.alpha = isShow ? 1 : 0;
+            this.betButtonPanel.blocksRaycasts = isShow;
+        }
+
+        public void ShowHideCardHeap(bool isShow)
+        {
+            this.cardHeap.DOFade(isShow ? 1 : 0, 0.5f);
+        }
+
+        public void ShowHideGrabBanker(bool isShow)
+        {
+            this.grabBankerButtonPanel.alpha = isShow ? 1 : 0;
+            this.grabBankerButtonPanel.blocksRaycasts = isShow;
+        }
+
         /// <summary>
         /// 打开手牌并结算
         /// </summary>
-        public void OpenAllGamerHandCard(CowCowSmallSettlementInfo[] info)
+        public async ETVoid OpenAllGamerHandCard(CowCowSmallSettlementInfo[] info)
         {
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
             Dictionary<int,Gamer> gamers = GamerComponent.GetDictAll();
             for (int i = 0; i < info.Length; i++)
             {
                 int[] cards = info[i].Cards.ToArray();
                 UICowCow_GamerInfoComponent gic = gamers[info[i].SeatID].GetComponent<UICowCow_GamerInfoComponent>();
                 UICowCow_SSGamerResultComponent ssgrc = gamers[info[i].SeatID].GetComponent<UICowCow_SSGamerResultComponent>();
-                gic.SetCards(cards);
+                gic.ShowCards(cards);
                 gic.SetStatus(UIGamerStatus.Down);
+                gic.SetCoin(info[i].BetCoin.ToString());
                 ssgrc.SetGamerSmallSettlement(info[i]);
+                //输赢显示，和押注显示
             }
             //在此延迟显示小结算
-            SmallSettlement.ShowHideSmallSettlement(true, 5000).Coroutine();
+            SmallSettlement.ShowHideSmallSettlement(true);
         }
 
-        public void DealCardsGiveAllGamer()
+        public void DealCardsGiveAllGamer(int seatId, int multiple)
         {
+            this.ShowHideCardHeap(true);
             ResourcesComponent rc = ETModel.Game.Scene.GetComponent<ResourcesComponent>();
             Dictionary<int, Gamer> gamers = GamerComponent.GetDictAll();
+            Sprite cardBG = (Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, "CardBG");
             foreach (KeyValuePair<int, Gamer> gamer in gamers)
             {
-                if (gamer.Key != GamerComponent.LocalSeatID)
+                UICowCow_GamerInfoComponent gic = gamer.Value.GetComponent<UICowCow_GamerInfoComponent>();
+                if (seatId == gamer.Key && gamer.Key == GamerComponent.LocalSeatID)
                 {
-                    UICowCow_GamerInfoComponent gic = gamer.Value.GetComponent<UICowCow_GamerInfoComponent>();
-                    gic.SetCards((Sprite)rc.GetAsset(UICowCowAB.CowCow_Texture, "CardBG"));
+                    //庄家
+                    gic.SetBankerCards(cardBG, multiple);
+                }
+                else
+                {
+                    gic.SetCards(cardBG, gamer.Key == GamerComponent.LocalSeatID);
                 }
             }
         }
@@ -412,6 +475,21 @@ namespace ETHotfix
 
             ReSet();
             res.UnloadBundle(UICowCowAB.CowCow_Prefabs);
+            res.UnloadBundle(UICowCowAB.CowCow_Texture);
+            smallSettlement?.Dispose();
+            bigSettlement?.Dispose();
+            gamerComponent?.Dispose();
+            chatComponent?.Dispose();
+            dissComponent?.Dispose();
+            settingComponent?.Dispose();
+
+            smallSettlement = null;
+            bigSettlement = null;
+            gamerComponent = null;
+            chatComponent = null;
+            uiChatVoice = null;
+            dissComponent = null;
+            settingComponent = null;
         }
     }
 }

@@ -3,7 +3,7 @@ using ETModel;
 
 namespace ETHotfix
 {
-    [Event(EventIdCowCowType.CreateGameRoom)]
+    [Event(CowCowEventIdType.CreateGameRoom)]
     public class CowCow_CreateGameRoomUI : AEvent<G2C_CowCowCreateGameRoomGate>
     {
         public override void Run(G2C_CowCowCreateGameRoomGate data)

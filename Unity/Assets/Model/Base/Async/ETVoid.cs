@@ -25,7 +25,7 @@ namespace ETModel
             [DebuggerHidden]
             public void GetResult()
             {
-                throw new InvalidOperationException("ETAvoid can not await, use Coroutine method instead!");
+                throw new InvalidOperationException("ETVoid can not await, use Coroutine method instead!");
             }
 
             [DebuggerHidden]

@@ -1,5 +1,8 @@
 ﻿using System;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 namespace ETModel
 {
@@ -12,6 +15,10 @@ namespace ETModel
         public static void Add(this Slider.SliderEvent sliderEvent, Action<float> action)
         {
             sliderEvent.AddListener((slider) => { action(slider); });
+        }
+        public static void Add(this TriggerEvent triggerEvent, UnityAction<BaseEventData> action)
+        {
+            triggerEvent.AddListener((data) => { action(data); });
         }
 	}
 }

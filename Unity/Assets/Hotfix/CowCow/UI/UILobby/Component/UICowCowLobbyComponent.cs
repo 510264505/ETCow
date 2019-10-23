@@ -1,5 +1,4 @@
 ﻿using ETModel;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
@@ -36,13 +35,7 @@ namespace ETHotfix
         private Image headIcon;
         private Text nameText;
         private Text roomCardText;
-        private Button quitBtn;
-        private Button settingBtn;
-        private Button bulletinBtn;
-        private Button rankBtn;
-        private Button serviceBtn;
-        private Button shareBtn;
-        private Button mallBtn;
+        private GameObject uiWindow;
 
         private int bureauLen = 2;
         private int ruleLen = 3;
@@ -50,6 +43,43 @@ namespace ETHotfix
         private int numberLen = 10;
         private List<string> roomNumber = new List<string>();
         private StringBuilder roomId = new StringBuilder();
+
+        private LobbySetting lobbySetting;
+        private LobbyServer lobbyServer;
+        private LobbyBulletin lobbyBulletin;
+        public LobbySetting LobbySetting
+        {
+            get
+            {
+                if (lobbySetting == null)
+                {
+                    lobbySetting = new LobbySetting(uiWindow);
+                }
+                return lobbySetting;
+            }
+        }
+        public LobbyServer LobbyServer
+        {
+            get
+            {
+                if (lobbyServer == null)
+                {
+                    lobbyServer = new LobbyServer(uiWindow);
+                }
+                return lobbyServer;
+            }
+        }
+        public LobbyBulletin LobbyBulletin
+        {
+            get
+            {
+                if (lobbyBulletin == null)
+                {
+                    lobbyBulletin = new LobbyBulletin(uiWindow);
+                }
+                return lobbyBulletin;
+            }
+        }
 
 		public void Awake(G2C_CowCowLoginGate data)
 		{
@@ -90,13 +120,14 @@ namespace ETHotfix
             headIcon = rc.Get<GameObject>("HeadIcon").GetComponent<Image>();
             nameText = rc.Get<GameObject>("Name").GetComponent<Text>();
             roomCardText = rc.Get<GameObject>("RoomCard").GetComponent<Text>();
-            quitBtn = rc.Get<GameObject>("QuitBtn").GetComponent<Button>();
-            settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
-            bulletinBtn = rc.Get<GameObject>("BulletinBtn").GetComponent<Button>();
-            rankBtn = rc.Get<GameObject>("RankBtn").GetComponent<Button>();
-            serviceBtn = rc.Get<GameObject>("ServiceBtn").GetComponent<Button>();
-            shareBtn = rc.Get<GameObject>("ShareBtn").GetComponent<Button>();
-            mallBtn = rc.Get<GameObject>("MallBtn").GetComponent<Button>();
+            Button quitBtn = rc.Get<GameObject>("QuitBtn").GetComponent<Button>();
+            Button settingBtn = rc.Get<GameObject>("SettingBtn").GetComponent<Button>();
+            Button bulletinBtn = rc.Get<GameObject>("BulletinBtn").GetComponent<Button>();
+            Button rankBtn = rc.Get<GameObject>("RankBtn").GetComponent<Button>();
+            Button serviceBtn = rc.Get<GameObject>("ServiceBtn").GetComponent<Button>();
+            Button shareBtn = rc.Get<GameObject>("ShareBtn").GetComponent<Button>();
+            Button mallBtn = rc.Get<GameObject>("MallBtn").GetComponent<Button>();
+            uiWindow = rc.Get<GameObject>("UIWindow");
 
             createRoomBtn.onClick.Add(OnCreateRoom);
             joinRoomBtn.onClick.Add(OnJoinRoom);
@@ -136,11 +167,11 @@ namespace ETHotfix
         }
         private void OnCreateRoom()
         {
-            ShowHideCreateRoomWindows(true);
+            this.ShowHideCreateRoomWindows(true);
         }
         private void OnJoinRoom()
         {
-            ShowHideJoinRoomWindows(true);
+            this.ShowHideJoinRoomWindows(true);
         }
         private void OnCreate()
         {
@@ -164,7 +195,8 @@ namespace ETHotfix
                 }
             }
             long userId = ETModel.Game.Scene.GetComponent<ClientComponent>().User.UserID;
-            Actor_CreateRoomHelper.OnCreateGameRoom("柳州牛欢喜", userId, bureau, ruleBit, peopleDrop.value).Coroutine();
+            Actor_CreateRoomHelper.OnCreateGameRoom("牛欢喜", userId, bureau, ruleBit, peopleDrop.value + 2).Coroutine();
+            this.ShowHideCreateRoomWindows(false);
         }
         private void OnCloseCreateRoomWindows()
         {
@@ -190,6 +222,7 @@ namespace ETHotfix
         }
         private void OnNumber(int n)
         {
+            roomId.Clear();
             string num = n.ToString();
             roomNumber.Add(num);
             numText[roomNumber.Count - 1].text = num;
@@ -202,21 +235,22 @@ namespace ETHotfix
                     roomId.Append(roomNumber[i]);
                 }
                 Actor_JoinRoomHelper.OnJoinRoomAsync(userId, roomId.ToString()).Coroutine();
+                this.ShowHideJoinRoomWindows(false);
                 OnRepeat();
             }
         }
         private void OnQuit()
         {
-            Game.EventSystem.Run(EventIdCowCowType.InitScensStart);
-            Game.EventSystem.Run(EventIdCowCowType.RemoveLobby);
+            Game.EventSystem.Run(CowCowEventIdType.InitScensStart);
+            Game.EventSystem.Run(CowCowEventIdType.RemoveLobby);
         }
         private void OnSetting()
         {
-
+            LobbySetting.ShowHideLobbySetting(true);
         }
         private void OnBulletin()
         {
-
+            LobbyBulletin.ShowHideLobbyServer(true);
         }
         private void OnRank()
         {
@@ -224,7 +258,7 @@ namespace ETHotfix
         }
         private void OnService()
         {
-
+            LobbyServer.ShowHideLobbyServer(true);
         }
         private void OnShare()
         {
@@ -238,7 +272,22 @@ namespace ETHotfix
 		{
 			MapHelper.EnterMapAsync().Coroutine();
 		}
-		
 
-	}
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            LobbySetting.Destroy();
+            LobbyServer.Destroy();
+            LobbyBulletin.Destroy();
+            this.lobbySetting = null;
+            this.lobbyServer = null;
+            this.lobbyBulletin = null;
+        }
+    }
 }

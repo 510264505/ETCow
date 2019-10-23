@@ -61,6 +61,12 @@ namespace ETHotfix
         {
             return gamers;
         }
+
+        public int GetGamerCount()
+        {
+            return gamers.Count;
+        }
+
         private int GetGamerSeat(long id)
         {
             int seatIndex;

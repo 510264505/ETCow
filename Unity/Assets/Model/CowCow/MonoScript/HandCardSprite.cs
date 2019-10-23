@@ -26,11 +26,11 @@ namespace ETModel
         {
             if (isSelect)
             {
-                Game.EventSystem.Run(CowCowEventIdType.SelectHandCard);
+                Game.EventSystem.Run(CowCowEventIdHandCard.SelectHandCard);
             }
             else
             {
-                Game.EventSystem.Run(CowCowEventIdType.CancelHandCard);
+                Game.EventSystem.Run(CowCowEventIdHandCard.CancelHandCard);
             }
             //这张牌的移动Pos
         }

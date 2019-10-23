@@ -113,5 +113,16 @@ namespace ETHotfix
             this.GameObject.GetComponent<CanvasGroup>().alpha = isShow ? 1 : 0;
             this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
         }
+
+        public override void Dispose()
+        {
+            if (this.IsDisposed)
+            {
+                return;
+            }
+            base.Dispose();
+
+            UnityEngine.Object.Destroy(this.GameObject);
+        }
     }
 }

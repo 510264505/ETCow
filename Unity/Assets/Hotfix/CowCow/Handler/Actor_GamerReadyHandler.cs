@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using ETModel;
 
 namespace ETHotfix
@@ -14,6 +10,10 @@ namespace ETHotfix
         {
             UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
             room.GamerReady(message.SeatIDs.ToArray());
+            if (message.IsFullPeople)
+            {
+                room.ShowHideGrabBanker(true);
+            }
         }
     }
 }

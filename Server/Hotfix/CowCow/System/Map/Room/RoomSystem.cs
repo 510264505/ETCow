@@ -90,7 +90,10 @@ namespace ETHotfix
 
         public static void AddDissoltion(this Room self, int seatId, bool isAgree)
         {
-            self.dissoltions.Add(seatId, isAgree);
+            if (!self.dissoltions.ContainsKey(seatId))
+            {
+                self.dissoltions.Add(seatId, isAgree);
+            }
         }
 
         public static Dictionary<int, bool> GetDissoltions(this Room self)

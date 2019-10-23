@@ -26,6 +26,8 @@ namespace ILRuntime.Runtime.Generated
             method = type.GetMethod("get_onClick", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, get_onClick_0);
 
+            app.RegisterCLRCreateArrayInstance(type, s => new UnityEngine.UI.Button[s]);
+
 
         }
 

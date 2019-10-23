@@ -32,6 +32,9 @@ namespace ETHotfix
         public const string CowCowGamerDissInfo = "GamerDissInfo";
         public const string CowCowGameSetting = "UIGameSetting";
         public const string CowCowInitiateDissPanel = "InitiateDissPanel";
+        public const string CowCowLobbySetting = "LobbySetting";
+        public const string CowCowLobbyServer = "LobbyServer";
+        public const string CowCowLobbyBulletin = "LobbyBulletin";
     }
     public static partial class SoundCowCow
     {
@@ -90,7 +93,14 @@ namespace ETHotfix
             { 5, new GamerPosData(new Vector2(-400,  270), new Vector2(-330,  160), new ChatPosData(new Vector2( 100, -80), new Vector2(180,   0))) },
             { 6, new GamerPosData(new Vector2(-600,    0), new Vector2(-350,    0), new ChatPosData(new Vector2( 100,  80), Vector2.zero)) },
         };
-        
+        public static Dictionary<int, Vector2> LocalPos = new Dictionary<int, Vector2>()
+        {
+            { 0, new Vector2(-66.5f,0) },
+            { 1, new Vector2(-32.5f,0) },
+            { 2, new Vector2(1.5f,0) },
+            { 3, new Vector2(35.5f,0) },
+            { 4, new Vector2(69.5f,0) },
+        };
     }
     /// <summary>
     /// 游戏规则名称

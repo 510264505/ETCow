@@ -42,7 +42,8 @@ namespace ETHotfix
                 Game.Scene.AddComponent<MicrophoneComponent>();
 
                 //Game.EventSystem.Run(EventIdType.InitSceneStart);
-                Game.EventSystem.Run(EventIdCowCowType.InitScensStart); //初始化UI
+                Game.EventSystem.Run(GlobalsEventType.CreateUIPopups); //初始化弹窗
+                Game.EventSystem.Run(CowCowEventIdType.InitScensStart); //初始化UI
             }
 			catch (Exception e)
 			{

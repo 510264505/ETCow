@@ -1,6 +1,6 @@
 ﻿namespace ETModel
 {
-    public enum CardGroupType
+    public enum CardGroupType : int
     {
         None,
         FiveSmall,      //五小牛

@@ -30,7 +30,13 @@ namespace ETHotfix
             else
             {
                 //解散(销毁)房间，返回大厅
+                if (room.GamerComponent.GetGamerCount() == message.Info.count)
+                {
+                    room.DissComponent.DelayCloseDissoltion().Coroutine();
+                }
                 room.Dispose();
+                Game.EventSystem.Run(CowCowEventIdType.RemoveGameRoom);
+                Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GameObject.SetActive(true);
             }
         }
     }

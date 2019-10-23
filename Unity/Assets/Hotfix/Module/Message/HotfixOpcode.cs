@@ -90,6 +90,12 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowRoomDealCards)]
 	public partial class Actor_CowCowRoomDealCards : IActorMessage {}
 
+	[Message(HotfixOpcode.C2M_CowCowGrabBanker)]
+	public partial class C2M_CowCowGrabBanker : IRequest {}
+
+	[Message(HotfixOpcode.M2C_CowCowGrabBanker)]
+	public partial class M2C_CowCowGrabBanker : IResponse {}
+
 	[Message(HotfixOpcode.C2M_CowCowGamerSubmitCardType)]
 	public partial class C2M_CowCowGamerSubmitCardType : IRequest {}
 
@@ -174,22 +180,24 @@ namespace ETHotfix
 		 public const ushort M2C_CowCowGamerReady = 10026;
 		 public const ushort Actor_CowCowGamerReady = 10027;
 		 public const ushort Actor_CowCowRoomDealCards = 10028;
-		 public const ushort C2M_CowCowGamerSubmitCardType = 10029;
-		 public const ushort M2C_CowCowGamerSubmitCardType = 10030;
-		 public const ushort Actor_CowCowGamerSubmitCardType = 10031;
-		 public const ushort CowCowSmallSettlementInfo = 10032;
-		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10033;
-		 public const ushort C2G_CowCowPing = 10034;
-		 public const ushort G2C_CowCowPing = 10035;
-		 public const ushort C2G_CowCowChatFont = 10036;
-		 public const ushort G2C_CowCowChatFont = 10037;
-		 public const ushort Actor_CowCowChatFont = 10038;
-		 public const ushort C2G_CowCowEmoji = 10039;
-		 public const ushort G2C_CowCowEmoji = 10040;
-		 public const ushort Actor_CowCowEmoji = 10041;
-		 public const ushort DissolutionInfo = 10042;
-		 public const ushort C2G_CowCowDissoltion = 10043;
-		 public const ushort G2C_CowCowDissoltion = 10044;
-		 public const ushort Actor_CowCowDissoltion = 10045;
+		 public const ushort C2M_CowCowGrabBanker = 10029;
+		 public const ushort M2C_CowCowGrabBanker = 10030;
+		 public const ushort C2M_CowCowGamerSubmitCardType = 10031;
+		 public const ushort M2C_CowCowGamerSubmitCardType = 10032;
+		 public const ushort Actor_CowCowGamerSubmitCardType = 10033;
+		 public const ushort CowCowSmallSettlementInfo = 10034;
+		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10035;
+		 public const ushort C2G_CowCowPing = 10036;
+		 public const ushort G2C_CowCowPing = 10037;
+		 public const ushort C2G_CowCowChatFont = 10038;
+		 public const ushort G2C_CowCowChatFont = 10039;
+		 public const ushort Actor_CowCowChatFont = 10040;
+		 public const ushort C2G_CowCowEmoji = 10041;
+		 public const ushort G2C_CowCowEmoji = 10042;
+		 public const ushort Actor_CowCowEmoji = 10043;
+		 public const ushort DissolutionInfo = 10044;
+		 public const ushort C2G_CowCowDissoltion = 10045;
+		 public const ushort G2C_CowCowDissoltion = 10046;
+		 public const ushort Actor_CowCowDissoltion = 10047;
 	}
 }

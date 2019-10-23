@@ -13,6 +13,7 @@ namespace ETModel
     {
         public readonly Dictionary<int, Gamer> gamers = new Dictionary<int, Gamer>();
         public readonly Dictionary<int, bool> dissoltions = new Dictionary<int, bool>();
+        public readonly List<int> grabBankers = new List<int>();
         public string GameName { get; set; }
         //创建房间的玩家ID
         public long UserID { get; set; }
@@ -22,7 +23,11 @@ namespace ETModel
         public RoomState State { get; set; } = RoomState.None;
         public int GamerCount { get { return gamers.Values.Count; } }
         public int DissoltionCount { get { return dissoltions.Values.Count; } }
-        public int PeopleCount { get { return 2; } }
+        public int PeopleCount { get; set; }
+        //当前庄家
+        public int CurBankerSeatID { get; set; }
+        //当前赔率
+        public int CurMultiple { get; set; }
         public override void Dispose()
         {
             if (this.IsDisposed)
