@@ -23,15 +23,15 @@ namespace ILRuntime.Runtime.Generated
             FieldInfo field;
             Type[] args;
             Type type = typeof(Google.Protobuf.Collections.RepeatedField<System.Int32>);
-            args = new Type[]{typeof(System.Int32)};
-            method = type.GetMethod("get_Item", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, get_Item_0);
             args = new Type[]{};
             method = type.GetMethod("Clear", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Clear_1);
+            app.RegisterCLRMethodRedirection(method, Clear_0);
             args = new Type[]{typeof(System.Collections.Generic.IEnumerable<System.Int32>)};
             method = type.GetMethod("AddRange", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, AddRange_2);
+            app.RegisterCLRMethodRedirection(method, AddRange_1);
+            args = new Type[]{typeof(System.Int32)};
+            method = type.GetMethod("get_Item", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, get_Item_2);
             args = new Type[]{typeof(Google.Protobuf.CodedOutputStream), typeof(Google.Protobuf.FieldCodec<System.Int32>)};
             method = type.GetMethod("WriteTo", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, WriteTo_3);
@@ -53,7 +53,41 @@ namespace ILRuntime.Runtime.Generated
         }
 
 
-        static StackObject* get_Item_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Clear_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            Google.Protobuf.Collections.RepeatedField<System.Int32> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<System.Int32>)typeof(Google.Protobuf.Collections.RepeatedField<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.Clear();
+
+            return __ret;
+        }
+
+        static StackObject* AddRange_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Collections.Generic.IEnumerable<System.Int32> @values = (System.Collections.Generic.IEnumerable<System.Int32>)typeof(System.Collections.Generic.IEnumerable<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
+            Google.Protobuf.Collections.RepeatedField<System.Int32> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<System.Int32>)typeof(Google.Protobuf.Collections.RepeatedField<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.AddRange(@values);
+
+            return __ret;
+        }
+
+        static StackObject* get_Item_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -71,40 +105,6 @@ namespace ILRuntime.Runtime.Generated
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = result_of_this_method;
             return __ret + 1;
-        }
-
-        static StackObject* Clear_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            Google.Protobuf.Collections.RepeatedField<System.Int32> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<System.Int32>)typeof(Google.Protobuf.Collections.RepeatedField<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            instance_of_this_method.Clear();
-
-            return __ret;
-        }
-
-        static StackObject* AddRange_2(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Collections.Generic.IEnumerable<System.Int32> @values = (System.Collections.Generic.IEnumerable<System.Int32>)typeof(System.Collections.Generic.IEnumerable<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            Google.Protobuf.Collections.RepeatedField<System.Int32> instance_of_this_method = (Google.Protobuf.Collections.RepeatedField<System.Int32>)typeof(Google.Protobuf.Collections.RepeatedField<System.Int32>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack));
-            __intp.Free(ptr_of_this_method);
-
-            instance_of_this_method.AddRange(@values);
-
-            return __ret;
         }
 
         static StackObject* WriteTo_3(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using ETModel;
 using Google.Protobuf.Collections;
+using MongoDB.Bson;
 
 namespace ETHotfix
 {
     [MessageHandler(AppType.Map)]
     public class C2MCowCow_GamerReadyHandler : AMRpcHandler<C2M_CowCowGamerReady, M2C_CowCowGamerReady>
     {
-        private const int CardCount = 5; //每人持牌数
         protected override void Run(Session session, C2M_CowCowGamerReady message, Action<M2C_CowCowGamerReady> reply)
         {
             M2C_CowCowGamerReady response = new M2C_CowCowGamerReady();
@@ -37,6 +37,18 @@ namespace ETHotfix
                 reply(response);
 
                 readyInfo.IsFullPeople = readyInfo.SeatIDs.Count == room.PeopleCount;
+                if (readyInfo.IsFullPeople)
+                {
+                    room.CurBureau++;
+                    readyInfo.CurBureau = room.CurBureau;
+                    UserInfo userInfo = Game.Scene.GetComponent<UserInfoComponent>().Get(room.UserID);
+                    DBProxyComponent db = Game.Scene.GetComponent<DBProxyComponent>();
+                    BsonDocument bsons0 = new BsonDocument();
+                    bsons0["_id"] = room.UserID;
+                    BsonDocument bsons1 = new BsonDocument();
+                    bsons1["Diamond"] = userInfo.Diamond;
+                    db.QueryToUpdate<UserInfo>(bsons0, bsons1).Coroutine();
+                }
                 //广播准备玩家，所有人准备后，玩家即可开始抢庄
                 room.Broadcast(readyInfo);
             }

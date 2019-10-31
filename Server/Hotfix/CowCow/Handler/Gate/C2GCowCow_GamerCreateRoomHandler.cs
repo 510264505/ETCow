@@ -19,7 +19,7 @@ namespace ETHotfix
                     reply(response);
                     return;
                 }
-                userInfo.Diamond -= message.Bureau;
+                userInfo.Diamond -= (message.Bureau + 1);
 
                 string roomId = string.Empty;
                 while (true)
@@ -38,6 +38,7 @@ namespace ETHotfix
                 room.Bureau = GameInfo.Bureau[message.Bureau];
                 room.RuleBit = message.RuleBit;
                 room.PeopleCount = message.People;
+                room.CurBureau = 0;
                 Game.Scene.GetComponent<RoomComponent>().Add(room);
 
                 Gamer gamer = GamerFactory.Create(message.UserID, session.InstanceId);
@@ -67,6 +68,7 @@ namespace ETHotfix
                 response.GamerInfo.Sex = gamer.Sex;
                 response.GamerInfo.Status = (int)gamer.Status;
                 response.GamerInfo.Coin = gamer.Coin;
+                response.CurBureau = room.CurBureau;
 
                 reply(response);
             }

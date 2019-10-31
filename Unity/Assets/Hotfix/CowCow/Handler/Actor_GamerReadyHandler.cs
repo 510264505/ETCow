@@ -12,7 +12,7 @@ namespace ETHotfix
             room.GamerReady(message.SeatIDs.ToArray());
             if (message.IsFullPeople)
             {
-                room.ShowHideGrabBanker(true);
+                room.ShowHideGrabBanker(true, message.CurBureau);
             }
         }
     }

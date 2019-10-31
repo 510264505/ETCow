@@ -35,7 +35,7 @@ namespace ETHotfix
                 newUser.NickName = $"用户{message.Account}";
                 newUser.HeadIcon = message.Account;
                 newUser.Sex = 0;
-                newUser.Diamond = 1000000;
+                newUser.Diamond = 10000;
                 newUser.RegisterTime = DateTime.Now;
 
                 await db.Save(newAccounts);

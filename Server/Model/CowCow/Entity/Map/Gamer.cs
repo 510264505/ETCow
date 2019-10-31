@@ -50,11 +50,32 @@ namespace ETModel
         public int Multiple { get; set; }
         //抢庄
         public int GrabBanker { get; set; }
+        //做庄次数
+        public int BankerCount { get; set; }
+        //五小牛次数
+        public int FiveSmallCowCount { get; set; }
+        //五花牛次数
+        public int FiveFlowerCowCount { get; set; }
+        //炸弹牛次数
+        public int BombCowCount { get; set; }
+        //牛牛次数
+        public int DoubleCowCount { get; set; }
+        //有牛次数
+        public int HaveCowCount { get; set; }
+        //无牛次数
+        public int NotCowCount { get; set; }
         public void Awake()
         {
             this.UserID = this.Id;
             this.cards = new List<int>();
             this.Status = GamerStatus.None;
+            this.BankerCount = 0;
+            this.FiveSmallCowCount = 0;
+            this.FiveFlowerCowCount = 0;
+            this.BombCowCount = 0;
+            this.DoubleCowCount = 0;
+            this.HaveCowCount = 0;
+            this.NotCowCount = 0;
         }
         public override void Dispose()
         {
@@ -79,6 +100,15 @@ namespace ETModel
             this.MaxValue = 0;
             this.FloweColor = 0;
             this.CowNumber = 0;
+            this.Multiple = 0;
+            this.GrabBanker = 0;
+            this.BankerCount = 0;
+            this.FiveSmallCowCount = 0;
+            this.FiveFlowerCowCount = 0;
+            this.BombCowCount = 0;
+            this.DoubleCowCount = 0;
+            this.HaveCowCount = 0;
+            this.NotCowCount = 0;
         }
     }
 }

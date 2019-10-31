@@ -17,7 +17,7 @@ namespace ETHotfix
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
                 ui.AddComponent<UICowCow_GameRoomComponent>(); //加入游戏房间组件
-                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit, room.RoomID, room.People);
+                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit, room.RoomID, room.People, room.CurBureau);
                 ui.GetComponent<UICowCow_GameRoomComponent>().AddLocalGamer(room.GamerInfo);
                 ui.GetComponent<UICowCow_GameRoomComponent>().ShowHideInviteButton(true);
                 return ui;
@@ -39,7 +39,7 @@ namespace ETHotfix
 
                 UI ui = ComponentFactory.Create<UI, string, GameObject>(UICowCowType.CowCowGameRoom, gameObject);
                 ui.AddComponent<UICowCow_GameRoomComponent>(); //加入游戏房间组件
-                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit, room.RoomID, room.People);
+                ui.GetComponent<UICowCow_GameRoomComponent>().Init(room.GameName, room.Bureau, room.RuleBit, room.RoomID, room.People, room.CurBureau);
                 
                 return ui;
             }

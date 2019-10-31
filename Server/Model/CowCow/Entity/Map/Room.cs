@@ -28,6 +28,8 @@ namespace ETModel
         public int CurBankerSeatID { get; set; }
         //当前赔率
         public int CurMultiple { get; set; }
+        //当前局数
+        public int CurBureau { get; set; }
         public override void Dispose()
         {
             if (this.IsDisposed)

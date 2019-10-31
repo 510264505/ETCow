@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace ETHotfix
 {
@@ -164,6 +160,7 @@ namespace ETHotfix
         public static bool NotCow(List<int> card)
         {
             data.cowType = CowType.None;
+            //data.cowNumber = 
             return true;
         }
         /// <summary>

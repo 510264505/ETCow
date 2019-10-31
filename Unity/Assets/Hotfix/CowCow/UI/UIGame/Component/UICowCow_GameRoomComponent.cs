@@ -48,8 +48,8 @@ namespace ETHotfix
         private Button inviteBtn;
 
         private StringBuilder sb = new StringBuilder();
-        private int curBureauCount = 1;
         private int bureauCount;
+        public bool IsLastBureau { get; set; } = false;
 
         private bool isShowTime = false;
         private CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -151,10 +151,10 @@ namespace ETHotfix
 
         private void ReSet()
         {
-            sb.Clear();
-            curBureauCount = 1;
-            isShowTime = false;
-            GamerComponent.LocalGamer = null;
+            this.sb.Clear();
+            this.isShowTime = false;
+            this.GamerComponent.LocalGamer = null;
+            this.IsLastBureau = false;
         }
         public void Awake()
         {
@@ -193,7 +193,7 @@ namespace ETHotfix
             }
             Button grabBankerCloseBtn = rc.Get<GameObject>("GrabBankerCloseBtn").GetComponent<Button>();
             grabBankerCloseBtn.onClick.Add(() => { 
-                this.OnGrabBanker(-1);
+                this.OnGrabBanker(1); //所有玩家都不抢庄时，默认为1
             });
             
 
@@ -212,18 +212,18 @@ namespace ETHotfix
 
 
             // 隐藏即可
-            Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GameObject.SetActive(false);
+            Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GetComponent<UICowCowLobbyComponent>().ShowHideLobby(false);
             //Game.EventSystem.Run(CowCowEventIdType.RemoveLobby);
         }
 
-        public void Init(string gameName, int bureau, int ruleBit, string roomId, int people)
+        public void Init(string gameName, int bureau, int ruleBit, string roomId, int people, int curBureau)
         {
             this.bureauCount = bureau;
             this.gameName.text = gameName;
             this.gameRule.text = $"{people}人 " + Rule(ruleBit);
             this.roomId.text = roomId;
             this.RoomID = roomId;
-            Bureau();
+            this.SetBureau(curBureau);
         }
         
         private EventTrigger.Entry AddEventTrigger(EventTriggerType type, UnityAction<BaseEventData> action)
@@ -396,9 +396,16 @@ namespace ETHotfix
             //把发送准备那里改了，以及服务器的准备并发牌逻辑那里
             Actor_GrabBankerHelper.SendGrabBanker(RoomID, GamerComponent.LocalSeatID, n).Coroutine();
         }
-        public void Bureau()
+        public void SetBureau(int? bureau = null)
         {
-            bureau.text = curBureauCount + "/" + bureauCount;
+            if (bureau != null)
+            {
+                this.bureau.text = bureau + "/" + this.bureauCount;
+                if (bureau == this.bureauCount)
+                {
+                    this.IsLastBureau = true;
+                }
+            }
         }
         public void ChangeDesk(Sprite sprite)
         {
@@ -416,10 +423,14 @@ namespace ETHotfix
             this.cardHeap.DOFade(isShow ? 1 : 0, 0.5f);
         }
 
-        public void ShowHideGrabBanker(bool isShow)
+        public void ShowHideGrabBanker(bool isShow, int? bureau = null)
         {
             this.grabBankerButtonPanel.alpha = isShow ? 1 : 0;
             this.grabBankerButtonPanel.blocksRaycasts = isShow;
+            if (bureau != null)
+            {
+                this.SetBureau(bureau);
+            }
         }
 
         /// <summary>
@@ -427,7 +438,6 @@ namespace ETHotfix
         /// </summary>
         public async ETVoid OpenAllGamerHandCard(CowCowSmallSettlementInfo[] info)
         {
-            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
             Dictionary<int,Gamer> gamers = GamerComponent.GetDictAll();
             for (int i = 0; i < info.Length; i++)
             {
@@ -435,13 +445,19 @@ namespace ETHotfix
                 UICowCow_GamerInfoComponent gic = gamers[info[i].SeatID].GetComponent<UICowCow_GamerInfoComponent>();
                 UICowCow_SSGamerResultComponent ssgrc = gamers[info[i].SeatID].GetComponent<UICowCow_SSGamerResultComponent>();
                 gic.ShowCards(cards);
-                gic.SetStatus(UIGamerStatus.Down);
-                gic.SetCoin(info[i].BetCoin.ToString());
                 ssgrc.SetGamerSmallSettlement(info[i]);
-                //输赢显示，和押注显示
             }
+            await ETModel.Game.Scene.GetComponent<TimerComponent>().WaitAsync(5000);
             //在此延迟显示小结算
             SmallSettlement.ShowHideSmallSettlement(true);
+            for (int i = 0; i < info.Length; i++)
+            {
+                int[] cards = info[i].Cards.ToArray();
+                UICowCow_GamerInfoComponent gic = gamers[info[i].SeatID].GetComponent<UICowCow_GamerInfoComponent>();
+                UICowCow_SSGamerResultComponent ssgrc = gamers[info[i].SeatID].GetComponent<UICowCow_SSGamerResultComponent>();
+                gic.SetStatus(UIGamerStatus.Down);
+                gic.SetCoin(info[i].BetCoin.ToString());
+            }
         }
 
         public void DealCardsGiveAllGamer(int seatId, int multiple)

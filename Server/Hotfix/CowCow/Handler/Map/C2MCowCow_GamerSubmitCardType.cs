@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using ETModel;
 using Google.Protobuf.Collections;
-using System.Linq;
 
 namespace ETHotfix
 {
@@ -32,6 +30,7 @@ namespace ETHotfix
                 gamer.Multiple = message.Multiple;
                 gamer.cards.Clear();
                 gamer.cards.AddRange(message.Cards);
+                this.ChangeCowCount(gamer, room.CurBankerSeatID == gamer.SeatID, message.CardType, message.CowNumber);
 
                 Actor_CowCowGamerSubmitCardType submits = new Actor_CowCowGamerSubmitCardType();
                 submits.SeatIDs = new RepeatedField<int>();
@@ -47,6 +46,28 @@ namespace ETHotfix
                 if (submits.SeatIDs.count == room.GamerCount)
                 {
                     this.SmallSettlement(gamers, room);
+                    // 发送大结算
+                    if (room.CurBureau == room.Bureau)
+                    {
+                        Actor_CowCowBigSettlement bs = new Actor_CowCowBigSettlement();
+                        bs.Info = new RepeatedField<CowCowBigSettlementInfo>();
+                        foreach (Gamer g in gamers.Values)
+                        {
+                            CowCowBigSettlementInfo info = new CowCowBigSettlementInfo();
+                            info.SeatID = g.SeatID;
+                            info.Banker = g.BankerCount;
+                            info.FiveSmallCow = g.FiveSmallCowCount;
+                            info.FiveFlowerCow = g.FiveFlowerCowCount;
+                            info.BombCow = g.BombCowCount;
+                            info.DoubleCow = g.DoubleCowCount;
+                            info.HaveCow = g.HaveCowCount;
+                            info.NotCow = g.NotCowCount;
+                            info.TotalScore = g.Coin;
+
+                            bs.Info.Add(info);
+                        }
+                        room.Broadcast(bs);
+                    }
                 }
                 else
                 {
@@ -108,6 +129,39 @@ namespace ETHotfix
             info.BetCoin = g.Coin;
 
             return info;
+        }
+
+        private void ChangeCowCount(Gamer gamer, bool isBanker, int cardType, int cowNumber)
+        {
+            if (isBanker)
+            {
+                gamer.BankerCount++;
+            }
+            switch (cardType)
+            {
+                case 0:
+                    gamer.NotCowCount++;
+                    break;
+                case 1:
+                    if (cowNumber == 0)
+                    {
+                        gamer.DoubleCowCount++;
+                    }
+                    else
+                    {
+                        gamer.HaveCowCount++;
+                    }
+                    break;
+                case 2:
+                    gamer.FiveFlowerCowCount++;
+                    break;
+                case 3:
+                    gamer.BombCowCount++;
+                    break;
+                case 4:
+                    gamer.FiveSmallCowCount++;
+                    break;
+            }
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ETHotfix
         private Text banker;
         private Text fiveSmallCow;
         private Text fiveFlowerCow;
-        private Text fiveBombCow;
+        private Text bombCow;
         private Text doubleCow;
         private Text haveCow;
         private Text notCow;
@@ -34,24 +34,31 @@ namespace ETHotfix
             banker = rc.Get<GameObject>("Banker").GetComponent<Text>();
             fiveSmallCow = rc.Get<GameObject>("FiveSmallCow").GetComponent<Text>();
             fiveFlowerCow = rc.Get<GameObject>("FiveFlowerCow").GetComponent<Text>();
-            fiveBombCow = rc.Get<GameObject>("FiveBombCow").GetComponent<Text>();
+            bombCow = rc.Get<GameObject>("FiveBombCow").GetComponent<Text>();
             doubleCow = rc.Get<GameObject>("DoubleCow").GetComponent<Text>();
             haveCow = rc.Get<GameObject>("HaveCow").GetComponent<Text>();
             notCow = rc.Get<GameObject>("NotCow").GetComponent<Text>();
             totleScore = rc.Get<GameObject>("TotalScroe").GetComponent<Text>();
         }
 
-        public void SetGamerBigSettlement()
+        public void SetGamerBigSettlement(int banker, int fiveSmallCow,int fiveFlowerCow,int bombCow,int doubleCow,int haveCow, int notCow,int score)
         {
-            headIcon.sprite = null;
-            banker.text = "";
-            fiveSmallCow.text = "";
-            fiveFlowerCow.text = "";
-            fiveBombCow.text = "";
-            doubleCow.text = "";
-            haveCow.text = "";
-            notCow.text = "";
-            totleScore.text = "";
+            this.headIcon.sprite = null;
+            this.banker.text = banker.ToString();
+            this.fiveSmallCow.text = fiveSmallCow.ToString();
+            this.fiveFlowerCow.text = fiveFlowerCow.ToString();
+            this.bombCow.text = bombCow.ToString();
+            this.doubleCow.text = doubleCow.ToString();
+            this.haveCow.text = haveCow.ToString();
+            this.notCow.text = notCow.ToString();
+            if (score > 0)
+            {
+                this.totleScore.text = $"+{score}";
+            }
+            else
+            {
+                this.totleScore.text = $"-{score}";
+            }
         }
     }
 }

@@ -145,6 +145,20 @@ message G2C_CowCowLoginGate // IResponse
 	int32 Diamond = 5;
 }
 
+message C2G_CowCowRefreshGate // IRequest
+{
+	int32 RpcId = 90;
+	int64 UserID = 1;
+}
+
+message G2C_CowCowRefreshGate // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	int32 Diamond = 1;
+}
+
 message GamerInfo // IMessage
 {
 	int32 RpcId = 90;
@@ -178,6 +192,7 @@ message G2C_CowCowCreateGameRoomGate // IResponse
 	string RoomID = 4;
 	GamerInfo GamerInfo = 5;
 	int32 People = 6;
+	int32 CurBureau = 7;
 }
 
 message C2G_CowCowJoinGameRoomGate // IRequest
@@ -198,6 +213,7 @@ message G2C_CowCowJoinGameRoomGate // IResponse
 	string RoomID = 4;
 	int64 UserID = 5;
 	int32 People = 6;
+	int32 CurBureau = 7;
 }
 
 message Actor_CowCowJoinGameRoomGroupSend // IActorMessage
@@ -228,6 +244,7 @@ message Actor_CowCowGamerReady // IActorMessage
 	int64 ActorId = 94;
 	repeated int32 SeatIDs = 1;
 	bool IsFullPeople = 2;
+	int32 CurBureau = 3;
 }
 
 message Actor_CowCowRoomDealCards // IActorMessage
@@ -386,4 +403,25 @@ message Actor_CowCowDissoltion // IActorMessage
 	int64 ActorId = 94;
 	repeated DissolutionInfo Info = 1;
 	bool IsDiss = 2;
+}
+
+message CowCowBigSettlementInfo // IMessage
+{
+	int32 SeatID = 1;
+	string Name = 2;
+	int32 Banker = 3;
+	int32 FiveSmallCow = 4;
+	int32 FiveFlowerCow = 5;
+	int32 BombCow = 6;
+	int32 DoubleCow = 7;
+	int32 HaveCow = 8;
+	int32 NotCow = 9;
+	int32 TotalScore = 10;
+}
+
+message Actor_CowCowBigSettlement // IActorMessage
+{
+	int32 RpcId = 90;
+	int64 ActorId = 94;
+	repeated CowCowBigSettlementInfo Info = 1;
 }

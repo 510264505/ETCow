@@ -39,7 +39,16 @@ namespace ETHotfix
         }
         private void OnContinue()
         {
-            this.ShowHideSmallSettlement(false);
+            UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
+            if (room.IsLastBureau)
+            {
+                room.BigSettlement.ShowHideBigSettlement(true);
+                return;
+            }
+            else
+            {
+                this.ShowHideSmallSettlement(false);
+            }
         }
 
         public void ShowHideSmallSettlement(bool isShow)

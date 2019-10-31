@@ -92,6 +92,7 @@ namespace ILRuntime.Runtime.Generated
             ETModel_ClientComponent_Binding.Register(app);
             ETModel_ResourcesComponent_Binding.Register(app);
             Google_Protobuf_Collections_RepeatedField_1_Google_Protobuf_Adapt_IMessage_Binding_Adaptor_Binding.Register(app);
+            System_Nullable_1_Int32_Binding.Register(app);
             Google_Protobuf_Collections_RepeatedField_1_Int32_Binding.Register(app);
             ETModel_GlobalConfigComponent_Binding.Register(app);
             ETModel_GlobalProto_Binding.Register(app);
@@ -99,11 +100,14 @@ namespace ILRuntime.Runtime.Generated
             ETModel_SessionComponent_Binding.Register(app);
             ETModel_ComponentFactory_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_Int32_Boolean_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_Int32_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_Int32_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_Int32_Int32_Binding.Register(app);
             System_Int32_Binding.Register(app);
             System_Collections_Generic_List_1_Int32_Array_Binding.Register(app);
             System_Collections_Generic_List_1_List_1_Int32_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_Int32_Vector2_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_UInt16_String_Binding.Register(app);
             ReferenceCollector_Binding.Register(app);
             UnityEngine_UI_Button_Binding.Register(app);
@@ -117,9 +121,11 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_Int32_ILTypeInstance_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_Int32_ILTypeInstance_Binding.Register(app);
             DG_Tweening_ShortcutExtensions46_Binding.Register(app);
+            DG_Tweening_DOTween_Binding.Register(app);
+            UnityEngine_Vector3_Binding.Register(app);
             DG_Tweening_ShortcutExtensions_Binding.Register(app);
-            DG_Tweening_TweenExtensions_Binding.Register(app);
             DG_Tweening_TweenSettingsExtensions_Binding.Register(app);
+            DG_Tweening_TweenExtensions_Binding.Register(app);
             UnityEngine_EventSystems_EventTrigger_Binding.Register(app);
             System_Collections_Generic_List_1_UnityEngine_EventSystems_EventTrigger_Binding_Entry_Binding.Register(app);
             UnityEngine_EventSystems_EventTrigger_Binding_Entry_Binding.Register(app);
@@ -130,6 +136,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_Slider_Binding.Register(app);
             UnityEngine_UI_Toggle_Binding.Register(app);
             UnityEngine_UI_Dropdown_Binding.Register(app);
+            UnityEngine_Events_UnityEventBase_Binding.Register(app);
             ETModel_Define_Binding.Register(app);
             ETModel_ConfigAttribute_Binding.Register(app);
             ETModel_AppTypeHelper_Binding.Register(app);
@@ -149,7 +156,6 @@ namespace ILRuntime.Runtime.Generated
             ETModel_UnitInfo_Binding.Register(app);
             ETModel_UnitComponent_Binding.Register(app);
             ETModel_UnitFactory_Binding.Register(app);
-            UnityEngine_Vector3_Binding.Register(app);
             ETModel_Unit_Binding.Register(app);
             ETModel_M2C_PathfindingResult_Binding.Register(app);
             ETModel_AnimatorComponent_Binding.Register(app);

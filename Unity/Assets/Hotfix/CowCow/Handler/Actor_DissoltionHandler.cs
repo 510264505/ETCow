@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ETModel;
+﻿using ETModel;
 
 namespace ETHotfix
 {
@@ -36,7 +31,7 @@ namespace ETHotfix
                 }
                 room.Dispose();
                 Game.EventSystem.Run(CowCowEventIdType.RemoveGameRoom);
-                Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GameObject.SetActive(true);
+                Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GetComponent<UICowCowLobbyComponent>().ShowHideLobby(true);
             }
         }
     }

@@ -60,6 +60,12 @@ namespace ETHotfix
 	[Message(HotfixOpcode.G2C_CowCowLoginGate)]
 	public partial class G2C_CowCowLoginGate : IResponse {}
 
+	[Message(HotfixOpcode.C2G_CowCowRefreshGate)]
+	public partial class C2G_CowCowRefreshGate : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowRefreshGate)]
+	public partial class G2C_CowCowRefreshGate : IResponse {}
+
 	[Message(HotfixOpcode.GamerInfo)]
 	public partial class GamerInfo : IMessage {}
 
@@ -147,6 +153,12 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowDissoltion)]
 	public partial class Actor_CowCowDissoltion : IActorMessage {}
 
+	[Message(HotfixOpcode.CowCowBigSettlementInfo)]
+	public partial class CowCowBigSettlementInfo : IMessage {}
+
+	[Message(HotfixOpcode.Actor_CowCowBigSettlement)]
+	public partial class Actor_CowCowBigSettlement : IActorMessage {}
+
 }
 namespace ETHotfix
 {
@@ -170,34 +182,38 @@ namespace ETHotfix
 		 public const ushort R2C_CowCowRegister = 10016;
 		 public const ushort C2G_CowCowLoginGate = 10017;
 		 public const ushort G2C_CowCowLoginGate = 10018;
-		 public const ushort GamerInfo = 10019;
-		 public const ushort C2G_CowCowCreateGameRoomGate = 10020;
-		 public const ushort G2C_CowCowCreateGameRoomGate = 10021;
-		 public const ushort C2G_CowCowJoinGameRoomGate = 10022;
-		 public const ushort G2C_CowCowJoinGameRoomGate = 10023;
-		 public const ushort Actor_CowCowJoinGameRoomGroupSend = 10024;
-		 public const ushort C2M_CowCowGamerReady = 10025;
-		 public const ushort M2C_CowCowGamerReady = 10026;
-		 public const ushort Actor_CowCowGamerReady = 10027;
-		 public const ushort Actor_CowCowRoomDealCards = 10028;
-		 public const ushort C2M_CowCowGrabBanker = 10029;
-		 public const ushort M2C_CowCowGrabBanker = 10030;
-		 public const ushort C2M_CowCowGamerSubmitCardType = 10031;
-		 public const ushort M2C_CowCowGamerSubmitCardType = 10032;
-		 public const ushort Actor_CowCowGamerSubmitCardType = 10033;
-		 public const ushort CowCowSmallSettlementInfo = 10034;
-		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10035;
-		 public const ushort C2G_CowCowPing = 10036;
-		 public const ushort G2C_CowCowPing = 10037;
-		 public const ushort C2G_CowCowChatFont = 10038;
-		 public const ushort G2C_CowCowChatFont = 10039;
-		 public const ushort Actor_CowCowChatFont = 10040;
-		 public const ushort C2G_CowCowEmoji = 10041;
-		 public const ushort G2C_CowCowEmoji = 10042;
-		 public const ushort Actor_CowCowEmoji = 10043;
-		 public const ushort DissolutionInfo = 10044;
-		 public const ushort C2G_CowCowDissoltion = 10045;
-		 public const ushort G2C_CowCowDissoltion = 10046;
-		 public const ushort Actor_CowCowDissoltion = 10047;
+		 public const ushort C2G_CowCowRefreshGate = 10019;
+		 public const ushort G2C_CowCowRefreshGate = 10020;
+		 public const ushort GamerInfo = 10021;
+		 public const ushort C2G_CowCowCreateGameRoomGate = 10022;
+		 public const ushort G2C_CowCowCreateGameRoomGate = 10023;
+		 public const ushort C2G_CowCowJoinGameRoomGate = 10024;
+		 public const ushort G2C_CowCowJoinGameRoomGate = 10025;
+		 public const ushort Actor_CowCowJoinGameRoomGroupSend = 10026;
+		 public const ushort C2M_CowCowGamerReady = 10027;
+		 public const ushort M2C_CowCowGamerReady = 10028;
+		 public const ushort Actor_CowCowGamerReady = 10029;
+		 public const ushort Actor_CowCowRoomDealCards = 10030;
+		 public const ushort C2M_CowCowGrabBanker = 10031;
+		 public const ushort M2C_CowCowGrabBanker = 10032;
+		 public const ushort C2M_CowCowGamerSubmitCardType = 10033;
+		 public const ushort M2C_CowCowGamerSubmitCardType = 10034;
+		 public const ushort Actor_CowCowGamerSubmitCardType = 10035;
+		 public const ushort CowCowSmallSettlementInfo = 10036;
+		 public const ushort Actor_CowCowRoomOpenCardsAndSettlement = 10037;
+		 public const ushort C2G_CowCowPing = 10038;
+		 public const ushort G2C_CowCowPing = 10039;
+		 public const ushort C2G_CowCowChatFont = 10040;
+		 public const ushort G2C_CowCowChatFont = 10041;
+		 public const ushort Actor_CowCowChatFont = 10042;
+		 public const ushort C2G_CowCowEmoji = 10043;
+		 public const ushort G2C_CowCowEmoji = 10044;
+		 public const ushort Actor_CowCowEmoji = 10045;
+		 public const ushort DissolutionInfo = 10046;
+		 public const ushort C2G_CowCowDissoltion = 10047;
+		 public const ushort G2C_CowCowDissoltion = 10048;
+		 public const ushort Actor_CowCowDissoltion = 10049;
+		 public const ushort CowCowBigSettlementInfo = 10050;
+		 public const ushort Actor_CowCowBigSettlement = 10051;
 	}
 }

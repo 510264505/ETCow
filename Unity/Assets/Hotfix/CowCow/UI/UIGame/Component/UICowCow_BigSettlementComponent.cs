@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DG.Tweening;
 using ETModel;
 using UnityEngine;
 using UnityEngine.UI;
@@ -43,7 +44,16 @@ namespace ETHotfix
         }
         private void OnContinue()
         {
-            Debug.Log("小结算继续游戏！");
+            Debug.Log("大结算退出游戏,跳转到大厅!");
+            Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowLobby).GetComponent<UICowCowLobbyComponent>().ShowHideLobby(true);
+            Game.EventSystem.Run(CowCowEventIdType.RemoveGameRoom);
+        }
+
+        public void ShowHideBigSettlement(bool isShow)
+        {
+            CanvasGroup canvasGroup = this.GameObject.GetComponent<CanvasGroup>();
+            canvasGroup.blocksRaycasts = isShow;
+            canvasGroup.DOFade(isShow ? 1 : 0, 0.5f);
         }
 
         public override void Dispose()

@@ -37,6 +37,7 @@ namespace ETHotfix
                 response.Bureau = room.Bureau;
                 response.RuleBit = room.RuleBit;
                 response.RoomID = room.RoomID;
+                response.CurBureau = room.CurBureau;
 
                 Gamer gamer = GamerFactory.Create(message.UserID, session.InstanceId);
                 await gamer.AddComponent<MailBoxComponent>().AddLocation();

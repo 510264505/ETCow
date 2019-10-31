@@ -144,7 +144,7 @@ namespace ETHotfix
             shareBtn.onClick.Add(OnShare);
             mallBtn.onClick.Add(OnMall);
 
-            ShowPlayerInfo(data);
+            this.ShowPlayerInfo(data);
         }
         private void ShowPlayerInfo(G2C_CowCowLoginGate data)
         {
@@ -272,6 +272,17 @@ namespace ETHotfix
 		{
 			MapHelper.EnterMapAsync().Coroutine();
 		}
+
+        public void SetDiamond(int diamond)
+        {
+            roomCardText.text = diamond.ToString();
+        }
+
+        public void ShowHideLobby(bool isShow)
+        {
+            Actor_RefreshDiamondHelper.OnRefreshDiamond().Coroutine();
+            this.GetParent<UI>().GameObject.SetActive(isShow);
+        }
 
 
         public override void Dispose()

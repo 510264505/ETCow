@@ -108,11 +108,14 @@ namespace ETHotfix
 
         private void ShowHideDissoltion(bool isShow)
         {
-            if (this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts != isShow)
+            if (this.GameObject != null)
             {
-                this.GameObject.GetComponent<CanvasGroup>().DOFade(isShow ? 1 : 0, 0.5f);
-                this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
-                this.ShowHideAgreeButton(isShow);
+                if (this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts != isShow)
+                {
+                    this.GameObject.GetComponent<CanvasGroup>().DOFade(isShow ? 1 : 0, 0.5f);
+                    this.GameObject.GetComponent<CanvasGroup>().blocksRaycasts = isShow;
+                    this.ShowHideAgreeButton(isShow);
+                }
             }
         }
 
