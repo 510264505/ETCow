@@ -8,5 +8,9 @@ namespace ETHotfix
         {
             Game.Scene.GetComponent<UIComponent>().Get(GlobalsUIType.UIPopupsCanvas).GetComponent<UIPopupsComponent>().ShowPopups(dec, action);
         }
+        public static void ShowLoading(bool isShow)
+        {
+            Game.Scene.GetComponent<UIComponent>().Get(GlobalsUIType.UIPopupsCanvas).GetComponent<UIPopupsComponent>().ShowLoading(isShow);
+        }
     }
 }

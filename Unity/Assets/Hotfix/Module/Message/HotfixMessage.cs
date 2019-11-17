@@ -1883,9 +1883,6 @@ namespace ETHotfix {
     }
 
     private long userID_;
-    /// <summary>
-    /// 帐号
-    /// </summary>
     public long UserID {
       get { return userID_; }
       set {
@@ -3027,14 +3024,6 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
-      set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
-      }
-    }
-
     private int seatID_;
     public int SeatID {
       get { return seatID_; }
@@ -3043,10 +3032,18 @@ namespace ETHotfix {
       }
     }
 
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
+      set {
+        userID_ = value;
+      }
+    }
+
     public void WriteTo(pb::CodedOutputStream output) {
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(UserID);
       }
       if (SeatID != 0) {
         output.WriteRawTag(16);
@@ -3063,17 +3060,17 @@ namespace ETHotfix {
       if (RpcId != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
-      }
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
+      }
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       return size;
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
-      roomID_ = "";
+      userID_ = 0;
       seatID_ = 0;
       rpcId_ = 0;
       uint tag;
@@ -3082,8 +3079,8 @@ namespace ETHotfix {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            RoomID = input.ReadString();
+          case 8: {
+            UserID = input.ReadInt64();
             break;
           }
           case 16: {
@@ -3439,11 +3436,11 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
       set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userID_ = value;
       }
     }
 
@@ -3464,9 +3461,9 @@ namespace ETHotfix {
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(UserID);
       }
       if (SeatID != 0) {
         output.WriteRawTag(16);
@@ -3487,8 +3484,8 @@ namespace ETHotfix {
       if (RpcId != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
@@ -3500,7 +3497,7 @@ namespace ETHotfix {
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
-      roomID_ = "";
+      userID_ = 0;
       seatID_ = 0;
       multiple_ = 0;
       rpcId_ = 0;
@@ -3510,8 +3507,8 @@ namespace ETHotfix {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            RoomID = input.ReadString();
+          case 8: {
+            UserID = input.ReadInt64();
             break;
           }
           case 16: {
@@ -3629,11 +3626,11 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
       set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userID_ = value;
       }
     }
 
@@ -3694,9 +3691,9 @@ namespace ETHotfix {
     }
 
     public void WriteTo(pb::CodedOutputStream output) {
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(10);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(UserID);
       }
       if (SeatID != 0) {
         output.WriteRawTag(16);
@@ -3734,8 +3731,8 @@ namespace ETHotfix {
       if (RpcId != 0) {
         size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
@@ -3760,7 +3757,7 @@ namespace ETHotfix {
     }
 
     public void MergeFrom(pb::CodedInputStream input) {
-      roomID_ = "";
+      userID_ = 0;
       seatID_ = 0;
       maxCard_ = 0;
       cardType_ = 0;
@@ -3775,8 +3772,8 @@ namespace ETHotfix {
           default:
             input.SkipLastField();
             break;
-          case 10: {
-            RoomID = input.ReadString();
+          case 8: {
+            UserID = input.ReadInt64();
             break;
           }
           case 16: {
@@ -4392,11 +4389,11 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
       set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userID_ = value;
       }
     }
 
@@ -4413,9 +4410,9 @@ namespace ETHotfix {
         output.WriteRawTag(26);
         output.WriteString(ChatMessage);
       }
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(34);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(32);
+        output.WriteInt64(UserID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -4437,8 +4434,8 @@ namespace ETHotfix {
       if (ChatMessage.Length != 0) {
         size += 1 + pb::CodedOutputStream.ComputeStringSize(ChatMessage);
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       return size;
     }
@@ -4447,7 +4444,7 @@ namespace ETHotfix {
       chatIndex_ = 0;
       seatID_ = 0;
       chatMessage_ = "";
-      roomID_ = "";
+      userID_ = 0;
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -4467,8 +4464,8 @@ namespace ETHotfix {
             ChatMessage = input.ReadString();
             break;
           }
-          case 34: {
-            RoomID = input.ReadString();
+          case 32: {
+            UserID = input.ReadInt64();
             break;
           }
           case 720: {
@@ -4719,11 +4716,11 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
       set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userID_ = value;
       }
     }
 
@@ -4736,9 +4733,9 @@ namespace ETHotfix {
         output.WriteRawTag(16);
         output.WriteInt32(SeatID);
       }
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(UserID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -4757,8 +4754,8 @@ namespace ETHotfix {
       if (SeatID != 0) {
         size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       return size;
     }
@@ -4766,7 +4763,7 @@ namespace ETHotfix {
     public void MergeFrom(pb::CodedInputStream input) {
       index_ = 0;
       seatID_ = 0;
-      roomID_ = "";
+      userID_ = 0;
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -4782,8 +4779,8 @@ namespace ETHotfix {
             SeatID = input.ReadInt32();
             break;
           }
-          case 26: {
-            RoomID = input.ReadString();
+          case 24: {
+            UserID = input.ReadInt64();
             break;
           }
           case 720: {
@@ -5079,11 +5076,11 @@ namespace ETHotfix {
       }
     }
 
-    private string roomID_ = "";
-    public string RoomID {
-      get { return roomID_; }
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
       set {
-        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+        userID_ = value;
       }
     }
 
@@ -5096,9 +5093,9 @@ namespace ETHotfix {
         output.WriteRawTag(16);
         output.WriteBool(IsAgree);
       }
-      if (RoomID.Length != 0) {
-        output.WriteRawTag(26);
-        output.WriteString(RoomID);
+      if (UserID != 0L) {
+        output.WriteRawTag(24);
+        output.WriteInt64(UserID);
       }
       if (RpcId != 0) {
         output.WriteRawTag(208, 5);
@@ -5117,8 +5114,8 @@ namespace ETHotfix {
       if (IsAgree != false) {
         size += 1 + 1;
       }
-      if (RoomID.Length != 0) {
-        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
       }
       return size;
     }
@@ -5126,7 +5123,7 @@ namespace ETHotfix {
     public void MergeFrom(pb::CodedInputStream input) {
       seatID_ = 0;
       isAgree_ = false;
-      roomID_ = "";
+      userID_ = 0;
       rpcId_ = 0;
       uint tag;
       while ((tag = input.ReadTag()) != 0) {
@@ -5142,8 +5139,8 @@ namespace ETHotfix {
             IsAgree = input.ReadBool();
             break;
           }
-          case 26: {
-            RoomID = input.ReadString();
+          case 24: {
+            UserID = input.ReadInt64();
             break;
           }
           case 720: {
@@ -5640,6 +5637,516 @@ namespace ETHotfix {
           }
           case 752: {
             ActorId = input.ReadInt64();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class GamerReConnectedInfo : pb::IMessage {
+    private static readonly pb::MessageParser<GamerReConnectedInfo> _parser = new pb::MessageParser<GamerReConnectedInfo>(() => (GamerReConnectedInfo)MessagePool.Instance.Fetch(typeof(GamerReConnectedInfo)));
+    public static pb::MessageParser<GamerReConnectedInfo> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
+      set {
+        userID_ = value;
+      }
+    }
+
+    private string name_ = "";
+    public string Name {
+      get { return name_; }
+      set {
+        name_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private string headIcon_ = "";
+    public string HeadIcon {
+      get { return headIcon_; }
+      set {
+        headIcon_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private int sex_;
+    public int Sex {
+      get { return sex_; }
+      set {
+        sex_ = value;
+      }
+    }
+
+    private int status_;
+    public int Status {
+      get { return status_; }
+      set {
+        status_ = value;
+      }
+    }
+
+    private int seatID_;
+    public int SeatID {
+      get { return seatID_; }
+      set {
+        seatID_ = value;
+      }
+    }
+
+    private static readonly pb::FieldCodec<int> _repeated_cards_codec
+        = pb::FieldCodec.ForInt32(66);
+    private pbc::RepeatedField<int> cards_ = new pbc::RepeatedField<int>();
+    public pbc::RepeatedField<int> Cards {
+      get { return cards_; }
+      set { cards_ = value; }
+    }
+
+    private bool isResult_;
+    public bool IsResult {
+      get { return isResult_; }
+      set {
+        isResult_ = value;
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (UserID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(UserID);
+      }
+      if (Name.Length != 0) {
+        output.WriteRawTag(18);
+        output.WriteString(Name);
+      }
+      if (HeadIcon.Length != 0) {
+        output.WriteRawTag(26);
+        output.WriteString(HeadIcon);
+      }
+      if (IsResult != false) {
+        output.WriteRawTag(32);
+        output.WriteBool(IsResult);
+      }
+      if (Sex != 0) {
+        output.WriteRawTag(40);
+        output.WriteInt32(Sex);
+      }
+      if (Status != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(Status);
+      }
+      if (SeatID != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(SeatID);
+      }
+      cards_.WriteTo(output, _repeated_cards_codec);
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
+      }
+      if (Name.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      }
+      if (HeadIcon.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(HeadIcon);
+      }
+      if (Sex != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Sex);
+      }
+      if (Status != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Status);
+      }
+      if (SeatID != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(SeatID);
+      }
+      size += cards_.CalculateSize(_repeated_cards_codec);
+      if (IsResult != false) {
+        size += 1 + 1;
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      userID_ = 0;
+      name_ = "";
+      headIcon_ = "";
+      isResult_ = false;
+      sex_ = 0;
+      status_ = 0;
+      seatID_ = 0;
+      cards_.Clear();
+      rpcId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            UserID = input.ReadInt64();
+            break;
+          }
+          case 18: {
+            Name = input.ReadString();
+            break;
+          }
+          case 26: {
+            HeadIcon = input.ReadString();
+            break;
+          }
+          case 32: {
+            IsResult = input.ReadBool();
+            break;
+          }
+          case 40: {
+            Sex = input.ReadInt32();
+            break;
+          }
+          case 48: {
+            Status = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            SeatID = input.ReadInt32();
+            break;
+          }
+          case 66:
+          case 64: {
+            cards_.AddEntriesFrom(input, _repeated_cards_codec);
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class C2G_CowCowReConnect : pb::IMessage {
+    private static readonly pb::MessageParser<C2G_CowCowReConnect> _parser = new pb::MessageParser<C2G_CowCowReConnect>(() => (C2G_CowCowReConnect)MessagePool.Instance.Fetch(typeof(C2G_CowCowReConnect)));
+    public static pb::MessageParser<C2G_CowCowReConnect> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private long userID_;
+    public long UserID {
+      get { return userID_; }
+      set {
+        userID_ = value;
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      if (UserID != 0L) {
+        output.WriteRawTag(8);
+        output.WriteInt64(UserID);
+      }
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (UserID != 0L) {
+        size += 1 + pb::CodedOutputStream.ComputeInt64Size(UserID);
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      userID_ = 0;
+      rpcId_ = 0;
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 8: {
+            UserID = input.ReadInt64();
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+        }
+      }
+    }
+
+  }
+
+  public partial class G2C_CowCowReConnect : pb::IMessage {
+    private static readonly pb::MessageParser<G2C_CowCowReConnect> _parser = new pb::MessageParser<G2C_CowCowReConnect>(() => (G2C_CowCowReConnect)MessagePool.Instance.Fetch(typeof(G2C_CowCowReConnect)));
+    public static pb::MessageParser<G2C_CowCowReConnect> Parser { get { return _parser; } }
+
+    private int rpcId_;
+    public int RpcId {
+      get { return rpcId_; }
+      set {
+        rpcId_ = value;
+      }
+    }
+
+    private int error_;
+    public int Error {
+      get { return error_; }
+      set {
+        error_ = value;
+      }
+    }
+
+    private string message_ = "";
+    public string Message {
+      get { return message_; }
+      set {
+        message_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private static readonly pb::FieldCodec<global::ETHotfix.GamerReConnectedInfo> _repeated_info_codec
+        = pb::FieldCodec.ForMessage(10, global::ETHotfix.GamerReConnectedInfo.Parser);
+    private pbc::RepeatedField<global::ETHotfix.GamerReConnectedInfo> info_ = new pbc::RepeatedField<global::ETHotfix.GamerReConnectedInfo>();
+    public pbc::RepeatedField<global::ETHotfix.GamerReConnectedInfo> Info {
+      get { return info_; }
+      set { info_ = value; }
+    }
+
+    private int bureau_;
+    public int Bureau {
+      get { return bureau_; }
+      set {
+        bureau_ = value;
+      }
+    }
+
+    private int ruleBit_;
+    public int RuleBit {
+      get { return ruleBit_; }
+      set {
+        ruleBit_ = value;
+      }
+    }
+
+    private string roomID_ = "";
+    public string RoomID {
+      get { return roomID_; }
+      set {
+        roomID_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    private global::ETHotfix.GamerInfo gamerInfo_;
+    public global::ETHotfix.GamerInfo GamerInfo {
+      get { return gamerInfo_; }
+      set {
+        gamerInfo_ = value;
+      }
+    }
+
+    private int people_;
+    public int People {
+      get { return people_; }
+      set {
+        people_ = value;
+      }
+    }
+
+    private int curBureau_;
+    public int CurBureau {
+      get { return curBureau_; }
+      set {
+        curBureau_ = value;
+      }
+    }
+
+    private string gameName_ = "";
+    public string GameName {
+      get { return gameName_; }
+      set {
+        gameName_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      }
+    }
+
+    public void WriteTo(pb::CodedOutputStream output) {
+      info_.WriteTo(output, _repeated_info_codec);
+      if (Bureau != 0) {
+        output.WriteRawTag(16);
+        output.WriteInt32(Bureau);
+      }
+      if (RuleBit != 0) {
+        output.WriteRawTag(24);
+        output.WriteInt32(RuleBit);
+      }
+      if (RoomID.Length != 0) {
+        output.WriteRawTag(34);
+        output.WriteString(RoomID);
+      }
+      if (gamerInfo_ != null) {
+        output.WriteRawTag(42);
+        output.WriteMessage(GamerInfo);
+      }
+      if (People != 0) {
+        output.WriteRawTag(48);
+        output.WriteInt32(People);
+      }
+      if (CurBureau != 0) {
+        output.WriteRawTag(56);
+        output.WriteInt32(CurBureau);
+      }
+      if (GameName.Length != 0) {
+        output.WriteRawTag(66);
+        output.WriteString(GameName);
+      }
+      if (RpcId != 0) {
+        output.WriteRawTag(208, 5);
+        output.WriteInt32(RpcId);
+      }
+      if (Error != 0) {
+        output.WriteRawTag(216, 5);
+        output.WriteInt32(Error);
+      }
+      if (Message.Length != 0) {
+        output.WriteRawTag(226, 5);
+        output.WriteString(Message);
+      }
+    }
+
+    public int CalculateSize() {
+      int size = 0;
+      if (RpcId != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(RpcId);
+      }
+      if (Error != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeInt32Size(Error);
+      }
+      if (Message.Length != 0) {
+        size += 2 + pb::CodedOutputStream.ComputeStringSize(Message);
+      }
+      size += info_.CalculateSize(_repeated_info_codec);
+      if (Bureau != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(Bureau);
+      }
+      if (RuleBit != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(RuleBit);
+      }
+      if (RoomID.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomID);
+      }
+      if (gamerInfo_ != null) {
+        size += 1 + pb::CodedOutputStream.ComputeMessageSize(GamerInfo);
+      }
+      if (People != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(People);
+      }
+      if (CurBureau != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurBureau);
+      }
+      if (GameName.Length != 0) {
+        size += 1 + pb::CodedOutputStream.ComputeStringSize(GameName);
+      }
+      return size;
+    }
+
+    public void MergeFrom(pb::CodedInputStream input) {
+      for (int i = 0; i < info_.Count; i++) { MessagePool.Instance.Recycle(info_[i]); }
+      info_.Clear();
+      bureau_ = 0;
+      ruleBit_ = 0;
+      roomID_ = "";
+      if (gamerInfo_ != null) MessagePool.Instance.Recycle(gamerInfo_); gamerInfo_ = null;
+      people_ = 0;
+      curBureau_ = 0;
+      gameName_ = "";
+      rpcId_ = 0;
+      error_ = 0;
+      message_ = "";
+      uint tag;
+      while ((tag = input.ReadTag()) != 0) {
+        switch(tag) {
+          default:
+            input.SkipLastField();
+            break;
+          case 10: {
+            info_.AddEntriesFrom(input, _repeated_info_codec);
+            break;
+          }
+          case 16: {
+            Bureau = input.ReadInt32();
+            break;
+          }
+          case 24: {
+            RuleBit = input.ReadInt32();
+            break;
+          }
+          case 34: {
+            RoomID = input.ReadString();
+            break;
+          }
+          case 42: {
+            if (gamerInfo_ == null) {
+              gamerInfo_ = new global::ETHotfix.GamerInfo();
+            }
+            input.ReadMessage(gamerInfo_);
+            break;
+          }
+          case 48: {
+            People = input.ReadInt32();
+            break;
+          }
+          case 56: {
+            CurBureau = input.ReadInt32();
+            break;
+          }
+          case 66: {
+            GameName = input.ReadString();
+            break;
+          }
+          case 720: {
+            RpcId = input.ReadInt32();
+            break;
+          }
+          case 728: {
+            Error = input.ReadInt32();
+            break;
+          }
+          case 738: {
+            Message = input.ReadString();
             break;
           }
         }

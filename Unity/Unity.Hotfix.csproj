@@ -110,6 +110,7 @@
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_GrabBankerHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_JoinRoomHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_LoginHelper.cs" />
+    <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_ReConnectHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_RefreshDiamondHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_SendChatMessageHelper.cs" />
     <Compile Include="Assets\Hotfix\CowCow\Helper\Actor_SubmitHandCardHelper.cs" />
@@ -141,8 +142,8 @@
     <Compile Include="Assets\Hotfix\CowCow\UI\UILogin\System\UICowCowLoginFactory.cs" />
     <Compile Include="Assets\Hotfix\Entity\Game.cs" />
     <Compile Include="Assets\Hotfix\Entity\Scene.cs" />
+    <Compile Include="Assets\Hotfix\Globals\Helper\PopupsHelper.cs" />
     <Compile Include="Assets\Hotfix\Globals\Object\GlobalsUIType.cs" />
-    <Compile Include="Assets\Hotfix\Globals\PopupsHelper.cs" />
     <Compile Include="Assets\Hotfix\Globals\UI\UIPopups\Component\UIPopupsComponent.cs" />
     <Compile Include="Assets\Hotfix\Globals\UI\UIPopups\System\InitCreateUIPopups.cs" />
     <Compile Include="Assets\Hotfix\Globals\UI\UIPopups\System\UIPopupsFactory.cs" />

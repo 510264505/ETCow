@@ -241,8 +241,9 @@ namespace ETHotfix
         }
         private void OnQuit()
         {
-            Game.EventSystem.Run(CowCowEventIdType.InitScensStart);
             Game.EventSystem.Run(CowCowEventIdType.RemoveLobby);
+            Game.Scene.GetComponent<SessionComponent>().Session.RemoveComponent<PingComponent>();
+            Game.Scene.GetComponent<SessionComponent>().Session.Dispose();
         }
         private void OnSetting()
         {

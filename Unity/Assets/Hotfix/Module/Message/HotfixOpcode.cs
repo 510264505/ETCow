@@ -159,6 +159,15 @@ namespace ETHotfix
 	[Message(HotfixOpcode.Actor_CowCowBigSettlement)]
 	public partial class Actor_CowCowBigSettlement : IActorMessage {}
 
+	[Message(HotfixOpcode.GamerReConnectedInfo)]
+	public partial class GamerReConnectedInfo : IMessage {}
+
+	[Message(HotfixOpcode.C2G_CowCowReConnect)]
+	public partial class C2G_CowCowReConnect : IRequest {}
+
+	[Message(HotfixOpcode.G2C_CowCowReConnect)]
+	public partial class G2C_CowCowReConnect : IResponse {}
+
 }
 namespace ETHotfix
 {
@@ -215,5 +224,8 @@ namespace ETHotfix
 		 public const ushort Actor_CowCowDissoltion = 10049;
 		 public const ushort CowCowBigSettlementInfo = 10050;
 		 public const ushort Actor_CowCowBigSettlement = 10051;
+		 public const ushort GamerReConnectedInfo = 10052;
+		 public const ushort C2G_CowCowReConnect = 10053;
+		 public const ushort G2C_CowCowReConnect = 10054;
 	}
 }

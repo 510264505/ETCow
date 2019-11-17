@@ -11,7 +11,7 @@ namespace ETHotfix
             G2C_CowCowChatFont response = new G2C_CowCowChatFont();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 Actor_CowCowChatFont chatMessage = new Actor_CowCowChatFont();
                 chatMessage.SeatID = message.SeatID;
                 chatMessage.ChatIndex = message.ChatIndex;

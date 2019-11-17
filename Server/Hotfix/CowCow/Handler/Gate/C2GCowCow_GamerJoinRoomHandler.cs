@@ -51,6 +51,7 @@ namespace ETHotfix
                 gamer.IsOffline = false;
                 gamer.Identity = Identity.None;
                 room.Add(gamer);
+                Game.Scene.GetComponent<RoomComponent>().Add(gamer.UserID, room.RoomID);
 
                 Dictionary<int, Gamer> gamers = room.GetAll();
                 Actor_CowCowJoinGameRoomGroupSend allGamer = new Actor_CowCowJoinGameRoomGroupSend();

@@ -227,8 +227,8 @@ message Actor_CowCowJoinGameRoomGroupSend // IActorMessage
 message C2M_CowCowGamerReady // IRequest
 {
 	int32 RpcId = 90;
-	string RoomID = 1;
 	int32 SeatID = 2;
+	int64 UserID = 1;
 }
 
 message M2C_CowCowGamerReady // IResponse
@@ -259,7 +259,7 @@ message Actor_CowCowRoomDealCards // IActorMessage
 message C2M_CowCowGrabBanker // IRequest
 {
 	int32 RpcId = 90;
-	string RoomID = 1;
+	int64 UserID = 1;
 	int32 SeatID = 2;
 	int32 Multiple = 3;
 }
@@ -274,7 +274,7 @@ message M2C_CowCowGrabBanker // IResponse
 message C2M_CowCowGamerSubmitCardType // IRequest
 {
 	int32 RpcId = 90;
-	string RoomID = 1;
+	int64 UserID = 1;
 	int32 SeatID = 2;
 	int32 MaxCard = 3;
 	int32 CardType = 4;
@@ -334,7 +334,7 @@ message C2G_CowCowChatFont // IRequest
 	int32 ChatIndex = 1;
 	int32 SeatID = 2;
 	string ChatMessage = 3;
-	string RoomID = 4;
+	int64 UserID = 4;
 }
 
 message G2C_CowCowChatFont // IResponse
@@ -358,7 +358,7 @@ message C2G_CowCowEmoji // IRequest
 	int32 RpcId = 90;
 	int32 index = 1;
 	int32 SeatID = 2;
-	string RoomID = 3;
+	int64 UserID = 3;
 }
 
 message G2C_CowCowEmoji // IResponse
@@ -387,7 +387,7 @@ message C2G_CowCowDissoltion // IRequest
 	int32 RpcId = 90;
 	int32 SeatID = 1;
 	bool IsAgree = 2;
-	string RoomID = 3;
+	int64 UserID = 3;
 }
 
 message G2C_CowCowDissoltion // IResponse
@@ -424,4 +424,38 @@ message Actor_CowCowBigSettlement // IActorMessage
 	int32 RpcId = 90;
 	int64 ActorId = 94;
 	repeated CowCowBigSettlementInfo Info = 1;
+}
+
+message GamerReConnectedInfo // IMessage
+{
+	int32 RpcId = 90;
+	int64 UserID = 1;
+	string Name = 2;
+	string HeadIcon = 3;
+	int32 Sex = 5;
+	int32 Status = 6;
+	int32 SeatID = 7;
+	repeated int32 Cards = 8;
+	bool IsResult = 4;
+}
+
+message C2G_CowCowReConnect // IRequest
+{
+	int32 RpcId = 90;
+	int64 UserID = 1;
+}
+
+message G2C_CowCowReConnect // IResponse
+{
+	int32 RpcId = 90;
+	int32 Error = 91;
+	string Message = 92;
+	repeated GamerReConnectedInfo Info = 1;
+	int32 Bureau = 2;
+	int32 RuleBit = 3;
+	string RoomID = 4;
+	GamerInfo GamerInfo = 5;
+	int32 People = 6;
+	int32 CurBureau = 7;
+	string GameName = 8;
 }

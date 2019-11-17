@@ -11,7 +11,7 @@
         HaveCow,        //有牛
         NotCow          //无牛
     }
-    public enum GamerStatus : ushort
+    public enum GamerStatus : int
     {
         None,       //无
         Down,       //坐下

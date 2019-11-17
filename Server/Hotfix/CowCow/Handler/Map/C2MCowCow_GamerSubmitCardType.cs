@@ -13,7 +13,7 @@ namespace ETHotfix
             M2C_CowCowGamerSubmitCardType response = new M2C_CowCowGamerSubmitCardType();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 if (room == null)
                 {
                     response.Error = ErrorCode.ERR_NotRoomNumberError;
@@ -112,6 +112,7 @@ namespace ETHotfix
             }
             gamers[room.CurBankerSeatID].Coin += bankerCoin;
             openCards.SmallSettlemntInfo.Add(SetBankerInfo(gamers[room.CurBankerSeatID], bankerCoin));
+            room.State = RoomState.End;
 
             room.Broadcast(openCards);
         }
@@ -131,6 +132,9 @@ namespace ETHotfix
             return info;
         }
 
+        /// <summary>
+        /// 改变玩家牛类型的统计
+        /// </summary>
         private void ChangeCowCount(Gamer gamer, bool isBanker, int cardType, int cowNumber)
         {
             if (isBanker)

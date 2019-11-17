@@ -12,6 +12,9 @@
         public const string CreateGameRoom = "CowCowCreateGameRoom";
         public const string JoinGameRoom = "CowCowJoinGameRoom";
         public const string RemoveGameRoom = "CowCowRemoveGameRoom";
+        public const string TCPReConnect = "TCPReConnect";
+        public const string ServerMaintenance = "ServerMaintenance";
+        public const string ReConnectInfo = "ReConnectInfo";
     }
 }
 

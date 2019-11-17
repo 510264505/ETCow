@@ -8,7 +8,7 @@ namespace ETHotfix
         {
             Session session = Game.Scene.GetComponent<SessionComponent>().Session;
             UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
-            request.RoomID = room.RoomID;
+            request.UserID = ClientComponent.Instance.User.UserID;
             request.SeatID = room.GamerComponent.LocalSeatID;
             M2C_CowCowGamerSubmitCardType response = (M2C_CowCowGamerSubmitCardType)await session.Call(request);
             if (response.Error == 0)

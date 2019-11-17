@@ -103,7 +103,8 @@ namespace ETHotfix
 				{
 					if (ErrorCode.IsRpcNeedThrowException(response.Error))
 					{
-						throw new RpcException(response.Error, response.Message);
+                        Game.EventSystem.Run(CowCowEventIdType.ServerMaintenance);
+                        throw new RpcException(response.Error, response.Message);
 					}
 
 					tcs.SetResult(response);

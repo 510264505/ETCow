@@ -59,7 +59,7 @@ namespace ETHotfix
             UICowCow_GameRoomComponent room = Game.Scene.GetComponent<UIComponent>().Get(UICowCowType.CowCowGameRoom).GetComponent<UICowCow_GameRoomComponent>();
             if (!isShow)
             {
-                Actor_GamerReadyHelper.OnReady(room.GamerComponent.LocalSeatID, room.RoomID).Coroutine();
+                Actor_GamerReadyHelper.OnReady(room.GamerComponent.LocalSeatID).Coroutine();
             }
         }
 

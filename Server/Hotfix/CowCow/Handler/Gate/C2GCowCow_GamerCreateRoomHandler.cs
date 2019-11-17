@@ -53,6 +53,7 @@ namespace ETHotfix
                 gamer.Coin = 0;
                 gamer.Sex = userInfo.Sex;
                 room.Add(gamer);
+                Game.Scene.GetComponent<RoomComponent>().Add(gamer.UserID, room.RoomID);
 
                 response.GameName = room.GameName;
                 response.Bureau = room.Bureau;

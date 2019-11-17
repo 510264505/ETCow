@@ -25,7 +25,7 @@ namespace App
 					return;
 				}
 
-                Log.WriteLine("启动服务器类型:" + startConfig.AppType);
+                Log.WriteLine($"启动服务器类型:{startConfig.AppType},ip:{startConfig.ServerIP}");
                 Log.Debug("启动服务器类型:" + startConfig.AppType);
 
 				IdGenerater.AppId = options.AppId;

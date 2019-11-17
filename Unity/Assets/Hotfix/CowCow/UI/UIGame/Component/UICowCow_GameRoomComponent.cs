@@ -376,7 +376,7 @@ namespace ETHotfix
         }
         private void OnReady()
         {
-            Actor_GamerReadyHelper.OnReady(GamerComponent.LocalSeatID, this.RoomID).Coroutine();
+            Actor_GamerReadyHelper.OnReady(GamerComponent.LocalSeatID).Coroutine();
         }
         private void OnInvite()
         {
@@ -394,7 +394,7 @@ namespace ETHotfix
         private void OnGrabBanker(int n)
         {
             //把发送准备那里改了，以及服务器的准备并发牌逻辑那里
-            Actor_GrabBankerHelper.SendGrabBanker(RoomID, GamerComponent.LocalSeatID, n).Coroutine();
+            Actor_GrabBankerHelper.SendGrabBanker(GamerComponent.LocalSeatID, n).Coroutine();
         }
         public void SetBureau(int? bureau = null)
         {

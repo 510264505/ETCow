@@ -14,7 +14,7 @@ namespace ETHotfix
             M2C_CowCowGamerReady response = new M2C_CowCowGamerReady();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 if (room == null)
                 {
                     response.Error = ErrorCode.ERR_NotRoomNumberError;
@@ -40,6 +40,7 @@ namespace ETHotfix
                 if (readyInfo.IsFullPeople)
                 {
                     room.CurBureau++;
+                    room.State = RoomState.Game;
                     readyInfo.CurBureau = room.CurBureau;
                     UserInfo userInfo = Game.Scene.GetComponent<UserInfoComponent>().Get(room.UserID);
                     DBProxyComponent db = Game.Scene.GetComponent<DBProxyComponent>();

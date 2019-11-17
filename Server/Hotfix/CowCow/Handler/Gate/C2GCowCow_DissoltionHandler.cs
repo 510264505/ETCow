@@ -13,7 +13,7 @@ namespace ETHotfix
             G2C_CowCowDissoltion response = new G2C_CowCowDissoltion();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 room.AddDissoltion(message.SeatID, message.IsAgree);
                 Actor_CowCowDissoltion dissMessage = new Actor_CowCowDissoltion();
                 dissMessage.Info = new Google.Protobuf.Collections.RepeatedField<DissolutionInfo>();
@@ -34,7 +34,7 @@ namespace ETHotfix
                 // 当所有人同意，才可以解散，客户端自动倒计时时间然后默认给服务端发送同意(玩家没点，默认同意)
                 if (agreeCount >= room.GamerCount)
                 {
-                    Game.Scene.GetComponent<RoomComponent>().Remove(message.RoomID);
+                    Game.Scene.GetComponent<RoomComponent>().Remove(room.RoomID);
                     dissMessage.IsDiss = true;
                 }
                 else

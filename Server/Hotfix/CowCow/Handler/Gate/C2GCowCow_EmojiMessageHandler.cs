@@ -11,7 +11,7 @@ namespace ETHotfix
             G2C_CowCowEmoji response = new G2C_CowCowEmoji();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 Actor_CowCowEmoji emojiMessage = new Actor_CowCowEmoji();
                 emojiMessage.Index = message.Index;
                 emojiMessage.SeatID = message.SeatID;

@@ -16,7 +16,7 @@ namespace ETHotfix
             M2C_CowCowGrabBanker response = new M2C_CowCowGrabBanker();
             try
             {
-                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.RoomID);
+                Room room = Game.Scene.GetComponent<RoomComponent>().Get(message.UserID);
                 if (room == null)
                 {
                     response.Error = ErrorCode.ERR_NotRoomNumberError;
@@ -41,6 +41,7 @@ namespace ETHotfix
                 if (room.grabBankers.Count == room.PeopleCount)
                 {
                     //判断最大值
+                    room.State = RoomState.Game;
                     this.seatId.Clear();
                     int max = room.grabBankers.Max();
                     foreach (Gamer g in gamers.Values)
